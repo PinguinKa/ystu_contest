@@ -8,11 +8,13 @@ from flask_login import LoginManager, UserMixin, login_user, login_required, log
 
 
 def hashed_password(plain_text_password):
-    #Мы добавляем "соль" к нашему пароль, чтобы сделать его декодирование невозможным
-    return bcrypt.hashpw(plain_text_password.encode('utf-8'), bcrypt.gensalt()) 
+    # Мы добавляем "соль" к нашему пароль, чтобы сделать его декодирование невозможным
+    return bcrypt.hashpw(plain_text_password.encode('utf-8'), bcrypt.gensalt())
+
 
 def check_password(plain_text_password, hashed_password):
     return bcrypt.checkpw(plain_text_password.encode('utf-8'), hashed_password)
+
 
 app = Flask(__name__)
 
@@ -47,7 +49,7 @@ def register():
         row = db.users.get('login', request.form['login'])
         if row:
             return render_template('register.html', message='Такой пользователь уже существует!')
-            
+
         if request.form['password'] != request.form['password_check']:
             return render_template('register.html', message='Пороли не совпадают')
         data = dict(request.form)
@@ -70,10 +72,10 @@ def products():
         item_id = request.form['item_id']
         row = db.cart.get('item_id', item_id)
         if not row:
-            data = {'item_id':item_id, 'amount':1}
+            data = {'item_id': item_id, 'amount': 1}
             db.cart.put(data)
         else:
-            data = {'item_id':item_id, 'amount':row.amount+1}
+            data = {'item_id': item_id, 'amount': row.amount + 1}
             db.cart.delete('item_id', item_id)
             db.cart.put(data)
 
@@ -145,7 +147,7 @@ def order():
             if key == 'phone_number':
                 if not re.match('\+7\d{9}', request.form[key]):
                     return render_template('order.html', error='Неправильный формат номера телефона')
-        
+
         cart_data = db.cart.get_all()
         order_data = db.orders.get_all()
 
