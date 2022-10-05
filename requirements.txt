@@ -1,2 +1,4 @@
-sqlalchemy
-flask
+bcrypt
+flask==2.2.2
+flask_login==0.6.2
+sqlalchemy==1.4.41
