@@ -1,39 +1,31 @@
-<!DOCTYPE html> 
-<html> 
-  <head> 
-    <meta charset="UTF-8"> 
+<!DOCTYPE html>
+<html lang="ru">
+    <head>
+    <meta charset="UTF-8">
     <link rel="stylesheet" href= "/static/css/style.css">
+    <link rel="icon" href="/static/images/ystu_logo.svg">
     {% block head %}
-        <title>Главная страница</title>
+        <title>Главная</title>
     {% endblock %}
-  </head> 
-  <body> 
-    <header>
-        <ul>
-          <li><a href="/">Главная страница</a></li>
-          <li><a href="/products">Продукция</a></li>
-          <li><a href="/contacts">Контакты</a></li>
-          <li><a href="/cart">Корзина</a></li>
-          <li><a href="/about">О компании</a></li>
-          <li><a href="/logout">Выход</a></li>
-        </ul>
-    </header>
-    {% block content %}
-        <div class="main">
-            <div class='card'>
-                <a href="/product1">
-                    <img src="/static/images/promotion.png" width="300" height="300">
-                    <p class = "prom">Распродажа!</p>
-                </a>
-            </div>            
-            
-            <div class='card'>
-                <a href="/product2">
-                    <img src="/static/images/promotion.png" width="300" height="300">
-                    <p class = "prom">Распродажа!<p>
-                </a>
-            </div>            
+    </head>
+    <body>
+        <div class="topnav">
+            <a href="https://www.ystu.ru" class="left" title="Сайт ЯГТУ">
+                <img src="/static/images/ystu_logo.svg" width="27" alt="ystu_logo">
+            </a>
+
+            <a href="/">Главная</a><!--
+         --><a href="/info/">Информация</a><!--
+         --><a href="/events/">Мероприятия</a>
+
+            <a href="/login/" class="right" title="Аккаунт">
+                <img src="/static/images/user_icon.svg" width="27" alt="user_icon">
+            </a>
         </div>
-    {% endblock %}
-  </body> 
-</html> 
+        <div class="content">
+        {% block content %}
+            <img src="/static/images/Library.jpg" alt="library_image">
+        {% endblock %}
+        </div>
+    </body>
+</html>
