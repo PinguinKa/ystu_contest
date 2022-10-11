@@ -18,12 +18,9 @@ body {
 
 .caption {
     text-align: center;
+    text-decoration: underline;
     color: white;
     font-size: 125px;
-}
-
-.caption span.border {
-    border-radius: 25px;
-    background-color: #111;
-    padding: 18px;
+    background-color: rgba(0, 0, 0, .75);
+    padding: 0 30px 24px;
 }
