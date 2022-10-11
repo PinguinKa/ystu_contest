@@ -6,12 +6,54 @@ body {
     justify-content: center;
 }
 
+label {
+    font-size: 15px;
+    font-weight: bold;
+}
+
+input {
+    font-size: 15px;
+    padding: 0 1px;
+    margin-bottom: 12px;
+    height: 24px;
+    border: none;
+    border-bottom: 3px solid grey;
+}
+
+input:hover { border-color: var(--ystu-blue); }
+
+input:focus-visible,
+input:not(:placeholder-shown) {
+    outline: none;
+    border-image-slice: 1;
+    border-image-source: linear-gradient(to right, var(--ystu-blue), var(--ystu-orange));
+}
+
+button[type=submit] {
+    font-size: 17px;
+    margin-bottom: 12px;
+    padding: 3px;
+    border: 3px solid grey;
+}
+
+button[type=submit]:hover {
+    border-image-slice: 1;
+    border-image-source: linear-gradient(135deg, var(--ystu-blue), var(--ystu-orange));
+}
+
+
+.content {
+    padding: 0;
+}
 
 .login-form {
     margin: auto;
+    width: 255px;
     display: flex;
-    align-items: center;
     flex-direction: column;
 }
 
-input { margin-bottom: 10px; }
+.error {
+    margin-bottom: 12px;
+    color: red;
+}

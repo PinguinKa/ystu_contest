@@ -11,6 +11,11 @@ body {
     justify-content: center;
 }
 
+
+.content {
+    padding: 0;
+}
+
 .caption {
     text-align: center;
     color: white;
