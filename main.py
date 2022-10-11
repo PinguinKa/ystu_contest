@@ -60,9 +60,18 @@ def register():
 
 
 @app.route('/')
-@login_required
 def index():
     return render_template('index.html')
+
+
+@app.route('/info/')
+def info():
+    return render_template('info.html')
+
+
+@app.route('/events/')
+def events():
+    return render_template('events.html')
 
 
 # main.py
