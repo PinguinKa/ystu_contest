@@ -1,0 +1,23 @@
+body {
+    background-image: url("../images/library.jpg");
+    height: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.caption {
+    text-align: center;
+    color: white;
+    font-size: 125px;
+}
+
+.caption span.border {
+    border-radius: 25px;
+    background-color: #111;
+    padding: 18px;
+}
