@@ -8,11 +8,13 @@
 {% block content %}
     <form action='/login' method='post'>
         <div class="login-form">
-            {{error}}
-            <input type="text" name="login" placeholder="Логин">
-            <input type="password" name="password" placeholder="Пароль">
+            <div class="error">{{error}}</div>
+            <label for="login">Логин</label>
+            <input type="text" id="login" name="login" placeholder="1v4n" required />
+            <label for="password">Пароль</label>
+            <input type="password" id="password" name="password" placeholder="Qw3R7y" required />
             <button type="submit">Войти</button>
         </div>
+        Нет аккаунта? <a href="../register/">Зарегистрируйтесь</a>
     </form>
-    <p>Нет аккаунта? <a href="../register/">Зарегистрируйтесь</a></p>
 {% endblock %}

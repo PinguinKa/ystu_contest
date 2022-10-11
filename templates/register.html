@@ -8,14 +8,21 @@
 {% block content %}
     <form action='/register' method='post'>
         <div class="login-form">
-            {{message}}
-            <input type="text" name="last_name" placeholder="Фамилия">
-            <input type="text" name="first_name" placeholder="Имя">
-            <input type="text" name="middle_name" placeholder="Отчество">
-            <input type="text" name="university" placeholder="ВУЗ">
-            <input type="text" name="login" placeholder="Логин">
-            <input type="password" name="password" placeholder="Пароль">
-            <input type="password" name="password_check" placeholder="Повторите пароль">
+            <div class="error">{{message}}</div>
+            <label for="last_name">Фамилия</label>
+            <input type="text" id="last_name" name="last_name" placeholder="Иванов">
+            <label for="first_name">Имя</label>
+            <input type="text" id="first_name" name="first_name" placeholder="Иван">
+            <label for="middle_name">Отчество</label>
+            <input type="text" id="middle_name" name="middle_name" placeholder="Иванович">
+            <label for="university">ВУЗ</label>
+            <input type="text" id="university" name="university" placeholder="ЯГТУ">
+            <label for="login">Логин</label>
+            <input type="text" id="login" name="login" placeholder="1v4n">
+            <label for="password">Пароль</label>
+            <input type="password" id="password" name="password" placeholder="Qw3R7y">
+            <label for="password_check">Повторите пароль</label>
+            <input type="password" id="password_check" name="password_check" placeholder="Qw3R7y">
             <button type="submit">Зарегистрироваться</button>
         </div>
     </form>
