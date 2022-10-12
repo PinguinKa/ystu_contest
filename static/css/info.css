@@ -8,7 +8,7 @@
 
 table.event {
     width: 80%;
-    padding: 20px 10%;
+    margin: 20px 10%;
     border: none;
 }
 
@@ -23,10 +23,10 @@ td.event_date {
 }
 
 td.event_name {
-    width: 20%;
+    width: 25%;
     font-size: 25px;
 }
 
 td.event_info {
-    width: 40%;
+    width: 35%;
 }
