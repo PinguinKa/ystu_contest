@@ -1,0 +1,32 @@
+.header {
+    width: 80%;
+    font-size: 55px;
+    color: white;
+    background: var(--ystu-blue);
+    padding: 20px 10%;
+}
+
+table.event {
+    width: 80%;
+    padding: 20px 10%;
+    border: none;
+}
+
+table.event td {
+    border: none;
+    padding: 0;
+}
+
+td.event_date {
+    width: 20%;
+    font-size: 25px;
+}
+
+td.event_name {
+    width: 20%;
+    font-size: 25px;
+}
+
+td.event_info {
+    width: 40%;
+}
