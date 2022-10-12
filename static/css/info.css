@@ -6,25 +6,36 @@
     padding: 20px 10%;
 }
 
-table.event {
+.event {
     width: 80%;
     margin: 20px 10%;
-    border: none;
+}
+
+.empty {
+    font-size: 35px;
 }
 
 table.event td {
     border: none;
-    padding: 0;
+    padding: 0 5px;
 }
 
 td.event_date {
     width: 20%;
     font-size: 25px;
+    word-wrap: unset;
+}
+
+td.event_date div {
+    display: inline-block;
 }
 
 td.event_name {
+    text-align: center;
     width: 25%;
-    font-size: 25px;
+    font-size: 35px;
+    border-left: 1px solid gray !important;
+    border-right: 1px solid gray !important;
 }
 
 td.event_info {
