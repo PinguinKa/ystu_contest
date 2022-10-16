@@ -31,7 +31,7 @@ input:not(:placeholder-shown) {
 
 button[type=submit] {
     font-size: 17px;
-    padding: 3px;
+    padding: 2px 0 0;
     border: 3px solid grey;
 }
 
