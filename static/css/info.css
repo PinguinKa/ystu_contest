@@ -6,14 +6,12 @@
     padding: 20px 10%;
 }
 
-.event {
-    width: 80%;
-    margin: 10px 10%;
-}
+.infobox, .event { width: 80%; }
+.infobox { margin: 20px 10%; }
+.event { margin: 10px 10%; }
 
-.empty {
-    font-size: 35px;
-}
+.empty { font-size: 35px; }
+
 
 table.event {
     border-collapse: separate;
@@ -43,9 +41,7 @@ td.event_name {
     border-right: 1px solid gray !important;
 }
 
-td.event_info {
-    width: 37%;
-}
+td.event_info { width: 37%; }
 
 button[type=submit] {
     font-size: 17px;
