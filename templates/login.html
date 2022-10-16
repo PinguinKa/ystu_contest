@@ -7,8 +7,8 @@
 
 {% block content %}
     <form action='/login' method='post'>
+        <div class="error notification">{{error}}</div>
         <div class="login-form">
-            <div class="error notification">{{error}}</div>
             <label for="login">Логин</label>
             <input type="text" id="login" name="login" placeholder="1v4n" required />
             <label for="password">Пароль</label>

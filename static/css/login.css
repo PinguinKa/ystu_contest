@@ -31,7 +31,6 @@ input:not(:placeholder-shown) {
 
 button[type=submit] {
     font-size: 17px;
-    margin-bottom: 12px;
     padding: 3px;
     border: 3px solid grey;
 }
@@ -47,6 +46,7 @@ button[type=submit]:hover {
 }
 
 .login-form {
+    padding: 12px 6px;
     margin: auto;
     width: 255px;
     display: flex;
@@ -58,6 +58,5 @@ button[type=submit]:hover {
 }
 
 .error {
-    margin-bottom: 12px;
     color: red;
 }

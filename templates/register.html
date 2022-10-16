@@ -7,8 +7,8 @@
 
 {% block content %}
     <form action='/register' method='post'>
+        <div class="error notification">{{message}}</div>
         <div class="login-form">
-            <div class="error notification">{{message}}</div>
             <label for="last_name">Фамилия</label>
             <input type="text" id="last_name" name="last_name" placeholder="Иванов">
             <label for="first_name">Имя</label>
