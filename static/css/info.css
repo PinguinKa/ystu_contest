@@ -21,7 +21,7 @@ table.event td {
 }
 
 td.event_date {
-    width: 20%;
+    width: 18%;
     font-size: 25px;
     word-wrap: unset;
 }
@@ -39,7 +39,7 @@ td.event_name {
 }
 
 td.event_info {
-    width: 35%;
+    width: 37%;
 }
 
 button[type=submit] {
