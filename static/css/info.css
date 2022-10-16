@@ -41,3 +41,15 @@ td.event_name {
 td.event_info {
     width: 35%;
 }
+
+button[type=submit] {
+    font-size: 17px;
+    margin-bottom: 12px;
+    padding: 3px;
+    border: 3px solid grey;
+}
+
+button[type=submit]:hover {
+    border-image-slice: 1;
+    border-image-source: linear-gradient(135deg, var(--ystu-blue), var(--ystu-orange));
+}
