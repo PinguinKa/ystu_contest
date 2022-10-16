@@ -8,7 +8,7 @@
 {% block content %}
     <form action='/register' method='post'>
         <div class="login-form">
-            <div class="error">{{message}}</div>
+            <div class="error notification">{{message}}</div>
             <label for="last_name">Фамилия</label>
             <input type="text" id="last_name" name="last_name" placeholder="Иванов">
             <label for="first_name">Имя</label>
@@ -25,5 +25,6 @@
             <input type="password" id="password_check" name="password_check" placeholder="Qw3R7y">
             <button type="submit">Зарегистрироваться</button>
         </div>
+        <div class="notification">Есть аккаунт? <a href="../login/">Войти</a></div>
     </form>
 {% endblock %}

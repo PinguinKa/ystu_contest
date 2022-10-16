@@ -53,6 +53,10 @@ button[type=submit]:hover {
     flex-direction: column;
 }
 
+.notification {
+    text-align: center;
+}
+
 .error {
     margin-bottom: 12px;
     color: red;
