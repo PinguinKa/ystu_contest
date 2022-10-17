@@ -1,0 +1,24 @@
+html, body { height: 100%; }
+
+body {
+    background-image: url("../images/library.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.content { padding: 0; }
+
+.caption {
+    text-align: center;
+    text-decoration: underline;
+    color: white;
+    font-size: 125px;
+    background-color: rgba(0, 0, 0, .75);
+    padding: 0 30px 24px;
+}

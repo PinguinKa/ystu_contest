@@ -1,15 +1,58 @@
-.login-form {
-    width: 30%; /* Ширина форма */
-    margin: auto; /* Размещаем весь элемент по центру */
-    display: flex;  /* Создаем flex контейнер */
-    align-items: center; /* Все элементы будут по центру */
-    flex-direction: column; /* Все элементы будут размещены вертикально */
+html, body { height: 100%; }
+
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+label {
+    font-size: 15px;
+    font-weight: bold;
 }
 
 input {
-    margin-top: 20px; /* Добавляем немного расстояния между input */
+    font-size: 15px;
+    padding: 0 1px;
+    margin-bottom: 12px;
+    height: 24px;
+    border: none;
+    border-bottom: 3px solid grey;
 }
 
-button {
-    margin-top: 20px; /* Добавляем немного расстояния между input и кнопкой */
+input:hover { border-color: var(--ystu-blue); }
+
+input:focus-visible,
+input:not(:placeholder-shown) {
+    outline: none;
+    border-image-slice: 1;
+    border-image-source: linear-gradient(to right, var(--ystu-blue), var(--ystu-orange));
+}
+
+button[type=submit] {
+    font-size: 17px;
+    padding: 2px 0 0;
+    border: 3px solid grey;
+}
+
+button[type=submit]:hover {
+    border-image-slice: 1;
+    border-image-source: linear-gradient(135deg, var(--ystu-blue), var(--ystu-orange));
+}
+
+
+.login-form {
+    padding: 12px 6px;
+    margin: auto;
+    width: 255px;
+    display: flex;
+    flex-direction: column;
+}
+
+.notification {
+    text-align: center;
+}
+
+.error {
+    color: red;
 }
