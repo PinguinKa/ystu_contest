@@ -1,6 +1,6 @@
 import re
 import bcrypt
-from kodland_db import db
+from ystu_db import db
 from random import randint
 from datetime import datetime, timedelta
 from flask import Flask, render_template, request, url_for, redirect, jsonify
@@ -8,7 +8,6 @@ from flask_login import LoginManager, UserMixin, login_user, login_required, log
 
 
 def hashed_password(plain_text_password):
-    # Мы добавляем "соль" к нашему пароль, чтобы сделать его декодирование невозможным
     return bcrypt.hashpw(plain_text_password.encode('utf-8'), bcrypt.gensalt())
 
 
@@ -21,7 +20,7 @@ app = Flask(__name__)
 all_orders = []
 
 app.config.update(
-    SECRET_KEY='WOW SUCH SECRET'
+    SECRET_KEY='YSTU_CONTEST_SECRET_KEY'
 )
 
 login_manager = LoginManager()
@@ -51,7 +50,7 @@ def register():
             return render_template('register.html', message='Такой пользователь уже существует!')
 
         if request.form['password'] != request.form['password_check']:
-            return render_template('register.html', message='Пороли не совпадают')
+            return render_template('register.html', message='Пароли не совпадают')
         data = dict(request.form)
         data.pop('password_check')
         db.users.put(data=data)
@@ -60,12 +59,10 @@ def register():
 
 
 @app.route('/')
-@login_required
 def index():
     return render_template('index.html')
 
 
-# main.py
 @app.route('/products/', methods=['GET', 'POST'])
 def products():
     if request.method == 'POST':
@@ -178,7 +175,6 @@ def order_list():
     return render_template('order_list.html')
 
 
-# main.py
 @app.route('/login/', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
