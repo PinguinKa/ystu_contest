@@ -24,14 +24,12 @@
             {% endif %}
          -->
             {% if check_login == 1 %}
-                <a href="/edit/" class="right" title="Аккаунт">
-                    <img src="/static/images/user_icon.svg" width="27" alt="user_icon">
-                </a>
+            <a href="/edit/" class="right" title="Аккаунт">
             {% else %}
-                <a href="/login/" class="right" title="Аккаунт">
-                    <img src="/static/images/user_icon.svg" width="27" alt="user_icon">
-                </a>
+            <a href="/login/" class="right" title="Аккаунт">
             {% endif %}
+                <img src="/static/images/user_icon.svg" width="27" alt="user_icon">
+            </a>
         </div>
         <div class="content">
         {% block content %}
