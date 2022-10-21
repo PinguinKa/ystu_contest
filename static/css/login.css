@@ -41,7 +41,8 @@ button[type=submit]:hover {
 }
 
 
-.login-form, .logout-form {
+.login-form,
+.logout-form {
     padding: 12px 6px;
     margin: auto;
     width: 255px;
