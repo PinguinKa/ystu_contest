@@ -9,19 +9,26 @@
     <form action='/edit' method='post'>
         <div class="error notification">{{message}}</div>
         <div class="login-form">
-            <label for="last_name">Фамилия</label>
-            <input type="text" id="last_name" name="last_name" value={{ data['last_name'] }}>
-            <label for="first_name">Имя</label>
-            <input type="text" id="first_name" name="first_name" value={{ data['first_name'] }}>
-            <label for="middle_name">Отчество</label>
-            <input type="text" id="middle_name" name="middle_name" value={{ data['middle_name'] }}>
-            <label for="university">ВУЗ</label>
-            <input type="text" id="university" name="university" value={{ data['university'] }}>
-            <label for="login">E-Mail</label>
-            <input type="text" id="login" name="login" value={{ data['login'] }}>
-            <label for="password">Пароль</label>
-            <input type="password" id="password" name="password" value={{ data['password'] }}>
-            <button type="submit">Сохранить изменения</button>
+            {% if admin == False %}
+                <label for="last_name">Фамилия</label>
+                <input type="text" id="last_name" name="last_name" value={{ data['last_name'] }}>
+                <label for="first_name">Имя</label>
+                <input type="text" id="first_name" name="first_name" value={{ data['first_name'] }}>
+                <label for="middle_name">Отчество</label>
+                <input type="text" id="middle_name" name="middle_name" value={{ data['middle_name'] }}>
+                <label for="university">ВУЗ</label>
+                <input type="text" id="university" name="university" value={{ data['university'] }}>
+                <label for="login">E-Mail</label>
+                <input type="text" id="login" name="login" value={{ data['login'] }}>
+                <label for="password">Пароль</label>
+                <input type="password" id="password" name="password" value={{ data['password'] }}>
+                <button type="submit">Сохранить изменения</button>
+            {% else %}
+                <label for="login">E-Mail</label>
+                <input type="text" id="login" name="login" value={{ data['login'] }}>
+                <label for="password">Пароль</label>
+                <input type="password" id="password" name="password" value={{ data['password'] }}>
+            {% endif %}
         </div>
     </form>
 

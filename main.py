@@ -38,36 +38,38 @@ def load_user(login):
 
 check_login = 0
 def check_if_admin():
+    global check_login
     if 'login' in session:
         if session['login'] == 'admin':
+            check_login = 1
             return True
 
 
 @app.route('/')
 def index():
     if check_if_admin():
-        return render_template('index.html', admin=1)
+        return render_template('index.html', check_login=check_login, admin=1)
     return render_template('index.html', check_login=check_login)
 
 
 @app.route('/info/')
 def info():
     if check_if_admin():
-        return render_template('info.html', admin=1)
+        return render_template('info.html', check_login=check_login, admin=1)
     return render_template('info.html', check_login=check_login)
 
 
 @app.route('/events/')
 def events():
     if check_if_admin():
-        return render_template('events.html', admin=1)
+        return render_template('events.html', check_login=check_login, admin=1)
     return render_template('events.html', check_login=check_login)
 
 
 @app.route('/review/')
 def review():
     if check_if_admin():
-        return render_template('review.html', admin=1)
+        return render_template('review.html', check_login=check_login, admin=1)
     return redirect(url_for('index'))
 
 
@@ -77,7 +79,7 @@ def participants():
         data = db.users.get_all()
         data.pop(0)
         print(db.users.get('id', len(data)).id)
-        return render_template('participants.html', admin=1, data=data)
+        return render_template('participants.html', check_login=check_login, admin=1, data=data)
     return redirect(url_for('index'))
 
 
@@ -135,32 +137,37 @@ def edit():
     data = db.users.get('login', session['login'])
 
     if request.method == 'POST':
-        for key in request.form:
-            if request.form[key] == '':
-                return render_template('edit.html', message='Все поля должны быть заполнены!', data=data, check_login=check_login)
+        if not check_if_admin():
+            for key in request.form:
+                if request.form[key] == '':
+                    return render_template('edit.html', message='Все поля должны быть заполнены!', data=data, check_login=check_login)
 
-        row = db.users.get('login', request.form['login'])
-        if row:
-            if request.form['login'] != session['login']:
-                return render_template('edit.html', message='Такой пользователь уже зарегистрирован!', data=data, check_login=check_login)
+            row = db.users.get('login', request.form['login'])
+            if row:
+                if request.form['login'] != session['login']:
+                    return render_template('edit.html', message='Такой пользователь уже зарегистрирован!', data=data, check_login=check_login)
 
-        if not re.match('(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)', request.form['login']):
-            return render_template('edit.html', message='Неправильный формат почты', data=data, check_login=check_login)
+            if not re.match('(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)', request.form['login']):
+                return render_template('edit.html', message='Неправильный формат почты', data=data, check_login=check_login)
 
-        db.users.update('login', session['login'], 'last_name', request.form['last_name'])
-        db.users.update('login', session['login'], 'first_name', request.form['first_name'])
-        db.users.update('login', session['login'], 'middle_name', request.form['middle_name'])
-        db.users.update('login', session['login'], 'university', request.form['university'])
-        db.users.update('login', session['login'], 'password', request.form['password'])
-        db.users.update('login', session['login'], 'login', request.form['login'])
-        session['login'] = request.form['login']
-        data = db.users.get('login', session['login'])
+            db.users.update('login', session['login'], 'last_name', request.form['last_name'])
+            db.users.update('login', session['login'], 'first_name', request.form['first_name'])
+            db.users.update('login', session['login'], 'middle_name', request.form['middle_name'])
+            db.users.update('login', session['login'], 'university', request.form['university'])
+            db.users.update('login', session['login'], 'password', request.form['password'])
+            db.users.update('login', session['login'], 'login', request.form['login'])
+            session['login'] = request.form['login']
+            data = db.users.get('login', session['login'])
 
-        send_email(request.form['login'], request.form['password'])
-        return render_template('edit.html', message='Ваши изменения сохранены!', data=data, check_login=check_login)
+            send_email(request.form['login'], request.form['password'])
+            return render_template('edit.html', message='Ваши изменения сохранены!', data=data, check_login=check_login)
 
+        else:
+            return render_template('edit.html', data=data, check_login=check_login, admin=1)
+
+    if check_if_admin():
+        return render_template('edit.html', data=data, check_login=check_login, admin=1)
     return render_template('edit.html', data=data, check_login=check_login)
-
 
 @app.route("/logout/")
 @login_required
