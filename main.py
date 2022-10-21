@@ -4,8 +4,8 @@ from ystu_db import db
 from random import randint
 from datetime import datetime, timedelta
 from send_email import send_email
-from flask import Flask, render_template, request, url_for, redirect, jsonify
-from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user
+from flask import Flask, render_template, request, url_for, redirect, jsonify, session
+from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 
 
 
@@ -40,6 +40,18 @@ def load_user(login):
     return User(login)
 
 
+def check_if_admin():
+    if 'login' in session:
+        if session['login'] == 'admin':
+            return True
+
+@app.route('/')
+def index():
+    if check_if_admin():
+        return render_template('index.html', admin=1)
+    return render_template('index.html')
+
+
 @app.route('/register/', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
@@ -67,65 +79,18 @@ def register():
     return render_template('register.html')
 
 
-@app.route('/')
-def index():
-    return render_template('index.html')
-
-
-@app.route('/info/')
-def info():
-    return render_template('info.html')
-
-
-@app.route('/events/')
-def events():
-    return render_template('events.html')
-
-
-
-
-
-
-
-
-@app.route('/contacts/')
-@login_required
-def contacts():
-    return render_template('contacts.html')
-
-
-@app.route('/about/')
-@login_required
-def about():
-    return render_template('about.html')
-
-
-
-
-
-
-@app.route('/api/orders/')
-def api_orders():
-    return jsonify(all_orders)
-
-
-@app.route('/order_list/')
-@login_required
-def order_list():
-    return render_template('order_list.html')
-
-
-# main.py
 @app.route('/login/', methods=['GET', 'POST'])
 def login():
+    print(session)
     if request.method == 'POST':
         row = db.users.get('login', request.form['login'])
         if not row:
             return render_template('login.html', error='Неправильный логин или пароль')
 
         if request.form['password'] == row.password:
-            user = User(login)  # Создаем пользователя
-            login_user(user)  # Логинем пользователя
+            user = User(login)
+            login_user(user)
+            session['login'] = request.form['login']
             return redirect(url_for('index'))
         else:
             return render_template('login.html', error='Неправильный логин или пароль')
@@ -136,7 +101,37 @@ def login():
 @login_required
 def logout():
     logout_user()
+    session.pop('login', None)
     return 'Пока'
+
+
+@app.route('/review/')
+def review():
+    if check_if_admin():
+        return render_template('review.html', admin=1)
+    return redirect(url_for('index'))
+
+
+
+
+
+
+
+@app.route('/info/')
+def info():
+    if check_if_admin():
+        return render_template('info.html', admin=1)
+    return render_template('info.html')
+
+
+@app.route('/events/')
+def events():
+    if check_if_admin():
+        return render_template('events.html', admin=1)
+    return render_template('events.html')
+
+
+
 
 
 

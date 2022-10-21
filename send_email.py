@@ -26,5 +26,3 @@ def send_email(recipient, user_password):
     server.sendmail(sender, recipient, msg.as_string())
 
     return "The message was sent successfully!"
-
-print(send_email('k.melnikova@kodland.team', '123456789'))

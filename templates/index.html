@@ -19,6 +19,10 @@
          --><a href="/info/">Информация</a><!--
          --><a href="/events/">Мероприятия</a>
 
+            {% if admin == 1 %}
+            <a href="/review/">Проверка</a>
+            {% endif %}
+
             <a href="/login/" class="right" title="Аккаунт">
                 <img src="/static/images/user_icon.svg" width="27" alt="user_icon">
             </a>
