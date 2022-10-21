@@ -48,9 +48,9 @@ class TableWrapper:
         sess.query(self.table).filter(getattr(self.table, key) == val).delete()
         sess.commit()
 
-    def update(self, key, old_val, new_val):
+    def update(self, key, old_val, new_key, new_val):
         sess.query(self.table).filter(getattr(self.table, key) == old_val).\
-            update({key: new_val})
+            update({new_key: new_val})
         sess.commit()
 
     def get(self, key, val):

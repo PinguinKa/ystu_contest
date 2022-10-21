@@ -10,17 +10,13 @@ from flask_login import LoginManager, UserMixin, login_user, login_required, log
 
 
 def hashed_password(plain_text_password):
-    # Мы добавляем "соль" к нашему пароль, чтобы сделать его декодирование невозможным
     return bcrypt.hashpw(plain_text_password.encode('utf-8'), bcrypt.gensalt())
-
 
 def check_password(plain_text_password, hashed_password):
     return bcrypt.checkpw(plain_text_password.encode('utf-8'), hashed_password)
 
 
 app = Flask(__name__)
-
-
 app.config.update(
     SECRET_KEY='WOW SUCH SECRET'
 )
@@ -161,7 +157,7 @@ def edit():
         session['login'] = request.form['login']
 
         send_email(request.form['login'], request.form['password'])
-        return render_template('edit.html', message='Регистрация прошла успешно', data=data, check_login=check_login)
+        return render_template('edit.html', message='Ваши изменения сохранены!', data=data, check_login=check_login)
 
     return render_template('edit.html', data=data, check_login=check_login)
 
