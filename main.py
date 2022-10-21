@@ -45,6 +45,7 @@ def check_if_admin():
         if session['login'] == 'admin':
             return True
 
+
 @app.route('/')
 def index():
     if check_if_admin():
@@ -52,11 +53,41 @@ def index():
     return render_template('index.html')
 
 
+@app.route('/info/')
+def info():
+    if check_if_admin():
+        return render_template('info.html', admin=1)
+    return render_template('info.html')
+
+
+@app.route('/events/')
+def events():
+    if check_if_admin():
+        return render_template('events.html', admin=1)
+    return render_template('events.html')
+
+
+@app.route('/review/')
+def review():
+    if check_if_admin():
+        return render_template('review.html', admin=1)
+    return redirect(url_for('index'))
+
+
+@app.route('/participants/')
+def participants():
+    if check_if_admin():
+        data = db.users.get_all()
+        data.pop(0)
+        print(db.users.get('id', len(data)).id)
+        return render_template('participants.html', admin=1, data=data)
+    return redirect(url_for('index'))
+
+
 @app.route('/register/', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
         for key in request.form:
-            print(key)
             if request.form[key] == '':
                 return render_template('register.html', message='Все поля должны быть заполнены!')
 
@@ -72,6 +103,7 @@ def register():
             return render_template('register.html', message='Неправильный формат почты')
 
         data = dict(request.form)
+        data['id'] = len(db.users.get_all())
         data.pop('password_check')
         db.users.put(data=data)
         send_email(request.form['login'], request.form['password'])
@@ -81,7 +113,6 @@ def register():
 
 @app.route('/login/', methods=['GET', 'POST'])
 def login():
-    print(session)
     if request.method == 'POST':
         row = db.users.get('login', request.form['login'])
         if not row:
@@ -105,11 +136,6 @@ def logout():
     return 'Пока'
 
 
-@app.route('/review/')
-def review():
-    if check_if_admin():
-        return render_template('review.html', admin=1)
-    return redirect(url_for('index'))
 
 
 
@@ -117,18 +143,8 @@ def review():
 
 
 
-@app.route('/info/')
-def info():
-    if check_if_admin():
-        return render_template('info.html', admin=1)
-    return render_template('info.html')
 
 
-@app.route('/events/')
-def events():
-    if check_if_admin():
-        return render_template('events.html', admin=1)
-    return render_template('events.html')
 
 
 
