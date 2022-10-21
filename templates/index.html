@@ -23,14 +23,20 @@
              --><a href="/participants/">Участники</a><!--
             {% endif %}
          -->
-            <a href="/login/" class="right" title="Аккаунт">
-                <img src="/static/images/user_icon.svg" width="27" alt="user_icon">
-            </a>
+            {% if check_login == 1 %}
+                <a href="/edit/" class="right" title="Аккаунт">
+                    <img src="/static/images/user_icon.svg" width="27" alt="user_icon">
+                </a>
+            {% else %}
+                <a href="/login/" class="right" title="Аккаунт">
+                    <img src="/static/images/user_icon.svg" width="27" alt="user_icon">
+                </a>
+            {% endif %}
         </div>
         <div class="content">
         {% block content %}
             <div class="caption">Конкурсный портал ЯГТУ</div>
-        {% endblock %}  w
+        {% endblock %}
         </div>
     </body>
 </html>

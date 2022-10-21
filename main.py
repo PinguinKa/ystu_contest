@@ -1,4 +1,5 @@
 import re
+import os
 import bcrypt
 from ystu_db import db
 from random import randint
@@ -6,7 +7,6 @@ from datetime import datetime, timedelta
 from send_email import send_email
 from flask import Flask, render_template, request, url_for, redirect, jsonify, session
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
-
 
 
 def hashed_password(plain_text_password):
@@ -40,6 +40,7 @@ def load_user(login):
     return User(login)
 
 
+check_login = 0
 def check_if_admin():
     if 'login' in session:
         if session['login'] == 'admin':
@@ -50,21 +51,21 @@ def check_if_admin():
 def index():
     if check_if_admin():
         return render_template('index.html', admin=1)
-    return render_template('index.html')
+    return render_template('index.html', check_login=check_login)
 
 
 @app.route('/info/')
 def info():
     if check_if_admin():
         return render_template('info.html', admin=1)
-    return render_template('info.html')
+    return render_template('info.html', check_login=check_login)
 
 
 @app.route('/events/')
 def events():
     if check_if_admin():
         return render_template('events.html', admin=1)
-    return render_template('events.html')
+    return render_template('events.html', check_login=check_login)
 
 
 @app.route('/review/')
@@ -86,33 +87,36 @@ def participants():
 
 @app.route('/register/', methods=['GET', 'POST'])
 def register():
-    if request.method == 'POST':
-        for key in request.form:
-            if request.form[key] == '':
-                return render_template('register.html', message='Все поля должны быть заполнены!')
+    if check_login == 0:
+        if request.method == 'POST':
+            for key in request.form:
+                if request.form[key] == '':
+                    return render_template('register.html', message='Все поля должны быть заполнены!')
 
 
-        row = db.users.get('login', request.form['login'])
-        if row:
-            return render_template('register.html', message='Такой пользователь уже существует!')
+            row = db.users.get('login', request.form['login'])
+            if row:
+                return render_template('register.html', message='Такой пользователь уже существует!')
 
-        if request.form['password'] != request.form['password_check']:
-            return render_template('register.html', message='Пароли не совпадают')
+            if request.form['password'] != request.form['password_check']:
+                return render_template('register.html', message='Пароли не совпадают')
 
-        if not re.match('(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)', request.form['login']):
-            return render_template('register.html', message='Неправильный формат почты')
+            if not re.match('(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)', request.form['login']):
+                return render_template('register.html', message='Неправильный формат почты')
 
-        data = dict(request.form)
-        data['id'] = len(db.users.get_all())
-        data.pop('password_check')
-        db.users.put(data=data)
-        send_email(request.form['login'], request.form['password'])
-        return render_template('register.html', message='Регистрация прошла успешно')
-    return render_template('register.html')
+            data = dict(request.form)
+            data['id'] = len(db.users.get_all())
+            data.pop('password_check')
+            db.users.put(data=data)
+            send_email(request.form['login'], request.form['password'])
+            return render_template('register.html', message='Регистрация прошла успешно')
 
+        return render_template('register.html')
+    return redirect(url_for('edit'))
 
 @app.route('/login/', methods=['GET', 'POST'])
 def login():
+    global check_login
     if request.method == 'POST':
         row = db.users.get('login', request.form['login'])
         if not row:
@@ -121,6 +125,8 @@ def login():
         if request.form['password'] == row.password:
             user = User(login)
             login_user(user)
+            check_login = 1
+            session.modified = True
             session['login'] = request.form['login']
             return redirect(url_for('index'))
         else:
@@ -128,12 +134,21 @@ def login():
     return render_template('login.html')
 
 
+@app.route('/edit/', methods=['GET', 'POST'])
+def edit():
+    global check_login
+    data = db.users.get('login', session['login'])
+    return render_template('edit.html', data=data, check_login=check_login)
+
+
 @app.route("/logout/")
 @login_required
 def logout():
+    global check_login
+    check_login = 0
     logout_user()
     session.pop('login', None)
-    return 'Пока'
+    return redirect(url_for('index'))
 
 
 
