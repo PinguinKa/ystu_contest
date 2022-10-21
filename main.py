@@ -147,7 +147,6 @@ def edit():
         if not re.match('(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)', request.form['login']):
             return render_template('edit.html', message='Неправильный формат почты', data=data, check_login=check_login)
 
-        print(session['login'])
         db.users.update('login', session['login'], 'last_name', request.form['last_name'])
         db.users.update('login', session['login'], 'first_name', request.form['first_name'])
         db.users.update('login', session['login'], 'middle_name', request.form['middle_name'])
