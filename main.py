@@ -154,6 +154,7 @@ def edit():
         db.users.update('login', session['login'], 'password', request.form['password'])
         db.users.update('login', session['login'], 'login', request.form['login'])
         session['login'] = request.form['login']
+        data = db.users.get('login', session['login'])
 
         send_email(request.form['login'], request.form['password'])
         return render_template('edit.html', message='Ваши изменения сохранены!', data=data, check_login=check_login)
