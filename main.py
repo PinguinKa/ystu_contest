@@ -136,8 +136,33 @@ def login():
 
 @app.route('/edit/', methods=['GET', 'POST'])
 def edit():
-    global check_login
     data = db.users.get('login', session['login'])
+
+    if request.method == 'POST':
+        for key in request.form:
+            if request.form[key] == '':
+                return render_template('edit.html', message='Все поля должны быть заполнены!', data=data, check_login=check_login)
+
+        row = db.users.get('login', request.form['login'])
+        if row:
+            if request.form['login'] != session['login']:
+                return render_template('edit.html', message='Такой пользователь уже зарегистрирован!', data=data, check_login=check_login)
+
+        if not re.match('(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)', request.form['login']):
+            return render_template('edit.html', message='Неправильный формат почты', data=data, check_login=check_login)
+
+        print(session['login'])
+        db.users.update('login', session['login'], 'last_name', request.form['last_name'])
+        db.users.update('login', session['login'], 'first_name', request.form['first_name'])
+        db.users.update('login', session['login'], 'middle_name', request.form['middle_name'])
+        db.users.update('login', session['login'], 'university', request.form['university'])
+        db.users.update('login', session['login'], 'password', request.form['password'])
+        db.users.update('login', session['login'], 'login', request.form['login'])
+        session['login'] = request.form['login']
+
+        send_email(request.form['login'], request.form['password'])
+        return render_template('edit.html', message='Регистрация прошла успешно', data=data, check_login=check_login)
+
     return render_template('edit.html', data=data, check_login=check_login)
 
 
@@ -148,7 +173,7 @@ def logout():
     check_login = 0
     logout_user()
     session.pop('login', None)
-    return redirect(url_for('index'))
+    return redirect(url_for('login'))
 
 
 
