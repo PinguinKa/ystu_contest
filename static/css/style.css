@@ -36,7 +36,7 @@ a { color: var(--ystu-blue); }
 }
 
 .topnav a {
-    padding: 10px 13px;
+    padding: 12px 13px;
     border: none;
     display: inline-block;
     vertical-align: middle;
@@ -45,17 +45,17 @@ a { color: var(--ystu-blue); }
     text-align: center;
     cursor: pointer;
     white-space: nowrap;
-    height: 27px;
+    height: 23px;
 
     color: black;
-    font-size: 1vmax;
+    font-size: 23px;
+    line-height: 23px;
     font-weight: normal;
     text-decoration: none;
 }
 
 .topnav a.left, .topnav a.right { padding: 10px; }
-.topnav a:not(.left):not(.right) { padding: 12px 13px 8px; }
-.topnav a:hover:not(.left):not(.right) { padding: 12px 13px 3px; }
+.topnav a:hover:not(.left):not(.right) { padding: 12px 13px 7px; }
 .topnav a:hover:not(.left):not(.right):nth-of-type(odd) { border-bottom: 5px solid var(--ystu-orange); }
 .topnav a:hover:not(.left):not(.right):nth-of-type(even) { border-bottom: 5px solid var(--ystu-blue); }
 
