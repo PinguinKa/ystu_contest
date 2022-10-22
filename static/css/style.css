@@ -54,13 +54,17 @@ a { color: var(--ystu-blue); }
     text-decoration: none;
 }
 
-.topnav a.left, .topnav a.right { padding: 10px; }
+.topnav a.left, .topnav a.right {
+    padding: 10px;
+    height: 27px;
+}
+
 .topnav a:hover:not(.left):not(.right),
-.topnav a:not(.left):not(.right).current { padding: 12px 13px 7px; }
+.topnav a.current { padding: 12px 13px 7px; }
 .topnav a:hover:not(.left):not(.right):nth-of-type(odd),
-.topnav a:not(.left):not(.right):nth-of-type(odd).current { border-bottom: 5px solid var(--ystu-orange); }
+.topnav a:nth-of-type(odd).current { border-bottom: 5px solid var(--ystu-orange); }
 .topnav a:hover:not(.left):not(.right):nth-of-type(even),
-.topnav a:not(.left):not(.right):nth-of-type(even).current { border-bottom: 5px solid var(--ystu-blue); }
+.topnav a:nth-of-type(even).current { border-bottom: 5px solid var(--ystu-blue); }
 
 
 .content { padding-top: 50px; }
