@@ -18,7 +18,7 @@ table.event {
 
 table.event td {
     border: none;
-    padding: 0 5px;
+    padding: 10px 5px;
 }
 
 td.event_date {
@@ -45,7 +45,7 @@ button[type=submit] {
     border: 3px solid grey;
 }
 .participation-error { font-weight: bold; }
-button[type=submit], .participation-error { margin: 24px 0 12px; }
+button[type=submit], .participation-error { margin: 20px 0 0; }
 
 button[type=submit]:hover {
     border-image-slice: 1;
