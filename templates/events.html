@@ -18,8 +18,9 @@
                 tempor venenatis id risus. Morbi pulvinar nibh nunc, a interdum urna consectetur eget.
                 Curabitur varius leo non nibh cursus, a faucibus massa iaculis. Sed non turpis sit amet
                 purus ullamcorper molestie.
-                {% if check_login %}<button type="submit">Принять участие</button>
-                {% else %}<div class="login-ntf"><a href="../login/">Войдите в аккаунт</a>, чтобы принять участие.</div>
+                {% if admin %}<div class="participation-error">Невозможно участвовать с аккаунта администратора.</div>
+                {% elif check_login %}<button type="submit">Принять участие</button>
+                {% else %}<div class="participation-error"><a href="../login/">Войдите в аккаунт</a>, чтобы принять участие.</div>
                 {% endif %}
             </td>
         </tr>
@@ -33,8 +34,9 @@
                 tempor venenatis id risus. Morbi pulvinar nibh nunc, a interdum urna consectetur eget.
                 Curabitur varius leo non nibh cursus, a faucibus massa iaculis. Sed non turpis sit amet
                 purus ullamcorper molestie.
-                {% if check_login %}<button type="submit">Принять участие</button>
-                {% else %}<div class="login-ntf"><a href="../login/">Войдите в аккаунт</a>, чтобы принять участие.</div>
+                {% if admin %}<div class="participation-error">Невозможно участвовать с аккаунта администратора.</div>
+                {% elif check_login %}<button type="submit">Принять участие</button>
+                {% else %}<div class="participation-error"><a href="../login/">Войдите в аккаунт</a>, чтобы принять участие.</div>
                 {% endif %}
             </td>
         </tr>

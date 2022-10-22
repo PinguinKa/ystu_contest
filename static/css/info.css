@@ -46,7 +46,8 @@ button[type=submit] {
     padding: 2px 4px 0;
     border: 3px solid grey;
 }
-button[type=submit], .login-ntf { margin: 24px 0 12px; }
+.participation-error { font-weight: bold; }
+button[type=submit], .participation-error { margin: 24px 0 12px; }
 
 button[type=submit]:hover {
     border-image-slice: 1;
