@@ -21,8 +21,8 @@
             {% if admin %}
              --><a href="/review/" class="{% if request.path == "/review/" %}current{% endif %}">Проверка</a><!--
              --><a href="/participants/" class="{% if request.path == "/participants/" %}current{% endif %}">Участники</a><!--
-            {% endif %}
-         -->
+            {% endif %}-->
+
             {% if check_login %}<a href="/edit/" class="right" title="Аккаунт">
             {% else %}<a href="/login/" class="right" title="Аккаунт">
             {% endif %}
