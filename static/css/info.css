@@ -43,10 +43,10 @@ td.event_info { width: 37%; }
 
 button[type=submit] {
     font-size: 17px;
-    margin-bottom: 12px;
     padding: 2px 4px 0;
     border: 3px solid grey;
 }
+button[type=submit], .login-ntf { margin: 24px 0 12px; }
 
 button[type=submit]:hover {
     border-image-slice: 1;
