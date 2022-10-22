@@ -16,10 +16,11 @@
                 классического письменного реферативного перевода научно-популярной статьи с
                 английского/немецкого языка на русский в соответствии с принятыми в научном сообществе
                 стандартами. На выбор участникам будут предложены научно-популярные статьи (не из
-                узкоспециализированных и академических источников).<br/><br/>
-                <form action="/submit" method="get">
-                    <button type="submit">Принять участие</button>
-                </form>
+                узкоспециализированных и академических источников).<br/>
+                {% if admin %}<div class="participation-error">Невозможно участвовать с аккаунта администратора.</div>
+                {% elif check_login %}<button type="submit">Принять участие</button>
+                {% else %}<div class="participation-error"><a href="../login/">Войдите в аккаунт</a>, чтобы принять участие.</div>
+                {% endif %}
             </td>
         </tr>
         <tr>
@@ -31,11 +32,7 @@
                 congue cursus. Fusce fringilla cursus ullamcorper. Nulla non dolor sed lacus accumsan
                 tempor venenatis id risus. Morbi pulvinar nibh nunc, a interdum urna consectetur eget.
                 Curabitur varius leo non nibh cursus, a faucibus massa iaculis. Sed non turpis sit amet
-                purus ullamcorper molestie.<br/><br/>
-                <form action="/submit" method="get">
-                    <button type="submit">Принять участие</button>
-                </form>
-                purus ullamcorper molestie.
+                purus ullamcorper molestie.<br/>
                 {% if admin %}<div class="participation-error">Невозможно участвовать с аккаунта администратора.</div>
                 {% elif check_login %}<button type="submit">Принять участие</button>
                 {% else %}<div class="participation-error"><a href="../login/">Войдите в аккаунт</a>, чтобы принять участие.</div>
@@ -43,6 +40,4 @@
             </td>
         </tr>
     </table>
-    <div class="header">2021 год</div>
-    <div class="event empty">Здесь пусто.</div>
 {% endblock %}
