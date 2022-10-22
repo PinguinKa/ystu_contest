@@ -18,7 +18,9 @@
                 tempor venenatis id risus. Morbi pulvinar nibh nunc, a interdum urna consectetur eget.
                 Curabitur varius leo non nibh cursus, a faucibus massa iaculis. Sed non turpis sit amet
                 purus ullamcorper molestie.<br/><br/>
-                <button type="submit">Принять участие</button>
+                {% if check_login %}<button type="submit">Принять участие</button>
+                {% else %}<a href="../login/">Войдите в аккаунт</a>, чтобы принять участие.
+                {% endif %}
             </td>
         </tr>
         <tr>
@@ -31,7 +33,9 @@
                 tempor venenatis id risus. Morbi pulvinar nibh nunc, a interdum urna consectetur eget.
                 Curabitur varius leo non nibh cursus, a faucibus massa iaculis. Sed non turpis sit amet
                 purus ullamcorper molestie.<br/><br/>
-                <button type="submit">Принять участие</button>
+                {% if check_login %}<button type="submit">Принять участие</button>
+                {% else %}<a href="../login/">Войдите в аккаунт</a>, чтобы принять участие.
+                {% endif %}
             </td>
         </tr>
     </table>
