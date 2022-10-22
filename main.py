@@ -1,13 +1,11 @@
 import re
-import os
 import bcrypt
 from ystu_db import db
-from random import randint
-from datetime import datetime, timedelta
 from send_email import send_email
-from flask import Flask, render_template, request, url_for, redirect, jsonify, session
-from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
-
+from flask import Flask, render_template, request, url_for, redirect, jsonify, session, send_file
+from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user
+from werkzeug.utils import secure_filename
+from io import BytesIO
 
 def hashed_password(plain_text_password):
     return bcrypt.hashpw(plain_text_password.encode('utf-8'), bcrypt.gensalt())
@@ -35,41 +33,53 @@ class User(UserMixin):
 def load_user(login):
     return User(login)
 
+UPLOAD_FOLDER = '/files'
+ALLOWED_EXTENSIONS = {'txt', 'pdf', 'doc', 'docx'}
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 check_login = 0
 def check_if_admin():
-    global check_login
     if 'login' in session:
         if session['login'] == 'admin':
-            check_login = 1
             return True
 
 
 @app.route('/')
 def index():
     if check_if_admin():
-        return render_template('index.html', check_login=check_login, admin=1)
+        return render_template('index.html', admin=1)
     return render_template('index.html', check_login=check_login)
 
 
 @app.route('/info/')
 def info():
     if check_if_admin():
-        return render_template('info.html', check_login=check_login, admin=1)
+        return render_template('info.html', admin=1)
     return render_template('info.html', check_login=check_login)
 
 
 @app.route('/events/')
 def events():
     if check_if_admin():
-        return render_template('events.html', check_login=check_login, admin=1)
+        return render_template('events.html', admin=1)
     return render_template('events.html', check_login=check_login)
+
+
+@app.route('/translation/')
+def translation():
+    if check_if_admin():
+        return render_template('translation.html', admin=1)
+    return render_template('translation.html', check_login=check_login)
 
 
 @app.route('/review/')
 def review():
     if check_if_admin():
-        return render_template('review.html', check_login=check_login, admin=1)
+        return render_template('review.html', admin=1)
     return redirect(url_for('index'))
 
 
@@ -79,7 +89,7 @@ def participants():
         data = db.users.get_all()
         data.pop(0)
         print(db.users.get('id', len(data)).id)
-        return render_template('participants.html', check_login=check_login, admin=1, data=data)
+        return render_template('participants.html', admin=1, data=data)
     return redirect(url_for('index'))
 
 
@@ -137,37 +147,63 @@ def edit():
     data = db.users.get('login', session['login'])
 
     if request.method == 'POST':
-        if not check_if_admin():
-            for key in request.form:
-                if request.form[key] == '':
-                    return render_template('edit.html', message='Все поля должны быть заполнены!', data=data, check_login=check_login)
 
-            row = db.users.get('login', request.form['login'])
-            if row:
-                if request.form['login'] != session['login']:
-                    return render_template('edit.html', message='Такой пользователь уже зарегистрирован!', data=data, check_login=check_login)
+        for key in request.form:
+            if request.form[key] == '':
+                return render_template('edit.html', message='Все поля должны быть заполнены!', data=data, check_login=check_login)
 
-            if not re.match('(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)', request.form['login']):
-                return render_template('edit.html', message='Неправильный формат почты', data=data, check_login=check_login)
+        row = db.users.get('login', request.form['login'])
+        if row:
+            if request.form['login'] != session['login']:
+                return render_template('edit.html', message='Такой пользователь уже зарегистрирован!', data=data, check_login=check_login)
 
-            db.users.update('login', session['login'], 'last_name', request.form['last_name'])
-            db.users.update('login', session['login'], 'first_name', request.form['first_name'])
-            db.users.update('login', session['login'], 'middle_name', request.form['middle_name'])
-            db.users.update('login', session['login'], 'university', request.form['university'])
-            db.users.update('login', session['login'], 'password', request.form['password'])
-            db.users.update('login', session['login'], 'login', request.form['login'])
-            session['login'] = request.form['login']
-            data = db.users.get('login', session['login'])
+        if not re.match('(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)', request.form['login']):
+            return render_template('edit.html', message='Неправильный формат почты', data=data, check_login=check_login)
 
-            send_email(request.form['login'], request.form['password'])
-            return render_template('edit.html', message='Ваши изменения сохранены!', data=data, check_login=check_login)
+        db.users.update('login', session['login'], 'last_name', request.form['last_name'])
+        db.users.update('login', session['login'], 'first_name', request.form['first_name'])
+        db.users.update('login', session['login'], 'middle_name', request.form['middle_name'])
+        db.users.update('login', session['login'], 'university', request.form['university'])
+        db.users.update('login', session['login'], 'password', request.form['password'])
+        db.users.update('login', session['login'], 'login', request.form['login'])
+        session['login'] = request.form['login']
+        data = db.users.get('login', session['login'])
 
-        else:
-            return render_template('edit.html', data=data, check_login=check_login, admin=1)
+        send_email(request.form['login'], request.form['password'])
+        return render_template('edit.html', message='Ваши изменения сохранены!', data=data, check_login=check_login)
 
     if check_if_admin():
         return render_template('edit.html', data=data, check_login=check_login, admin=1)
-    return render_template('edit.html', data=data, check_login=check_login)
+    else:
+        return render_template('edit.html', data=data, check_login=check_login)
+
+
+@app.route("/submit/", methods=['GET', 'POST'])
+def submit():
+    if request.method == 'POST':
+        print(request.files)
+        current_user = db.users.get('login', session['login'])
+        if 'file' not in request.files:
+            return render_template('submit.html', message='Загрузите файл!')
+
+        file = request.files['file']
+        if file.filename == '':
+            return render_template('submit.html', message='Загрузите файл!')
+
+        if file and allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            db.submit.put({'theme': 'theme', 'filename': filename, 'file': file.read()})
+            #file.save(os.path.join(app.config['UPLOAD_FOLDER']), filename)
+            return render_template('submit.html', message='Успешно загружено')
+        return render_template('submit.html', message='Неверный формат файла')
+    return render_template('submit.html')
+
+
+@app.route('/download/<upload_id>')
+def download(upload_id):
+    upload = db.submit.get('id', upload_id)
+    return send_file(BytesIO(upload.file), download_name=upload.filename, as_attachment=True)
+
 
 @app.route("/logout/")
 @login_required

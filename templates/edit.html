@@ -9,7 +9,7 @@
     <form action='/edit' method='post'>
         <div class="error notification">{{message}}</div>
         <div class="login-form">
-            {% if admin == False %}
+            {% if admin != 1 %}
                 <label for="last_name">Фамилия</label>
                 <input type="text" id="last_name" name="last_name" value={{ data['last_name'] }}>
                 <label for="first_name">Имя</label>
@@ -32,7 +32,7 @@
         </div>
     </form>
 
-    <form action="/login" method="get">
+    <form action="/logout" method="get">
         <div class="logout-form">
             <button type='submit'>Выход</button>
         </div>

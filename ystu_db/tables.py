@@ -1,4 +1,5 @@
-from sqlalchemy import Column, Integer, String
+from sqlalchemy import Column
+from sqlalchemy.types import Integer, String, LargeBinary
 from .db import Base
 
 
@@ -14,15 +15,14 @@ class Users(Base):
     password = Column(String)
 
 
-class Items(Base):
+class Submit(Base):
 
-    __tablename__ = 'items'
+    __tablename__ = 'submit'
 
     id = Column(Integer, primary_key=True, index=True,  unique=True)
-    name = Column(String)
-    description = Column(String)
-    image = Column(String)
-    price = Column(Integer)
+    theme = Column(String)
+    filename = Column(String)
+    file = Column(LargeBinary)
 
 
 

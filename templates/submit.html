@@ -1,0 +1,17 @@
+{% extends "index.html" %}
+
+{% block head %}
+    <title>Вход</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/login.css">
+{% endblock %}
+
+{% block content %}
+    <form method="post" action="/submit" enctype="multipart/form-data">
+        <div class="error notification">{{message}}</div>
+        <div class="login-form">
+            <label for="theme">Тема</label>
+            <input type="file" name="file">
+            <button type="submit">Отправить</button>
+        </div>
+    </form>
+{% endblock %}
