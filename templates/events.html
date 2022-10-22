@@ -35,6 +35,11 @@
                 <form action="/submit" method="get">
                     <button type="submit">Принять участие</button>
                 </form>
+                purus ullamcorper molestie.
+                {% if admin %}<div class="participation-error">Невозможно участвовать с аккаунта администратора.</div>
+                {% elif check_login %}<button type="submit">Принять участие</button>
+                {% else %}<div class="participation-error"><a href="../login/">Войдите в аккаунт</a>, чтобы принять участие.</div>
+                {% endif %}
             </td>
         </tr>
     </table>

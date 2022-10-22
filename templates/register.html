@@ -10,19 +10,19 @@
         <div class="error notification">{{message}}</div>
         <div class="login-form">
             <label for="last_name">Фамилия</label>
-            <input type="text" id="last_name" name="last_name" placeholder="Иванов">
+            <input type="text" id="last_name" name="last_name" placeholder="Иванов" required />
             <label for="first_name">Имя</label>
-            <input type="text" id="first_name" name="first_name" placeholder="Иван">
+            <input type="text" id="first_name" name="first_name" placeholder="Иван" required />
             <label for="middle_name">Отчество</label>
-            <input type="text" id="middle_name" name="middle_name" placeholder="Иванович">
+            <input type="text" id="middle_name" name="middle_name" placeholder="Иванович" required />
             <label for="university">ВУЗ</label>
-            <input type="text" id="university" name="university" placeholder="ЯГТУ">
+            <input type="text" id="university" name="university" placeholder="ЯГТУ" required />
             <label for="login">E-Mail</label>
-            <input type="text" id="login" name="login" placeholder="example@gmail.com">
+            <input type="text" id="login" name="login" placeholder="example@email.com" required />
             <label for="password">Пароль</label>
-            <input type="password" id="password" name="password" placeholder="Qw3R7y">
+            <input type="password" id="password" name="password" placeholder="Qw3R7y" required />
             <label for="password_check">Повторите пароль</label>
-            <input type="password" id="password_check" name="password_check" placeholder="Qw3R7y">
+            <input type="password" id="password_check" name="password_check" placeholder="Qw3R7y" required />
             <button type="submit">Зарегистрироваться</button>
         </div>
         <div class="notification">Есть аккаунт? <a href="../login/">Войти</a></div>
