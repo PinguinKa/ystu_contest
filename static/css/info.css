@@ -13,12 +13,12 @@
 
 table.event {
     border-collapse: separate;
-    border-spacing: 2px 10px;
+    border-spacing: 0 10px;
 }
 
 table.event td {
     border: none;
-    padding: 10px 5px;
+    padding: 10px 7px;
 }
 
 td.event_date {
