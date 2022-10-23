@@ -9,19 +9,20 @@ table {
     border: none;
     border-collapse: collapse;
     border-radius: var(--border-radius);
+    empty-cells: show;
 }
 
-td + td, th + th { border-left: 1px solid gray; }
+td + td { border-left: 1px solid #a4a4a4; }
 
 th {
     background: var(--ystu-blue);
     color: white;
 }
 
-th:first-of-type { border-top-left-radius: var(--border-radius) !important; }
-th:last-of-type { border-top-right-radius: var(--border-radius) !important; }
-tr:last-of-type td:first-of-type { border-bottom-left-radius: var(--border-radius) !important; }
-tr:last-of-type td:last-of-type { border-bottom-right-radius: var(--border-radius) !important; }
+tr:first-of-type th:first-of-type { border-top-left-radius: var(--border-radius) !important; }
+tr:first-of-type th:last-of-type { border-top-right-radius: var(--border-radius) !important; }
+tr:last-of-type th:first-of-type { border-bottom-left-radius: var(--border-radius) !important; }
+tr:last-of-type th:last-of-type { border-bottom-right-radius: var(--border-radius) !important; }
 
 tr>:nth-child(1) {
     text-align: right;

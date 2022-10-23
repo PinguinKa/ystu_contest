@@ -2,13 +2,10 @@
 
 {% block head %}
     <title>Список участников</title>
-    <link rel="stylesheet" href= "/static/css/info.css">
     <link rel="stylesheet" href= "/static/css/participants.css">
 {% endblock %}
 
 {% block content %}
-    <div class="header">Участники</div>
-
     <table>
     <tr>
         <th>№</th>
@@ -26,5 +23,6 @@
             <td>{{row.university}}</td>
         </tr>
     {% endfor %}
+    <tr><th></th><th></th><th></th><th></th><th></th></tr>
     </table>
 {% endblock %}
