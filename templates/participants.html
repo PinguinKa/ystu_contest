@@ -3,10 +3,18 @@
 {% block head %}
     <title>Список участников</title>
     <link rel="stylesheet" href= "/static/css/participants.css">
+    <script type="text/javascript" src="../static/js/jquery-3.6.1.min.js"></script>
+    <script type="text/javascript" src="../static/js/jquery.tablesorter.js"></script>
+    <script>
+    $(function() {
+      $("#participantsTable").tablesorter();
+    });
+    </script>
 {% endblock %}
 
 {% block content %}
-    <table>
+    <table id="participantsTable">
+    <thead>
     <tr>
         <th>№</th>
         <th>Фамилия</th>
@@ -14,6 +22,8 @@
         <th>Отчество</th>
         <th>ВУЗ</th>
     </tr>
+    </thead>
+    <tbody>
     {% for row in data %}
         <tr>
             <td>{{row.id}}</td>
@@ -23,6 +33,6 @@
             <td>{{row.university}}</td>
         </tr>
     {% endfor %}
-    <tr><th></th><th></th><th></th><th></th><th></th></tr>
+    </tbody>
     </table>
 {% endblock %}
