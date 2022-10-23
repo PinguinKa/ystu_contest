@@ -215,6 +215,11 @@ def download(upload_id):
     return send_file(BytesIO(upload.file), download_name=upload.filename, as_attachment=True)
 
 
+@app.route('/events/<event>')
+def event(event):
+    return render_template(f'events/{event}.html')
+
+
 @app.route("/logout/")
 @login_required
 def logout():
