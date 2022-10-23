@@ -33,7 +33,7 @@ th, td {
     padding: 12px 15px;
 }
 
-tr:nth-of-type(odd) {
+tr:nth-of-type(even) {
     background-color: #ddd;
 }
 
