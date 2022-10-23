@@ -1,19 +1,40 @@
-table {
-    margin: 15px auto; /* Сверху и снизу таблицы отступы 15 пикселей, auto - центрирует таблицу */
-    font-size: 16px;
-    font-family: sans-serif; /* Подключаем красивый шрифт */
-    width: 90%; /* Ширина таблицы относительно всей страницы */
-    border: double 5px #2c3e50; /* Создаем двойную границу с толщиной 5 пикселей */
+:root {
+    --border-radius: 10px;
 }
 
-table th, table td {
+
+table {
+    margin: 12px auto;
+    width: 80%;
+    border: none;
+    border-collapse: collapse;
+    border-radius: var(--border-radius);
+}
+
+td + td, th + th { border-left: 1px solid gray; }
+
+th {
+    background: var(--ystu-blue);
+    color: white;
+}
+
+th:first-of-type { border-top-left-radius: var(--border-radius) !important; }
+th:last-of-type { border-top-right-radius: var(--border-radius) !important; }
+tr:last-of-type td:first-of-type { border-bottom-left-radius: var(--border-radius) !important; }
+tr:last-of-type td:last-of-type { border-bottom-right-radius: var(--border-radius) !important; }
+
+tr>:nth-child(1) {
+    text-align: right;
+}
+
+th, td {
     padding: 12px 15px;
 }
 
-table tr:nth-of-type(even) { /* Каждый четный элемент имеет фоновый цвет #ecf0f1 */
-    background-color: #ecf0f1;
+tr:nth-of-type(odd) {
+    background-color: #ddd;
 }
-table tr:hover{ /* При наведении на строчку, меняем цвет фона и текста */
-    background-color: #95a5a6;
-    color: white;
+
+tr:hover {
+    background-color: #ccd;
 }
