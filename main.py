@@ -7,8 +7,10 @@ from flask_login import LoginManager, UserMixin, login_user, login_required, log
 from werkzeug.utils import secure_filename
 from io import BytesIO
 
-def hashed_password(plain_text_password):
+
+def hash_password(plain_text_password):
     return bcrypt.hashpw(plain_text_password.encode('utf-8'), bcrypt.gensalt())
+
 
 def check_password(plain_text_password, hashed_password):
     return bcrypt.checkpw(plain_text_password.encode('utf-8'), hashed_password)
@@ -25,23 +27,28 @@ login_manager.login_view = "login"
 
 
 class User(UserMixin):
-    def __init__(self, id):
-        self.id = id
+    def __init__(self, user_id):
+        self.id = user_id
 
 
 @login_manager.user_loader
-def load_user(login):
-    return User(login)
+def load_user(user_login):
+    return User(user_login)
+
 
 UPLOAD_FOLDER = '/files'
 ALLOWED_EXTENSIONS = {'txt', 'pdf', 'doc', 'docx'}
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
+
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
+
 check_login = 0
+
+
 def check_if_admin():
     if 'login' in session:
         if session['login'] == 'admin':
@@ -101,7 +108,6 @@ def register():
                 if request.form[key] == '':
                     return render_template('register.html', message='Все поля должны быть заполнены!')
 
-
             row = db.users.get('login', request.form['login'])
             if row:
                 return render_template('register.html', message='Такой пользователь уже существует!')
@@ -109,7 +115,7 @@ def register():
             if request.form['password'] != request.form['password_check']:
                 return render_template('register.html', message='Пароли не совпадают')
 
-            if not re.match('(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)', request.form['login']):
+            if not re.match(r'(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)', request.form['login']):
                 return render_template('register.html', message='Неправильный формат почты')
 
             data = dict(request.form)
@@ -121,6 +127,7 @@ def register():
 
         return render_template('register.html')
     return redirect(url_for('edit'))
+
 
 @app.route('/login/', methods=['GET', 'POST'])
 def login():
@@ -150,14 +157,16 @@ def edit():
 
         for key in request.form:
             if request.form[key] == '':
-                return render_template('edit.html', message='Все поля должны быть заполнены!', data=data, check_login=check_login)
+                return render_template('edit.html', message='Все поля должны быть заполнены!', data=data,
+                                       check_login=check_login)
 
         row = db.users.get('login', request.form['login'])
         if row:
             if request.form['login'] != session['login']:
-                return render_template('edit.html', message='Такой пользователь уже зарегистрирован!', data=data, check_login=check_login)
+                return render_template('edit.html', message='Такой пользователь уже зарегистрирован!', data=data,
+                                       check_login=check_login)
 
-        if not re.match('(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)', request.form['login']):
+        if not re.match(r'(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)', request.form['login']):
             return render_template('edit.html', message='Неправильный формат почты', data=data, check_login=check_login)
 
         db.users.update('login', session['login'], 'last_name', request.form['last_name'])
@@ -194,7 +203,7 @@ def submit():
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
             db.submit.put({'theme': 'theme', 'filename': filename, 'file': file.read()})
-            #file.save(os.path.join(app.config['UPLOAD_FOLDER']), filename)
+            # file.save(os.path.join(app.config['UPLOAD_FOLDER']), filename)
             return render_template('submit.html', message='Успешно загружено')
         return render_template('submit.html', message='Неверный формат файла')
     return render_template('submit.html')
