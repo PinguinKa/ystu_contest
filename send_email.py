@@ -41,4 +41,15 @@ def edit(last_name, first_name, middle_name, university, recipient, user_passwor
     server.sendmail(sender, recipient, msg.as_string())
 
 
-# msg["Subject"] = f"Вы зарегистрированы на мероприятие {0}".format(event)
+def participation(recipient, event):
+    with open("templates/emails/participation.html", encoding='utf-8') as file:
+        template = file.read()
+
+    template = template.replace('{{ login }}', recipient)
+    template = template.replace('{{ event }}', event)
+
+    msg = (MIMEText(template, "html"))
+    msg["From"] = "Конкурсный портал ЯГТУ"
+    msg["To"] = recipient
+    msg["Subject"] = f"Вы зарегистрированы на мероприятие {0}".format(event)
+    server.sendmail(sender, recipient, msg.as_string())
