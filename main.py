@@ -1,8 +1,8 @@
 import re
 import bcrypt
 from ystu_db import db
-from send_email import send_email
-from flask import Flask, render_template, request, url_for, redirect, jsonify, session, send_file
+import send_email
+from flask import Flask, render_template, request, url_for, redirect, session, send_file
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user
 from werkzeug.utils import secure_filename
 from io import BytesIO
@@ -116,7 +116,7 @@ def register():
             data['id'] = len(db.users.get_all())
             data.pop('password_check')
             db.users.put(data=data)
-            send_email(request.form['login'], request.form['password'])
+            send_email.registration(request.form['login'], request.form['password'])
             return render_template('register.html', message='Регистрация прошла успешно')
 
         return render_template('register.html')
@@ -169,7 +169,8 @@ def edit():
         session['login'] = request.form['login']
         data = db.users.get('login', session['login'])
 
-        send_email(request.form['login'], request.form['password'])
+        send_email.edit(request.form['last_name'], request.form['first_name'], request.form['middle_name'],
+                        request.form['university'], request.form['login'], request.form['password'])
         return render_template('edit.html', message='Ваши изменения сохранены!', data=data, check_login=check_login)
 
     if check_if_admin():

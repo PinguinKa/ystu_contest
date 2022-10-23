@@ -1,28 +1,44 @@
 import smtplib
-from flask import Flask, render_template
 from email.mime.text import MIMEText
-from email.message import EmailMessage
 
 
-def send_email(recipient, user_password):
-    sender = "pinguink.in.box@gmail.com"
-    password = 'ltnsekkthdwzywcc'
+sender = "pinguink.in.box@gmail.com"
+password = 'ltnsekkthdwzywcc'
+server = smtplib.SMTP("smtp.gmail.com", 587)
+server.starttls()
+server.login(sender, password)
 
-    try:
-        with open("templates/email_message.html", encoding='utf-8') as file:
-            template = file.read().replace('{{ login }}', recipient).replace('{{ password }}', user_password)
 
-    except IOError:
-        return "The template file doesn't found!"
+def registration(recipient, user_password):
+    with open("templates/emails/registration.html", encoding='utf-8') as file:
+        template = file.read()
 
-    server = smtplib.SMTP("smtp.gmail.com", 587)
-    server.starttls()
+    template = template.replace('{{ login }}', recipient)
+    template = template.replace('{{ password }}', user_password)
 
-    server.login(sender, password)
     msg = (MIMEText(template, "html"))
-    msg["From"] = sender
+    msg["From"] = "Конкурсный портал ЯГТУ"
     msg["To"] = recipient
-    msg["Subject"] = "Описание"
+    msg["Subject"] = "Регистрация на конкурсном портале ЯГТУ"
     server.sendmail(sender, recipient, msg.as_string())
 
-    return "The message was sent successfully!"
+
+def edit(last_name, first_name, middle_name, university, recipient, user_password):
+    with open("templates/emails/edit.html", encoding='utf-8') as file:
+        template = file.read()
+
+    template = template.replace('{{ last_name }}', last_name)
+    template = template.replace('{{ first_name }}', first_name)
+    template = template.replace('{{ middle_name }}', middle_name)
+    template = template.replace('{{ university }}', university)
+    template = template.replace('{{ login }}', recipient)
+    template = template.replace('{{ password }}', user_password)
+
+    msg = (MIMEText(template, "html"))
+    msg["From"] = "Конкурсный портал ЯГТУ"
+    msg["To"] = recipient
+    msg["Subject"] = "Изменение данных учётной записи"
+    server.sendmail(sender, recipient, msg.as_string())
+
+
+# msg["Subject"] = f"Вы зарегистрированы на мероприятие {0}".format(event)
