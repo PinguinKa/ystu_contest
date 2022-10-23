@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="ru">
-    <head>
+<head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href= "/static/css/style.css">
     <link rel="icon" href="/static/images/ystu_logo.svg">
@@ -8,31 +8,32 @@
         <title>Главная</title>
         <link rel="stylesheet" href= "/static/css/index.css">
     {% endblock %}
-    </head>
-    <body>
-        <div class="topnav">
-            <a href="https://www.ystu.ru" class="left" title="Сайт ЯГТУ">
-                <img src="/static/images/ystu_logo.svg" width="27" alt="ystu_logo">
-            </a>
+</head>
 
-            <a href="/" class="{% if request.path == "/" %}current{% endif %}">Главная</a><!--
-         --><a href="/info/" class="{% if request.path == "/info/" %}current{% endif %}">Информация</a><!--
-         --><a href="/events/" class="{% if request.path == "/events/" %}current{% endif %}">Мероприятия</a><!--
-            {% if admin %}
-             --><a href="/review/" class="{% if request.path == "/review/" %}current{% endif %}">Проверка</a><!--
-             --><a href="/participants/" class="{% if request.path == "/participants/" %}current{% endif %}">Участники</a><!--
-            {% endif %}-->
+<body>
+<div class="topnav">
+    <a href="https://www.ystu.ru" class="left" title="Сайт ЯГТУ">
+        <img src="/static/images/ystu_logo.svg" width="27" alt="ystu_logo">
+    </a>
 
-            {% if check_login %}<a href="/edit/" class="right" title="Аккаунт">
-            {% else %}<a href="/login/" class="right" title="Аккаунт">
-            {% endif %}
-                <img src="/static/images/user_icon.svg" width="27" alt="user_icon">
-            </a>
-        </div>
-        <div class="content">
-        {% block content %}
-            <div class="caption">Конкурсный портал ЯГТУ</div>
-        {% endblock %}
-        </div>
-    </body>
+    <a href="/" class="{% if request.path == "/" %}current{% endif %}">Главная</a><!--
+ --><a href="/info/" class="{% if request.path == "/info/" %}current{% endif %}">Информация</a><!--
+ --><a href="/events/" class="{% if request.path == "/events/" %}current{% endif %}">Мероприятия</a><!--
+    {% if admin %}
+     --><a href="/review/" class="{% if request.path == "/review/" %}current{% endif %}">Проверка</a><!--
+     --><a href="/participants/" class="{% if request.path == "/participants/" %}current{% endif %}">Участники</a><!--
+    {% endif %}-->
+
+    {% if check_login %}<a href="/edit/" class="right" title="Аккаунт">
+    {% else %}<a href="/login/" class="right" title="Аккаунт">
+    {% endif %}
+        <img src="/static/images/user_icon.svg" width="27" alt="user_icon">
+    </a>
+</div>
+<div class="content">
+{% block content %}
+    <div class="caption">Конкурсный портал ЯГТУ</div>
+{% endblock %}
+</div>
+</body>
 </html>
