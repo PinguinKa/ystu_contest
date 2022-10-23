@@ -29,6 +29,10 @@ select#theme, label[for="theme"],
     margin-bottom: 12px;
 }
 
+select:invalid { font-style: italic; }
+select > option { font-style: normal; }
+select option[value=""], select option:not([value]) { font-style: italic; }
+
 .event {
     width: 49%;
     float: left;

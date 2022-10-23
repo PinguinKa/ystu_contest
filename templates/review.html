@@ -35,8 +35,8 @@
     <form action="/select-event" method="post">
         <div class="select-form">
             <label for="jury">Член жюри</label>
-            <select id="jury" name="jury">
-                <option value="0">Выбрать...</option>
+            <select id="jury" name="jury" required>
+                <option value="">-- Нужно выбрать --</option>
                 {#{% for * in * %}#}
                 <option value="Крамная Екатерина Сергеевна">Крамная Екатерина Сергеевна</option>
                 {#{% endfor %}#}
@@ -45,8 +45,8 @@
             <div class="event-selector-container">
                 <div class="event">
                     <label for="event">Мероприятие</label>
-                    <select id="event" name="event">
-                        <option value="0">Выбрать...</option>
+                    <select id="event" name="event" required>
+                        <option value="">-- Нужно выбрать --</option>
                         {#{% for * in * %}#}
                         <option value="STC-2021">STC-2021</option>
                         {#{% endfor %}#}
@@ -55,8 +55,8 @@
 
                 <div class="theme">
                     <label for="theme">Тема</label>
-                    <select id="theme" name="theme">
-                        <option value="0">Выбрать...</option>
+                    <select id="theme" name="theme" required>
+                        <option value="">-- Нужно выбрать --</option>
                         {#{% for * in * %}#}
                         <option value="Техника">Техника</option>
                         {#{% endfor %}#}
