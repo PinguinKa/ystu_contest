@@ -82,8 +82,8 @@
             {% if row.event == event and row.theme == theme %}
                 <tr>
                     <td>{{row.id}}</td>
-                    <td><a href="{{row.id}}" target="_blank" rel="noopener noreferrer">{{row.filename}}</a></td>
-                    <td><button href="{{row.id}}" type="submit">Оценить</button></td>
+                    <td><a href="download/{{row.id}}" target="_blank" rel="noopener noreferrer">{{row.filename}}</a></td>
+                    <td><a href="{{row.id}}" target="_blank" rel="noopener noreferrer">Оценить</a></td>
                     <td>{{row.num_of_checks}}</td>
                     <td> </td>
                 </tr>
