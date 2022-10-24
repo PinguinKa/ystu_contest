@@ -1,0 +1,23 @@
+{% extends "index.html" %}
+
+{% block head %}
+    <title>Оценка работы</title>
+    <link rel="stylesheet" href= "/static/css/review_id.css">
+{% endblock %}
+
+{% block content %}
+    <div class="header">
+        <a href="{# id #}">повторно скачать работу</a>
+    </div>
+    <form action="/review" method="post">
+        <label for="criteria1">Полнота изложения реферируемого материала: </label>
+        <input type="number" id="criteria1" min="0" max="5" step="1" value="0"/><br/>
+        <label for="criteria2">Информативность и доступность изложения: </label>
+        <input type="number" id="criteria2" min="0" max="5" step="1" value="0"/><br/>
+        <label for="criteria3">Качество русского языка: </label>
+        <input type="number" id="criteria3" min="0" max="5" step="1" value="0"/><br/>
+        <label for="criteria4">Умение работать с аудиторией: </label>
+        <input type="number" id="criteria4" min="0" max="5" step="1" value="0"/><br/>
+        <button type="submit">Оценить</button>
+    </form>
+{% endblock %}

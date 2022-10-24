@@ -230,5 +230,11 @@ def logout():
     return redirect(url_for('login'))
 
 
+# TODO: Не забыть удалить!
+@app.route('/review_id/')
+def review_id():
+    return render_template('review_id.html')
+
+
 if __name__ == "__main__":
     app.run()
