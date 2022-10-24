@@ -15,14 +15,18 @@ class Users(Base):
     password = Column(String)
 
 
-class Submit(Base):
+class Submits(Base):
 
-    __tablename__ = 'submit'
+    __tablename__ = 'submits'
 
-    id = Column(Integer, primary_key=True, index=True,  unique=True)
-    theme = Column(String)
+    id = Column(Integer, index=True,  unique=True)
+    login = Column(String, primary_key=True)
     filename = Column(String)
     file = Column(LargeBinary)
+    event = Column(String)
+    theme = Column(String)
+    num_of_checks = Column(Integer)
+
 
 
 

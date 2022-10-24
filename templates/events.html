@@ -17,9 +17,13 @@
                 английского/немецкого языка на русский в соответствии с принятыми в научном сообществе
                 стандартами. На выбор участникам будут предложены научно-популярные статьи (не из
                 узкоспециализированных и академических источников).<br/>
-                {% if admin %}<div class="participation-error">Невозможно участвовать с аккаунта администратора.</div>
-                {% elif check_login %}<button type="submit" onclick="window.location.href='stc-2021'">Принять участие</button>
-                {% else %}<div class="participation-error"><a href="../login/">Войдите в аккаунт</a>, чтобы принять участие.</div>
+
+                {% if admin %}
+                    <div class="participation-error">Невозможно участвовать с аккаунта администратора.</div>
+                {% elif check_login %}
+                    <button type="submit" onclick="window.location.href='stc-2021'">Принять участие</button>
+                {% else %}
+                    <div class="participation-error"><a href="../login/">Войдите в аккаунт</a>, чтобы принять участие.</div>
                 {% endif %}
             </td>
         </tr>

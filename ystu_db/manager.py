@@ -54,7 +54,7 @@ class TableWrapper:
         sess.commit()
 
     def get(self, key, val):
-        return sess.query(self.table).filter(getattr(self.table, key) == val).first()
+        return sess.query(self.table).filter(getattr(self.table, key) == val).all()
 
     def get_all(self):
         return sess.query(self.table).all()

@@ -32,7 +32,7 @@
 {% endblock %}
 
 {% block content %}
-    <form action="/select-event" method="post">
+    <form action="/review" method="post">
         <div class="select-form">
             <label for="jury">Член жюри</label>
             <select id="jury" name="jury" required>
@@ -69,18 +69,25 @@
         </div>
     </form>
 
-    <table style="visibility: hidden{#{% if data_loaded %} visible {% else %} hidden {% endif %}#};">
+
+    <table style="visibility: {{ visibility }}{#{% if data_loaded %} visible {% else %} hidden {% endif %}#};">
         <tr>
+            <th>ID</th>
             <th>Работа</th>
+            <th>Проверка</th>
             <th>Кол-во проверок</th>
             <th>Проверившие члены жюри</th>
         </tr>
         {% for row in data %}
-            <tr>
-                <td><a href="{{row.id}}" target="_blank" rel="noopener noreferrer">Оценить</a></td>
-                <td>{{row.reviews_sum}}</td>
-                <td>{{row.reviewers}}</td>
-            </tr>
+            {% if row.event == event and row.theme == theme %}
+                <tr>
+                    <td>{{row.id}}</td>
+                    <td><a href="{{row.id}}" target="_blank" rel="noopener noreferrer">{{row.filename}}</a></td>
+                    <td><button href="{{row.id}}" type="submit">Оценить</button></td>
+                    <td>{{row.num_of_checks}}</td>
+                    <td> </td>
+                </tr>
+            {% endif %}
         {% endfor %}
     </table>
 {% endblock %}

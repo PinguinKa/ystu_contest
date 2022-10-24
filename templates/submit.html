@@ -7,11 +7,32 @@
 
 {% block content %}
     <form method="post" action="/submit" enctype="multipart/form-data">
-        <div class="error notification">{{message}}</div>
-        <div class="login-form">
-            <label for="theme">Тема</label>
+        <div class="error notification">ВНИМАНИЕ!</div>
+        <div class="error notification">На каждую номинацию в мероприятии можно отправить лишь один файл. <br> Внимательно проверяйте данные перед отправкой</div>
+        <div class="submit-form">
+
+            <div class="event">
+                <label for="event">Мероприятие</label>
+                <select id="event" name="event" required>
+                    <option value="">-- Нужно выбрать --</option>
+                    {#{% for * in * %}#}
+                    <option value="STC-2021">STC-2021</option>
+                    {#{% endfor %}#}
+                </select>
+            </div>
+
+            <div class="theme">
+                <label for="theme">Тема</label>
+                <select id="theme" name="theme" required>
+                    <option value="">-- Нужно выбрать --</option>
+                    {#{% for * in * %}#}
+                    <option value="Техника">Техника</option>
+                    {#{% endfor %}#}
+                </select>
+
             <input type="file" name="file">
             <button type="submit">Отправить</button>
+            <div class="error notification">{{message}}</div>
         </div>
     </form>
 {% endblock %}

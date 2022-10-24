@@ -1,5 +1,7 @@
+import datetime as datetime
 import re
 import bcrypt
+from datetime import datetime
 from ystu_db import db
 import send_email
 from flask import Flask, render_template, request, url_for, redirect, session, send_file
@@ -36,19 +38,13 @@ def load_user(user_login):
     return User(user_login)
 
 
-UPLOAD_FOLDER = '/files'
 ALLOWED_EXTENSIONS = {'txt', 'pdf', 'doc', 'docx'}
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-
-
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
 check_login = 0
-
-
 def check_if_admin():
     if 'login' in session:
         if session['login'] == 'admin':
@@ -83,10 +79,14 @@ def translation():
     return render_template('translation.html', check_login=check_login)
 
 
-@app.route('/review/')
+@app.route('/review/', methods=['GET', 'POST'])
 def review():
     if check_if_admin():
-        return render_template('review.html', admin=1)
+        if request.method == 'POST':
+            data = db.submits.get_all()
+            event, theme = request.form['event'], request.form['theme']
+            return render_template('review.html', admin=1, event=event, theme=theme, data=data, visibility='visible')
+        return render_template('review.html', admin=1, visibility='hidden')
     return redirect(url_for('index'))
 
 
@@ -95,7 +95,6 @@ def participants():
     if check_if_admin():
         data = db.users.get_all()
         data.pop(0)
-        print(db.users.get('id', len(data)).id)
         return render_template('participants.html', admin=1, data=data)
     return redirect(url_for('index'))
 
@@ -133,7 +132,7 @@ def register():
 def login():
     global check_login
     if request.method == 'POST':
-        row = db.users.get('login', request.form['login'])
+        row = db.users.get('login', request.form['login'])[0]
         if not row:
             return render_template('login.html', error='Неправильный логин или пароль')
 
@@ -151,7 +150,8 @@ def login():
 
 @app.route('/edit/', methods=['GET', 'POST'])
 def edit():
-    data = db.users.get('login', session['login'])
+
+    data = db.users.get('login', session['login'])[0]
 
     if request.method == 'POST':
 
@@ -189,33 +189,65 @@ def edit():
 
 
 @app.route("/submit/", methods=['GET', 'POST'])
+@login_required
 def submit():
+    if check_if_admin():
+        return redirect(url_for('index'))
+
     if request.method == 'POST':
-        print(request.files)
-        current_user = db.users.get('login', session['login'])
+        begin_date = datetime(2022, 10, 23) # будет из БД по мероприятиям
+        exp_date = datetime(2022, 11, 1) # будет из БД по мероприятиям
+        if datetime.now() < begin_date or datetime.now() > exp_date:
+            print(datetime.now() < begin_date)
+            print(datetime.now() > exp_date)
+            return render_template('submit.html', message='По этому мероприятию работы не принимаются', check_login=check_login)
+
         if 'file' not in request.files:
-            return render_template('submit.html', message='Загрузите файл!')
+            return render_template('submit.html', message='Загрузите файл!', check_login=check_login)
 
         file = request.files['file']
         if file.filename == '':
-            return render_template('submit.html', message='Загрузите файл!')
+            return render_template('submit.html', message='Загрузите файл!', check_login=check_login)
 
         if file and allowed_file(file.filename):
+            user_submits = db.submits.get('login', session['login'])
+            for user_submit in user_submits:
+                if user_submit.event == request.form['event'] and user_submit.theme == request.form['theme']:
+                    return render_template('submit.html', message='Вы уже участвовали в этой номинации', check_login=check_login)
+
             filename = secure_filename(file.filename)
-            db.submit.put({'theme': 'theme', 'filename': filename, 'file': file.read()})
-            # file.save(os.path.join(app.config['UPLOAD_FOLDER']), filename)
-            return render_template('submit.html', message='Успешно загружено')
-        return render_template('submit.html', message='Неверный формат файла')
-    return render_template('submit.html')
+            db.submits.put({'id': len(db.submits.get_all()) + 1,
+                           'login': session['login'],
+                           'filename': file.filename,
+                           'file': file.read(),
+                           'event': request.form['event'],
+                           'theme': request.form['theme'],
+                           'num_of_checks': 0
+                           })
+
+            return render_template('submit.html', message='Успешно загружено', check_login=check_login)
+
+        return render_template('submit.html', message='Неверный формат файла', check_login=check_login)
+
+    return render_template('submit.html', check_login=check_login)
 
 
-@app.route('/download/<upload_id>')
-def download(upload_id):
-    upload = db.submit.get('id', upload_id)
-    return send_file(BytesIO(upload.file), download_name=upload.filename, as_attachment=True)
+@app.route('/review/download/<id>')
+def download(id):
+    if check_if_admin():
+        upload = db.submits.get('id', id)[0]
+        return send_file(BytesIO(upload.file), download_name=upload.filename, as_attachment=True)
+        #return render_template('review_id.html', admin=1)
+    return redirect(url_for('index'))
 
+@app.route('/review/<id>')
+def review_check(id):
+    if check_if_admin():
+        return render_template('review_id.html', admin=1)
+    return redirect(url_for('index'))
 
 @app.route('/events/<event>')
+@login_required
 def event(event):
     return render_template(f'events/{event}.html')
 
