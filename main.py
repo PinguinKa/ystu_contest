@@ -64,7 +64,7 @@ def info():
         return render_template('info.html', admin=1)
     return render_template('info.html', check_login=check_login)
 
-
+# http://127.0.0.1:5000/events/stc-2021 добавить к чек листу ссылку на рекомендации
 @app.route('/events/')
 def events():
     if check_if_admin():
