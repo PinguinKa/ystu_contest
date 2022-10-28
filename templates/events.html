@@ -17,30 +17,15 @@
                 английского/немецкого языка на русский в соответствии с принятыми в научном сообществе
                 стандартами. На выбор участникам будут предложены научно-популярные статьи (не из
                 узкоспециализированных и академических источников).<br/>
+                <button type="submit" onclick="window.location.href='stc-2021'">Подробнее</button>
 
-                {% if admin %}
-                    <div class="participation-error">Невозможно участвовать с аккаунта администратора.</div>
-                {% elif check_login %}
-                    <button type="submit" onclick="window.location.href='stc-2021'">Принять участие</button>
-                {% else %}
-                    <div class="participation-error"><a href="../login/">Войдите в аккаунт</a>, чтобы принять участие.</div>
-                {% endif %}
-            </td>
-        </tr>
-        <tr>
-            <td class="event_date"><div>10 октября</div> – <div>16 октября</div></td>
-            <td class="event_name">Конкурс рисунка</td>
-            <td class="event_info">
-                <b>Международный конкурс осеннего рисунка.</b> Lorem ipsum dolor sit amet,
-                consectetur adipiscing elit. Cras sed vestibulum augue. Phasellus dapibus nibh et purus
-                congue cursus. Fusce fringilla cursus ullamcorper. Nulla non dolor sed lacus accumsan
-                tempor venenatis id risus. Morbi pulvinar nibh nunc, a interdum urna consectetur eget.
-                Curabitur varius leo non nibh cursus, a faucibus massa iaculis. Sed non turpis sit amet
-                purus ullamcorper molestie.<br/>
-                {% if admin %}<div class="participation-error">Невозможно участвовать с аккаунта администратора.</div>
-                {% elif check_login %}<button type="submit">Принять участие</button>
-                {% else %}<div class="participation-error"><a href="../login/">Войдите в аккаунт</a>, чтобы принять участие.</div>
-                {% endif %}
+{#                {% if admin %}#}
+{#                    <div class="participation-error">Невозможно участвовать с аккаунта администратора.</div>#}
+{#                {% elif check_login %}#}
+{#                    <button type="submit" onclick="window.location.href='stc-2021'">Принять участие</button>#}
+{#                {% else %}#}
+{#                    <div class="participation-error"><a href="../login/">Войдите в аккаунт</a>, чтобы принять участие.</div>#}
+{#                {% endif %}#}
             </td>
         </tr>
     </table>
