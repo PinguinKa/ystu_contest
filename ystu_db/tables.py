@@ -19,7 +19,7 @@ class Submits(Base):
 
     __tablename__ = 'submits'
 
-    id = Column(Integer, index=True,  unique=True)
+    id = Column(Integer, primary_key=True, index=True,  unique=True)
     login = Column(String, primary_key=True)
     filename = Column(String)
     file = Column(LargeBinary)
@@ -32,6 +32,7 @@ class Events(Base):
 
     __tablename__ = 'events'
 
+    id = Column(Integer, index=True,  unique=True)
     name = Column(String, unique=True, primary_key=True)
     begin_date = Column(String)
     exp_date = Column(String)
@@ -40,6 +41,7 @@ class Events(Base):
     title = Column(String)
     subtitle = Column(String)
     info = Column(String)
+    themes = Column(String)
 
 
 

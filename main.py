@@ -66,9 +66,9 @@ def info():
 # http://127.0.0.1:5000/events/stc-2021 добавить к чек листу ссылку на рекомендации
 @app.route('/events/')
 def events():
-    if check_if_admin():
-        return render_template('events.html', admin=1)
     data = db.events.get_all()
+    if check_if_admin():
+        return render_template('events.html', admin=1, data=data)
     return render_template('events.html', check_login=check_login, data=data)
 
 
@@ -81,12 +81,17 @@ def translation():
 
 @app.route('/review/', methods=['GET', 'POST'])
 def review():
+    events = db.events.get_all()
+    themes = []
+    for event in events:
+        themes.append(event.themes.split())
+
     if check_if_admin():
         if request.method == 'POST':
             data = db.submits.get_all()
             event, theme = request.form['event'], request.form['theme']
-            return render_template('review.html', admin=1, event=event, theme=theme, data=data, visibility='visible')
-        return render_template('review.html', admin=1, visibility='hidden')
+            return render_template('review.html', admin=1, events=events, event=event, themes=themes, theme=theme, data=data, visibility='visible')
+        return render_template('review.html', admin=1, events=events, themes=themes, visibility='hidden')
     return redirect(url_for('index'))
 
 
@@ -191,30 +196,35 @@ def edit():
 @app.route("/submit/", methods=['GET', 'POST'])
 @login_required
 def submit():
+    events = db.events.get_all()
+    themes = []
+    for event in events:
+        themes.append(event.themes.split())
+
     if check_if_admin():
         return redirect(url_for('index'))
 
     if request.method == 'POST':
-        #datetime.strptime("22/05/2017", "%d/%m/%Y")
-        begin_date = datetime(2022, 10, 23) # будет из БД по мероприятиям
-        exp_date = datetime(2022, 11, 1) # будет из БД по мероприятиям
+        event = db.events.get('name', request.form['event'])[0]
+        begin_date = datetime.strptime(event.begin_date, "%d.%m.%Y")
+        exp_date = datetime.strptime(event.exp_date, "%d.%m.%Y")
+
         if datetime.now() < begin_date or datetime.now() > exp_date:
-            return render_template('submit.html', message='По этому мероприятию работы не принимаются', check_login=check_login)
+            return render_template('submit.html', message='По этому мероприятию работы не принимаются', check_login=check_login, events=events, themes=themes)
 
         if 'file' not in request.files:
-            return render_template('submit.html', message='Загрузите файл!', check_login=check_login)
+            return render_template('submit.html', message='Загрузите файл!', check_login=check_login, events=events, themes=themes)
 
         file = request.files['file']
         if file.filename == '':
-            return render_template('submit.html', message='Загрузите файл!', check_login=check_login)
+            return render_template('submit.html', message='Загрузите файл!', check_login=check_login, events=events, themes=themes)
 
         if file and allowed_file(file.filename):
             user_submits = db.submits.get('login', session['login'])
             for user_submit in user_submits:
                 if user_submit.event == request.form['event'] and user_submit.theme == request.form['theme']:
-                    return render_template('submit.html', message='Вы уже участвовали в этой номинации', check_login=check_login)
+                    return render_template('submit.html', message='Вы уже участвовали в этой номинации', check_login=check_login, events=events, themes=themes)
 
-            filename = secure_filename(file.filename)
             db.submits.put({'id': len(db.submits.get_all()) + 1,
                            'login': session['login'],
                            'filename': file.filename,
@@ -224,11 +234,11 @@ def submit():
                            'num_of_checks': 0
                            })
 
-            return render_template('submit.html', message='Успешно загружено', check_login=check_login)
+            return render_template('submit.html', message='Успешно загружено', check_login=check_login, events=events, themes=themes)
 
-        return render_template('submit.html', message='Неверный формат файла', check_login=check_login)
+        return render_template('submit.html', message='Неверный формат файла', check_login=check_login, events=events, themes=themes)
 
-    return render_template('submit.html', check_login=check_login)
+    return render_template('submit.html', check_login=check_login, events=events, themes=themes)
 
 
 @app.route('/review/download/<id>')

@@ -47,9 +47,9 @@
                     <label for="event">Мероприятие</label>
                     <select id="event" name="event" required>
                         <option value="">-- Нужно выбрать --</option>
-                        {#{% for * in * %}#}
-                        <option value="STC-2021">STC-2021</option>
-                        {#{% endfor %}#}
+                        {% for event in events %}
+                            <option value="{{ event.name }}">{{ event.name }}</option>
+                        {% endfor %}
                     </select>
                 </div>
 
@@ -57,9 +57,9 @@
                     <label for="theme">Тема</label>
                     <select id="theme" name="theme" required>
                         <option value="">-- Нужно выбрать --</option>
-                        {#{% for * in * %}#}
-                        <option value="Техника">Техника</option>
-                        {#{% endfor %}#}
+                        {% for theme in themes[0]  %}
+                            <option value="{{ theme }}">{{ theme }}</option>
+                        {% endfor %}
                     </select>
                 </div>
             </div>
