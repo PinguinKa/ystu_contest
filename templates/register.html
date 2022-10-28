@@ -15,14 +15,18 @@
             <input type="text" id="first_name" name="first_name" placeholder="Иван" required />
             <label for="middle_name">Отчество</label>
             <input type="text" id="middle_name" name="middle_name" placeholder="Иванович" required />
-            <label for="university">ВУЗ</label>
-            <input type="text" id="university" name="university" placeholder="ЯГТУ" required />
+            <label for="university">ВУЗ (полное название)</label>
+            <input type="text" id="university" name="university" placeholder="Ярославский государственный технический университет" required />
             <label for="login">E-Mail</label>
             <input type="text" id="login" name="login" placeholder="example@email.com" required />
             <label for="password">Пароль</label>
             <input type="password" id="password" name="password" placeholder="Qw3R7y" required />
             <label for="password_check">Повторите пароль</label>
             <input type="password" id="password_check" name="password_check" placeholder="Qw3R7y" required />
+            <label for="personal_data">
+                <input type="checkbox" id="personal_data" name="personal_data" value="Bike" required />
+                Соглашаюсь на <a href="">обработку персональных данных</a>
+            </label>
             <button type="submit">Зарегистрироваться</button>
         </div>
         <div class="notification">Есть аккаунт? <a href="../login/">Войти</a></div>

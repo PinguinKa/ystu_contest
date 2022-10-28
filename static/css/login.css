@@ -11,7 +11,8 @@ label {
     font-weight: bold;
 }
 
-input {
+input[type=text],
+input[type=password] {
     font-size: 15px;
     padding: 0 1px;
     margin-bottom: 12px;
@@ -57,4 +58,8 @@ button[type=submit]:hover {
 
 .error {
     color: red;
+}
+
+label[for=personal_data] {
+    margin-bottom: 12px;
 }
