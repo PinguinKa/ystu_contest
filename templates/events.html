@@ -8,16 +8,13 @@
 {% block content %}
     <div class="header">2022 год</div>
     <table class="event">
-        <tr>
-            <td class="event_date"><div>25 октября</div> – <div>1 ноября</div></td>
-            <td class="event_name">Конкурс перевода</td>
-            <td class="event_info">
-                <b>Конкурс реферативного перевода.</b> Предполагает выполнение
-                классического письменного реферативного перевода научно-популярной статьи с
-                английского/немецкого языка на русский в соответствии с принятыми в научном сообществе
-                стандартами. На выбор участникам будут предложены научно-популярные статьи (не из
-                узкоспециализированных и академических источников).<br/>
-                <button type="submit" onclick="window.location.href='stc-2021'">Подробнее</button>
+        {% for row in data %}
+            <tr>
+                <td class="event_date"><div>{{ row.start }}</div> – <div>{{ row.end }}</div></td>
+                <td class="event_name">{{ row.title }}</td>
+                <td class="event_info">
+                    <b>{{ row.subtitle }}</b> {{ row.info }} <br/>
+                    <button type="submit" onclick="window.location.href='{{ row.name }}'">Подробнее</button>
 
 {#                {% if admin %}#}
 {#                    <div class="participation-error">Невозможно участвовать с аккаунта администратора.</div>#}
@@ -26,7 +23,8 @@
 {#                {% else %}#}
 {#                    <div class="participation-error"><a href="../login/">Войдите в аккаунт</a>, чтобы принять участие.</div>#}
 {#                {% endif %}#}
-            </td>
-        </tr>
+                </td>
+            </tr>
+        {% endfor %}
     </table>
 {% endblock %}

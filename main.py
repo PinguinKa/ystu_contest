@@ -1,4 +1,3 @@
-import datetime as datetime
 import re
 import bcrypt
 from datetime import datetime
@@ -69,7 +68,8 @@ def info():
 def events():
     if check_if_admin():
         return render_template('events.html', admin=1)
-    return render_template('events.html', check_login=check_login)
+    data = db.events.get_all()
+    return render_template('events.html', check_login=check_login, data=data)
 
 
 @app.route('/translation/')
@@ -195,11 +195,10 @@ def submit():
         return redirect(url_for('index'))
 
     if request.method == 'POST':
+        #datetime.strptime("22/05/2017", "%d/%m/%Y")
         begin_date = datetime(2022, 10, 23) # будет из БД по мероприятиям
         exp_date = datetime(2022, 11, 1) # будет из БД по мероприятиям
         if datetime.now() < begin_date or datetime.now() > exp_date:
-            print(datetime.now() < begin_date)
-            print(datetime.now() > exp_date)
             return render_template('submit.html', message='По этому мероприятию работы не принимаются', check_login=check_login)
 
         if 'file' not in request.files:
@@ -260,12 +259,6 @@ def logout():
     logout_user()
     session.pop('login', None)
     return redirect(url_for('login'))
-
-
-# TODO: Не забыть удалить!
-@app.route('/review_id/')
-def review_id():
-    return render_template('review_id.html')
 
 
 if __name__ == "__main__":

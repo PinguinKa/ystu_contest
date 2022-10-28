@@ -28,5 +28,19 @@ class Submits(Base):
     num_of_checks = Column(Integer)
 
 
+class Events(Base):
+
+    __tablename__ = 'events'
+
+    name = Column(String, unique=True, primary_key=True)
+    begin_date = Column(String)
+    exp_date = Column(String)
+    start = Column(String)
+    end = Column(String)
+    title = Column(String)
+    subtitle = Column(String)
+    info = Column(String)
+
+
 
 
