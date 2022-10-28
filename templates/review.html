@@ -37,9 +37,14 @@
             <label for="jury">Член жюри</label>
             <select id="jury" name="jury" required>
                 <option value="">-- Нужно выбрать --</option>
-                {#{% for * in * %}#}
+                <option value="Жильцов Александр Александрович">Жильцов Александр Александрович</option>
+                <option value="Касаткина Елизавета Александровна">Касаткина Елизавета Александровна</option>
+                <option value="Кириллова Елена Борисовна">Кириллова Елена Борисовна</option>
                 <option value="Крамная Екатерина Сергеевна">Крамная Екатерина Сергеевна</option>
-                {#{% endfor %}#}
+                <option value="Мельникова Ксения Александровна">Мельникова Ксения Александровна</option>
+                <option value="Морева Надежда Александровна">Морева Надежда Александровна</option>
+                <option value="Прокофьева Дарья Сергеевна">Прокофьева Дарья Сергеевна</option>
+                <option value="Тюкина Людмила Александровна">Тюкина Людмила Александровна</option>
             </select>
 
             <div class="event-selector-container">
@@ -48,7 +53,7 @@
                     <select id="event" name="event" required>
                         <option value="">-- Нужно выбрать --</option>
                         {% for event in events %}
-                            <option value="{{ event.name }}">{{ event.name }}</option>
+                            <option value="{{ event.name }}">{{ event.title }}</option>
                         {% endfor %}
                     </select>
                 </div>
@@ -85,7 +90,11 @@
                     <td><a href="download/{{row.id}}" target="_blank" rel="noopener noreferrer">{{row.filename}}</a></td>
                     <td><a href="{{row.id}}" target="_blank" rel="noopener noreferrer">Оценить</a></td>
                     <td>{{row.num_of_checks}}</td>
-                    <td> </td>
+                    {% if row.jury_members %}
+                        <td>{{row.jury_members}}</td>
+                    {% else %}
+                        <td>Эта работа ещё не проверена</td>
+                    {% endif %}
                 </tr>
             {% endif %}
         {% endfor %}

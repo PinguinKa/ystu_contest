@@ -7,17 +7,18 @@
 
 {% block content %}
     <div class="header">
-        <a href="{# id #}">повторно скачать работу</a>
+        <a href="../review/download/{{data.id}}" target="_blank" rel="noopener noreferrer">повторно скачать работу</a>
     </div>
-    <form action="/review" method="post">
+    <form action="/review/{{data.id}}" method="post">
+        <div class="error notification">{{message}}</div>
         <label for="criteria1">Полнота изложения реферируемого материала: </label>
-        <input type="number" id="criteria1" min="0" max="5" step="1" value="0"/><br/>
+        <input type="number" id="criteria1" name='criteria1' min="0" max="5" step="1" value="0"/><br/>
         <label for="criteria2">Информативность и доступность изложения: </label>
-        <input type="number" id="criteria2" min="0" max="5" step="1" value="0"/><br/>
+        <input type="number" id="criteria2" name='criteria2' min="0" max="5" step="1" value="0"/><br/>
         <label for="criteria3">Качество русского языка: </label>
-        <input type="number" id="criteria3" min="0" max="5" step="1" value="0"/><br/>
+        <input type="number" id="criteria3" name='criteria3' min="0" max="5" step="1" value="0"/><br/>
         <label for="criteria4">Умение работать с аудиторией: </label>
-        <input type="number" id="criteria4" min="0" max="5" step="1" value="0"/><br/>
+        <input type="number" id="criteria4" name='criteria4' min="0" max="5" step="1" value="0"/><br/>
         <button type="submit">Оценить</button>
     </form>
 {% endblock %}

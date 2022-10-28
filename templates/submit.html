@@ -16,7 +16,7 @@
                 <select id="event" name="event" required>
                     <option value="">-- Нужно выбрать --</option>
                     {% for event in events %}
-                        <option value="{{ event.name }}">{{ event.name }}</option>
+                        <option value="{{ event.name }}">{{ event.title }}</option>
                     {% endfor %}
                 </select>
             </div>

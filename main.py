@@ -90,6 +90,7 @@ def review():
         if request.method == 'POST':
             data = db.submits.get_all()
             event, theme = request.form['event'], request.form['theme']
+            session['jury'] = request.form['jury']
             return render_template('review.html', admin=1, events=events, event=event, themes=themes, theme=theme, data=data, visibility='visible')
         return render_template('review.html', admin=1, events=events, themes=themes, visibility='hidden')
     return redirect(url_for('index'))
@@ -104,13 +105,18 @@ def participants():
     return redirect(url_for('index'))
 
 
+@app.route('/rating/')
+def rating():
+    if check_if_admin():
+        data = db.review.get_all()
+        return render_template('rating.html', admin=1, data=data)
+    return redirect(url_for('index'))
+
+
 @app.route('/register/', methods=['GET', 'POST'])
 def register():
     if check_login == 0:
         if request.method == 'POST':
-            for key in request.form:
-                if request.form[key] == '':
-                    return render_template('register.html', message='Все поля должны быть заполнены!')
 
             row = db.users.get('login', request.form['login'])
             if row:
@@ -160,11 +166,6 @@ def edit():
 
     if request.method == 'POST':
 
-        for key in request.form:
-            if request.form[key] == '':
-                return render_template('edit.html', message='Все поля должны быть заполнены!', data=data,
-                                       check_login=check_login)
-
         row = db.users.get('login', request.form['login'])
         if row:
             if request.form['login'] != session['login']:
@@ -174,6 +175,9 @@ def edit():
         if not re.match(r'(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)', request.form['login']):
             return render_template('edit.html', message='Неправильный формат почты', data=data, check_login=check_login)
 
+        if request.form['password'] != request.form['password_check']:
+            return render_template('edit.html', message='Пароли не совпадают')
+
         db.users.update('login', session['login'], 'last_name', request.form['last_name'])
         db.users.update('login', session['login'], 'first_name', request.form['first_name'])
         db.users.update('login', session['login'], 'middle_name', request.form['middle_name'])
@@ -181,7 +185,7 @@ def edit():
         db.users.update('login', session['login'], 'password', request.form['password'])
         db.users.update('login', session['login'], 'login', request.form['login'])
         session['login'] = request.form['login']
-        data = db.users.get('login', session['login'])
+        data = db.users.get('login', session['login'])[0]
 
         send_email.edit(request.form['last_name'], request.form['first_name'], request.form['middle_name'],
                         request.form['university'], request.form['login'], request.form['password'])
@@ -234,6 +238,7 @@ def submit():
                            'num_of_checks': 0
                            })
 
+            send_email.participation(session['login'], db.events.get('name', request.form['event'])[0].title, request.form['theme'])
             return render_template('submit.html', message='Успешно загружено', check_login=check_login, events=events, themes=themes)
 
         return render_template('submit.html', message='Неверный формат файла', check_login=check_login, events=events, themes=themes)
@@ -246,13 +251,46 @@ def download(id):
     if check_if_admin():
         upload = db.submits.get('id', id)[0]
         return send_file(BytesIO(upload.file), download_name=upload.filename, as_attachment=True)
-        #return render_template('review_id.html', admin=1)
     return redirect(url_for('index'))
 
-@app.route('/review/<id>')
+@app.route('/review/<id>', methods=['GET', 'POST'])
 def review_check(id):
     if check_if_admin():
-        return render_template('review_id.html', admin=1)
+        data = db.submits.get('id', int(id))[0]
+        if request.method == 'POST':
+
+            check = db.reviews.get('id', int(id))
+            if check:
+                check = check[0]
+                if check.id == int(id) and session['jury'] == check.jury:
+                    return render_template('review_id.html', admin=1, data=data, message='Вы уже проверили эту работу')
+
+            criteria1 = int(request.form['criteria1'])
+            criteria2 = int(request.form['criteria2'])
+            criteria3 = int(request.form['criteria3'])
+            criteria4 = int(request.form['criteria4'])
+            sum = criteria1 + criteria2 + criteria3 + criteria4
+
+            db.reviews.put({
+                'id': int(id),
+                'jury': session['jury'],
+                'criteria1': criteria1,
+                'criteria2': criteria2,
+                'criteria3': criteria3,
+                'criteria4': criteria4,
+                'sum': sum
+            })
+
+            count = data.num_of_checks
+            db.submits.update('id', int(id), 'num_of_checks', count+1)
+            if data.jury_members:
+                jury_members = data.jury_members + ', ' + session['jury']
+                db.submits.update('id', int(id), 'jury_members', jury_members)
+            else:
+                db.submits.update('id', int(id), 'jury_members', session['jury'])
+
+            return render_template('review_id.html', admin=1, data=data)
+        return render_template('review_id.html', admin=1, data=data)
     return redirect(url_for('index'))
 
 @app.route('/events/<event>')

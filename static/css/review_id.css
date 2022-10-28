@@ -46,3 +46,12 @@ button[type=submit]:hover {
     border-image-slice: 1;
     border-image-source: linear-gradient(135deg, var(--ystu-blue), var(--ystu-orange));
 }
+
+
+.notification {
+    text-align: center;
+}
+
+.error {
+    color: red;
+}
