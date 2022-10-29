@@ -38,12 +38,16 @@ def load_user(user_login):
 
 
 ALLOWED_EXTENSIONS = {'txt', 'pdf', 'doc', 'docx'}
+
+
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
 check_login = 0
+
+
 def check_if_admin():
     if 'login' in session:
         if session['login'] == 'admin':
@@ -62,6 +66,7 @@ def info():
     if check_if_admin():
         return render_template('info.html', admin=1)
     return render_template('info.html', check_login=check_login)
+
 
 # http://127.0.0.1:5000/events/stc-2021 добавить к чек листу ссылку на рекомендации
 @app.route('/events/')
@@ -91,7 +96,8 @@ def review():
             data = db.submits.get_all()
             event, theme = request.form['event'], request.form['theme']
             session['jury'] = request.form['jury']
-            return render_template('review.html', admin=1, events=events, event=event, themes=themes, theme=theme, data=data, visibility='visible')
+            return render_template('review.html', admin=1, events=events, event=event, themes=themes, theme=theme,
+                                   data=data, visibility='visible')
         return render_template('review.html', admin=1, events=events, themes=themes, visibility='hidden')
     return redirect(url_for('index'))
 
@@ -161,7 +167,6 @@ def login():
 
 @app.route('/edit/', methods=['GET', 'POST'])
 def edit():
-
     data = db.users.get('login', session['login'])[0]
 
     if request.method == 'POST':
@@ -214,34 +219,41 @@ def submit():
         exp_date = datetime.strptime(event.exp_date, "%d.%m.%Y")
 
         if datetime.now() < begin_date or datetime.now() > exp_date:
-            return render_template('submit.html', message='По этому мероприятию работы не принимаются', check_login=check_login, events=events, themes=themes)
+            return render_template('submit.html', message='По этому мероприятию работы не принимаются',
+                                   check_login=check_login, events=events, themes=themes)
 
         if 'file' not in request.files:
-            return render_template('submit.html', message='Загрузите файл!', check_login=check_login, events=events, themes=themes)
+            return render_template('submit.html', message='Загрузите файл!', check_login=check_login, events=events,
+                                   themes=themes)
 
         file = request.files['file']
         if file.filename == '':
-            return render_template('submit.html', message='Загрузите файл!', check_login=check_login, events=events, themes=themes)
+            return render_template('submit.html', message='Загрузите файл!', check_login=check_login, events=events,
+                                   themes=themes)
 
         if file and allowed_file(file.filename):
             user_submits = db.submits.get('login', session['login'])
             for user_submit in user_submits:
                 if user_submit.event == request.form['event'] and user_submit.theme == request.form['theme']:
-                    return render_template('submit.html', message='Вы уже участвовали в этой номинации', check_login=check_login, events=events, themes=themes)
+                    return render_template('submit.html', message='Вы уже участвовали в этой номинации',
+                                           check_login=check_login, events=events, themes=themes)
 
             db.submits.put({'id': len(db.submits.get_all()) + 1,
-                           'login': session['login'],
-                           'filename': file.filename,
-                           'file': file.read(),
-                           'event': request.form['event'],
-                           'theme': request.form['theme'],
-                           'num_of_checks': 0
-                           })
+                            'login': session['login'],
+                            'filename': file.filename,
+                            'file': file.read(),
+                            'event': request.form['event'],
+                            'theme': request.form['theme'],
+                            'num_of_checks': 0
+                            })
 
-            send_email.participation(session['login'], db.events.get('name', request.form['event'])[0].title, request.form['theme'])
-            return render_template('submit.html', message='Успешно загружено', check_login=check_login, events=events, themes=themes)
+            send_email.participation(session['login'], db.events.get('name', request.form['event'])[0].title,
+                                     request.form['theme'])
+            return render_template('submit.html', message='Успешно загружено', check_login=check_login, events=events,
+                                   themes=themes)
 
-        return render_template('submit.html', message='Неверный формат файла', check_login=check_login, events=events, themes=themes)
+        return render_template('submit.html', message='Неверный формат файла', check_login=check_login, events=events,
+                               themes=themes)
 
     return render_template('submit.html', check_login=check_login, events=events, themes=themes)
 
@@ -252,6 +264,7 @@ def download(id):
         upload = db.submits.get('id', id)[0]
         return send_file(BytesIO(upload.file), download_name=upload.filename, as_attachment=True)
     return redirect(url_for('index'))
+
 
 @app.route('/review/<id>', methods=['GET', 'POST'])
 def review_check(id):
@@ -282,7 +295,7 @@ def review_check(id):
             })
 
             count = data.num_of_checks
-            db.submits.update('id', int(id), 'num_of_checks', count+1)
+            db.submits.update('id', int(id), 'num_of_checks', count + 1)
             if data.jury_members:
                 jury_members = data.jury_members + ', ' + session['jury']
                 db.submits.update('id', int(id), 'jury_members', jury_members)
@@ -292,6 +305,7 @@ def review_check(id):
             return render_template('review_id.html', admin=1, data=data)
         return render_template('review_id.html', admin=1, data=data)
     return redirect(url_for('index'))
+
 
 @app.route('/events/<event>')
 @login_required
