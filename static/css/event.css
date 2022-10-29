@@ -34,7 +34,21 @@ h3 {
     block-size: fit-content;
 }
 
-a[href="/submit"] {
+button[type=submit] {
+    display: block;
+
+    border: none;
+    padding: 0;
+    margin: 0 0 2px;
+
+    font-size: 15pt;
+    font-weight: bold;
+
+    width: fit-content;
+    block-size: fit-content;
+
+    cursor: pointer;
+
     background: linear-gradient(135deg, var(--ystu-blue), var(--ystu-orange));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;

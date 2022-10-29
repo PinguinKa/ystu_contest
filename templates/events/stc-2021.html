@@ -22,7 +22,9 @@
             {% if admin %}
                 <div class="participation-error">Невозможно участвовать с аккаунта администратора.</div>
             {% elif check_login %}
-                <a href="/submit">Принять участие</a>
+                <form method="post" action="/submit">
+                    <button type="submit">Принять участие</button>
+                </form>
             {% else %}
                 <div class="participation-error"><a href="/login">Войдите в аккаунт</a>, чтобы принять участие.</div>
             {% endif %}
