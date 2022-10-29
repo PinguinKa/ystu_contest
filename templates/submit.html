@@ -53,10 +53,14 @@
         </select>
     </div>
 
+    <label for="full_name">Полностью ФИО вашего руководителя</label>
+    <input type="text" id="full_name" name="full_name" placeholder="Иванов Иван Иванович" required /> <br>
+
     <div class="file-submit">
         <input type="file" name="file">
         <button type="submit" disabled>Отправить</button>
     </div>
+
     <div class="error notification">{{message}}</div>
     </div>
     </form>

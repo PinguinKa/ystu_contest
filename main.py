@@ -310,7 +310,9 @@ def review_check(id):
 @app.route('/events/<event>')
 @login_required
 def event(event):
-    return render_template(f'events/{event}.html')
+    if check_if_admin():
+        return render_template(f'events/{event}.html', admin=1, check_login=1)
+    return render_template(f'events/{event}.html', check_login=1)
 
 
 @app.route("/logout/")

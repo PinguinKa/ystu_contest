@@ -44,6 +44,7 @@ class Submits(Base):
     file = Column(LargeBinary)
     event = Column(String)
     theme = Column(String)
+    full_name = Column(String)
     num_of_checks = Column(Integer)
     jury_members = Column(String)
 
