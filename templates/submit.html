@@ -1,15 +1,36 @@
 {% extends "index.html" %}
 
 {% block head %}
-    <title>Вход</title>
-    <link rel="stylesheet" type="text/css" href="/static/css/center-page.css">
-    <link rel="stylesheet" type="text/css" href="/static/css/form-inputs.css">
+    <title>Отправка работы</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/submit.css"/>
+    <link rel="stylesheet" type="text/css" href="/static/css/center-page.css"/>
+    <link rel="stylesheet" type="text/css" href="/static/css/form-inputs.css"/>
+    <script type="text/javascript" src="../static/js/jquery-3.6.1.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            function checkAllSelected() {
+                event = $('#event').val();
+                theme = $('#theme').val();
+
+                if (event != 0 && theme != 0) { $('button[type=submit]').prop("disabled", false); }
+                else { $('button[type=submit]').prop("disabled", true); }
+            }
+
+            checkAllSelected();
+
+            $('#event').on('change', function() { checkAllSelected() });
+            $('#theme').on('change', function() { checkAllSelected() });
+        });
+    </script>
 {% endblock %}
 
 {% block content %}
     <form method="post" action="/submit" enctype="multipart/form-data">
-        <div class="error notification">ВНИМАНИЕ!</div>
-        <div class="error notification">На каждую номинацию в мероприятии можно отправить лишь один файл. <br> Внимательно проверяйте данные перед отправкой</div>
+        <div class="error notification">
+            ВНИМАНИЕ!<br/><br/>
+            На каждую номинацию в мероприятии можно отправить лишь один файл.<br/>
+            Внимательно проверяйте данные перед отправкой.
+        </div>
         <div class="submit-form">
 
             <div class="event">
@@ -32,7 +53,7 @@
                 </select>
 
             <input type="file" name="file">
-            <button type="submit">Отправить</button>
+            <button type="submit" disabled>Отправить</button>
             <div class="error notification">{{message}}</div>
             </div>
         </div>

@@ -1,0 +1,8 @@
+select#event, label[for="event"],
+select#theme, label[for="theme"],
+.event-selector-container {
+    width: 100%;
+    margin-bottom: 12px;
+}
+
+button[type=submit] { float: right; }
