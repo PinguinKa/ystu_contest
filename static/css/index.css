@@ -8,11 +8,14 @@ body {
 
 .content { padding: 0; }
 
-.caption {
+h1 {
     text-align: center;
     text-decoration: underline;
     color: white;
     font-size: 125px;
     background-color: rgba(0, 0, 0, .75);
     padding: 0 30px 24px;
+
+    margin: 0;
+    font-weight: normal;
 }
