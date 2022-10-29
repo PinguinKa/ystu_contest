@@ -2,6 +2,9 @@ import smtplib
 from email.mime.text import MIMEText
 
 
+sender_name = "Кафедра иностранных языков ЯГТУ"
+
+
 def _send(recipient, msg):
     sender = "pinguink.in.box@gmail.com"
     password = 'ltnsekkthdwzywcc'
@@ -20,9 +23,9 @@ def registration(recipient, user_password):
     template = template.replace('{{ password }}', user_password)
 
     msg = (MIMEText(template, "html"))
-    msg["From"] = "Конкурсный портал ЯГТУ"
+    msg["From"] = sender_name
     msg["To"] = recipient
-    msg["Subject"] = "Регистрация на конкурсном портале ЯГТУ"
+    msg["Subject"] = "Регистрация на кафедра иностранных языков ЯГТУ"
 
     _send(recipient, msg)
 
@@ -39,7 +42,7 @@ def edit(last_name, first_name, middle_name, university, recipient, user_passwor
     template = template.replace('{{ password }}', user_password)
 
     msg = (MIMEText(template, "html"))
-    msg["From"] = "Конкурсный портал ЯГТУ"
+    msg["From"] = sender_name
     msg["To"] = recipient
     msg["Subject"] = "Изменение данных учётной записи"
 
@@ -55,7 +58,7 @@ def participation(recipient, event, theme):
     template = template.replace('{{ theme }}', theme)
 
     msg = (MIMEText(template, "html"))
-    msg["From"] = "Конкурсный портал ЯГТУ"
+    msg["From"] = sender_name
     msg["To"] = recipient
     msg["Subject"] = f'Спасибо за участие в мероприятии "{event}"'
 
