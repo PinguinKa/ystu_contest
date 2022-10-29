@@ -11,10 +11,10 @@
 .login-form input[type=text],
 .login-form input[type=password],
 .submit-form select,
-.submit-form input[type=file],
 label[for=personal_data] { margin-bottom: 12px; }
 
-.select-form {
+.select-form,
+.submit-form {
      margin: 12px auto;
      width: 400px;
  }
@@ -27,7 +27,8 @@ label {
 
 
 input[type=text],
-input[type=password] {
+input[type=password],
+input[type=number] {
     font-size: 15px;
     padding: 0 1px;
     height: 24px;
@@ -35,7 +36,9 @@ input[type=password] {
     border-bottom: 3px solid grey;
 }
 
-input:hover { border-color: var(--ystu-blue); }
+input[type=text]:hover,
+input[type=password]:hover,
+input[type=submit]:hover { border-color: var(--ystu-blue); }
 
 input:focus-visible,
 input:not(:placeholder-shown) {

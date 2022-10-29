@@ -28,10 +28,5 @@ button[type=submit]:not([disabled]) {
     border-color: var(--ystu-blue);
 }
 
-button[type=submit]:hover:not([disabled]) {
-    border-image-slice: 1;
-    border-image-source: linear-gradient(135deg, var(--ystu-blue), var(--ystu-orange));
-}
-
 
 th { text-align: center !important; }
