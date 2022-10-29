@@ -42,6 +42,6 @@ td.event_name {
 
 td.event_info { width: 37%; }
 
-.participation-error { font-weight: bold; }
 
+.participation-error { font-weight: bold; }
 button[type=submit], .participation-error { margin-top: 20px; }
