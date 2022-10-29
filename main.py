@@ -97,7 +97,7 @@ def review():
             event, theme = request.form['event'], request.form['theme']
             session['jury'] = request.form['jury']
             return render_template('review.html', admin=1, events=events, event=event, themes=themes, theme=theme,
-                                   data=data, visibility='visible')
+                                   data=data, visibility='visible', jury_name=request.form['jury'], event_name=request.form['event'], theme_name=request.form['theme'])
         return render_template('review.html', admin=1, events=events, themes=themes, visibility='hidden')
     return redirect(url_for('index'))
 
@@ -312,7 +312,7 @@ def review_check(id):
 def event(event):
     if check_if_admin():
         return render_template(f'events/{event}.html', admin=1, check_login=1)
-    return render_template(f'events/{event}.html', check_login=1, event_name=event)
+    return render_template(f'events/{event}.html', check_login=1)
 
 
 @app.route("/logout/")
