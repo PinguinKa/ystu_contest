@@ -76,6 +76,7 @@ button[disabled] {
 button[disabled] { color: grey; }
 
 button[type=submit]:hover:not([disabled]) {
+    cursor: pointer;
     border-image-slice: 1;
     border-image-source: linear-gradient(135deg, var(--ystu-blue), var(--ystu-orange));
 }
