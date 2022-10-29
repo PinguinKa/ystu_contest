@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+
+
 :root {
     --ystu-orange: #F07C00;
     --ystu-blue: #004589;
@@ -7,6 +10,7 @@
 html, body {
     margin: 0;
     font-family: Roboto, sans-serif;
+    font-weight: 400;
 }
 
 img { display:block; }
