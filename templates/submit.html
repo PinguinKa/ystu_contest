@@ -11,15 +11,20 @@
             function checkAllSelected() {
                 event = $('#event').val();
                 theme = $('#theme').val();
+                full_name = $('#full_name').val();
+                file = $('#file')[0].files.length;
 
-                if (event != 0 && theme != 0) { $('button[type=submit]').prop("disabled", false); }
-                else { $('button[type=submit]').prop("disabled", true); }
+                if (event != 0 && theme != 0 && full_name != "" && file != 0) {
+                    $('button[type=submit]').prop("disabled", false);
+                } else { $('button[type=submit]').prop("disabled", true); }
             }
 
             checkAllSelected();
 
             $('#event').on('change', function() { checkAllSelected() });
             $('#theme').on('change', function() { checkAllSelected() });
+            $('#full_name').on('change', function() { checkAllSelected() });
+            $('#file').on('change', function() { checkAllSelected() });
         });
     </script>
 {% endblock %}
@@ -57,7 +62,7 @@
     <input type="text" id="full_name" name="full_name" placeholder="Иванов Иван Иванович" required /> <br>
 
     <div class="file-submit">
-        <input type="file" name="file">
+        <input type="file" id="file" name="file">
         <button type="submit" disabled>Отправить</button>
     </div>
 
