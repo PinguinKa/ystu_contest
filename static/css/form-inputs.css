@@ -63,7 +63,7 @@ select option[value=""], select option:not([value]) { font-style: italic; }
 button[type=submit],
 button[disabled] {
     font-size: 17px;
-    padding: 2px 2px 0;
+    padding: 2px 4px 0;
     border: 3px solid grey;
 }
 
