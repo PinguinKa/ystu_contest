@@ -1,0 +1,58 @@
+.infobox { margin: 20px 15%; }
+
+
+h2 {
+    width: 80%;
+    font-size: 55px;
+    color: white;
+    background: var(--ystu-blue);
+    padding: 20px 10%;
+
+    margin: 0;
+    font-weight: 400;
+}
+
+h3 {
+    font-size: 22pt;
+    margin: 18px 24px 12px;
+    font-weight: 300;
+}
+
+
+.useful-links {
+    font-size: 15pt;
+    font-weight: bold;
+}
+
+.useful-links a:not([href="/login"]) {
+    display: block;
+    text-decoration: none;
+
+    margin-bottom: 2px;
+
+    width: fit-content;
+    block-size: fit-content;
+}
+
+a[href="/submit"] {
+    background: linear-gradient(135deg, var(--ystu-blue), var(--ystu-orange));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+
+p {
+    font-size: 13.2pt;
+    margin: 0 0 12px;
+}
+
+ul {
+    font-size: 13.2pt;
+    margin: 0 0 12px;
+    padding-inline-start: 19px;
+}
+
+
+.participation-error {
+    margin-bottom: 2px;
+}
