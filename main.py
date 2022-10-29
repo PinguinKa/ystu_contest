@@ -312,7 +312,7 @@ def review_check(id):
 def event(event):
     if check_if_admin():
         return render_template(f'events/{event}.html', admin=1, check_login=1)
-    return render_template(f'events/{event}.html', check_login=1)
+    return render_template(f'events/{event}.html', check_login=1, event_name=event)
 
 
 @app.route("/logout/")
