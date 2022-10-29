@@ -1,3 +1,8 @@
+.infobox, .event { width: 80%; }
+.infobox { margin: 20px 10%; }
+.event { margin: 10px 10%; }
+
+
 h2 {
     width: 80%;
     font-size: 55px;
@@ -8,10 +13,6 @@ h2 {
     margin: 0;
     font-weight: normal;
 }
-
-.infobox, .event { width: 80%; }
-.infobox { margin: 20px 10%; }
-.event { margin: 10px 10%; }
 
 
 table.event {
