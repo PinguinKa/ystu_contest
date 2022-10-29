@@ -8,6 +8,12 @@
     flex-direction: column;
 }
 
+.login-form input[type=text],
+.login-form input[type=password],
+.submit-form select,
+.submit-form input[type=file],
+label[for=personal_data] { margin-bottom: 12px; }
+
 .select-form {
      margin: 12px auto;
      width: 400px;
@@ -19,14 +25,11 @@ label {
     font-weight: bold;
 }
 
-label[for=personal_data] { margin-bottom: 12px; }
-
 
 input[type=text],
 input[type=password] {
     font-size: 15px;
     padding: 0 1px;
-    margin-bottom: 12px;
     height: 24px;
     border: none;
     border-bottom: 3px solid grey;
@@ -69,7 +72,7 @@ button[disabled] {
 
 button[disabled] { color: grey; }
 
-button[type=submit]:hover {
+button[type=submit]:hover:not([disabled]) {
     border-image-slice: 1;
     border-image-source: linear-gradient(135deg, var(--ystu-blue), var(--ystu-orange));
 }
