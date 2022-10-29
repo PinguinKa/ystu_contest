@@ -1,38 +1,3 @@
-.select-form {
-    margin: 12px auto;
-    width: 400px;
-}
-
-label {
-    font-size: 15px;
-    font-weight: bold;
-}
-
-select {
-    font-size: 17px;
-    padding: 2px 0 0;
-    border: 3px solid grey;
-    outline: none;
-}
-
-select:hover,
-select:focus-visible:hover {
-    border-image-slice: 1;
-    border-image-source: linear-gradient(135deg, var(--ystu-blue), var(--ystu-orange));
-}
-
-select#jury, label[for="jury"],
-select#event, label[for="event"],
-select#theme, label[for="theme"],
-.event-selector-container {
-    width: 100%;
-    margin-bottom: 12px;
-}
-
-select:invalid { font-style: italic; }
-select > option { font-style: normal; }
-select option[value=""], select option:not([value]) { font-style: italic; }
-
 .event {
     width: 49%;
     float: left;
@@ -48,13 +13,15 @@ select option[value=""], select option:not([value]) { font-style: italic; }
     text-align: center;
 }
 
-button[type=submit],
-button[disabled] {
-    color: grey;
-    font-size: 17px;
-    padding: 2px 4px 0;
-    border: 3px solid grey;
+
+select#jury, label[for="jury"],
+select#event, label[for="event"],
+select#theme, label[for="theme"],
+.event-selector-container {
+    width: 100%;
+    margin-bottom: 12px;
 }
+
 
 button[type=submit]:not([disabled]) {
     color: inherit;
@@ -67,6 +34,4 @@ button[type=submit]:hover:not([disabled]) {
 }
 
 
-th {
-    text-align: center !important;
-}
+th { text-align: center !important; }
