@@ -256,8 +256,8 @@ def submit():
                                themes=themes)
 
     event_name = ''
-    if session['login']:
-        event_name = session['login']
+    if session['event']:
+        event_name = session['event']
     return render_template('submit.html', check_login=check_login, events=events, themes=themes, event_name=event_name)
 
 
@@ -310,13 +310,14 @@ def review_check(id):
     return redirect(url_for('index'))
 
 
-@app.route('/events/<event>')
+@app.route('/events/<event>', methods=['GET', 'POST'])
 @login_required
 def event(event):
     if check_if_admin():
         return render_template(f'events/{event}.html', admin=1, check_login=1)
     if request.method == 'POST':
         session['event'] = event
+        return redirect(url_for('submit'))
     return render_template(f'events/{event}.html', check_login=1)
 
 
