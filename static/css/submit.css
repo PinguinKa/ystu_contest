@@ -1,6 +1,5 @@
 select#event, label[for="event"],
-select#theme, label[for="theme"],
-.event-selector-container {
+select#theme, label[for="theme"] {
     width: 100%;
     margin-bottom: 12px;
 }

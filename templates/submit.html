@@ -26,36 +26,38 @@
 
 {% block content %}
     <form method="post" action="/submit" enctype="multipart/form-data">
-        <div class="error notification">
-            ВНИМАНИЕ!<br/><br/>
-            На каждую номинацию в мероприятии можно отправить лишь один файл.<br/>
-            Внимательно проверяйте данные перед отправкой.
-        </div>
-        <div class="submit-form">
+    <div class="error notification">
+        ВНИМАНИЕ!<br/><br/>
+        На каждую номинацию в мероприятии можно отправить лишь один файл.<br/>
+        Внимательно проверяйте данные перед отправкой.
+    </div>
 
-            <div class="event">
-                <label for="event">Мероприятие</label>
-                <select id="event" name="event" required>
-                    <option value="">-- Нужно выбрать --</option>
-                    {% for event in events %}
-                        <option value="{{ event.name }}">{{ event.title }}</option>
-                    {% endfor %}
-                </select>
-            </div>
+    <div class="submit-form">
+    <div class="event">
+        <label for="event">Мероприятие</label>
+        <select id="event" name="event" required>
+            <option value="">-- Нужно выбрать --</option>
+            {% for event in events %}
+                <option value="{{ event.name }}">{{ event.title }}</option>
+            {% endfor %}
+        </select>
+    </div>
 
-            <div class="theme">
-                <label for="theme">Номинация</label>
-                <select id="theme" name="theme" required>
-                    <option value="">-- Нужно выбрать --</option>
-                    {% for theme in themes[0]  %}
-                        <option value="{{ theme }}">{{ theme }}</option>
-                    {% endfor %}
-                </select>
+    <div class="theme">
+        <label for="theme">Номинация</label>
+        <select id="theme" name="theme" required>
+            <option value="">-- Нужно выбрать --</option>
+            {% for theme in themes[0]  %}
+                <option value="{{ theme }}">{{ theme }}</option>
+            {% endfor %}
+        </select>
+    </div>
 
-            <input type="file" name="file">
-            <button type="submit" disabled>Отправить</button>
-            <div class="error notification">{{message}}</div>
-            </div>
-        </div>
+    <div class="file-submit">
+        <input type="file" name="file">
+        <button type="submit" disabled>Отправить</button>
+    </div>
+    <div class="error notification">{{message}}</div>
+    </div>
     </form>
 {% endblock %}
