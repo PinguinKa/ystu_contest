@@ -1,9 +1,12 @@
-.header {
+h2 {
     width: 80%;
     font-size: 55px;
     color: white;
     background: var(--ystu-blue);
     padding: 20px 10%;
+
+    margin: 0;
+    font-weight: normal;
 }
 
 .infobox, .event { width: 80%; }
