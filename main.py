@@ -255,7 +255,10 @@ def submit():
         return render_template('submit.html', message='Неверный формат файла', check_login=check_login, events=events,
                                themes=themes)
 
-    return render_template('submit.html', check_login=check_login, events=events, themes=themes)
+    event_name = ''
+    if session['login']:
+        event_name = session['login']
+    return render_template('submit.html', check_login=check_login, events=events, themes=themes, event_name=event_name)
 
 
 @app.route('/review/download/<id>')
@@ -312,6 +315,8 @@ def review_check(id):
 def event(event):
     if check_if_admin():
         return render_template(f'events/{event}.html', admin=1, check_login=1)
+    if request.method == 'POST':
+        session['event'] = event
     return render_template(f'events/{event}.html', check_login=1)
 
 
@@ -322,6 +327,9 @@ def logout():
     check_login = 0
     logout_user()
     session.pop('login', None)
+    session.pop('jury', None)
+    session.pop('event', None)
+
     return redirect(url_for('login'))
 
 
