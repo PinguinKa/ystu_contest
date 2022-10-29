@@ -14,6 +14,10 @@
     </script>
     <script>
         $(document).ready(function () {
+            $('#jury').val("{{ jury_name }}");
+            $('#event').val("{{ event_name }}");
+            $('#theme').val("{{ theme_name }}");
+
             function checkAllSelected() {
                 jury = $('#jury').val();
                 event = $('#event').val();
