@@ -13,10 +13,10 @@
             function checkAllSelected() {
                 event = $('#event').val();
                 theme = $('#theme').val();
-                full_name = $('#full_name').val();
+                scientific_director = $('#scientific_director').val();
                 file = $('#file')[0].files.length;
 
-                if (event != 0 && theme != 0 && full_name != "" && file != 0) {
+                if (event != 0 && theme != 0 && scientific_director != "" && file != 0) {
                     $('button[type=submit]').prop("disabled", false);
                 } else { $('button[type=submit]').prop("disabled", true); }
             }
@@ -25,7 +25,7 @@
 
             $('#event').on('change', function() { checkAllSelected() });
             $('#theme').on('change', function() { checkAllSelected() });
-            $('#full_name').on('change', function() { checkAllSelected() });
+            $('#scientific_director').on('change', function() { checkAllSelected() });
             $('#file').on('change', function() { checkAllSelected() });
         });
     </script>
@@ -60,8 +60,8 @@
         </select>
     </div>
 
-    <label for="full_name">Полностью ФИО вашего руководителя</label>
-    <input type="text" id="full_name" name="full_name" placeholder="Иванов Иван Иванович" required /> <br>
+    <label for="scientific_director">Полностью ФИО вашего руководителя</label>
+    <input type="text" id="scientific_director" name="scientific_director" placeholder="Иванов Иван Иванович" required /> <br>
 
     <div class="file-submit">
         <input type="file" id="file" name="file">

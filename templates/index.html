@@ -23,6 +23,7 @@
     {% if admin %}
      --><a href="/review/" class="{% if request.path == "/review/" %}current{% endif %}">Проверка</a><!--
      --><a href="/participants/" class="{% if request.path == "/participants/" %}current{% endif %}">Участники</a><!--
+     --><a href="/rating/" class="{% if request.path == "/rating/" %}current{% endif %}">Рейтинг</a><!--
     {% endif %}-->
 
     {% if check_login or admin %}<a href="/edit/" class="right" title="Аккаунт">

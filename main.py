@@ -1,5 +1,6 @@
 import re
 import bcrypt
+import decimal
 from datetime import datetime
 from ystu_db import db
 import send_email
@@ -89,7 +90,7 @@ def review():
     events = db.events.get_all()
     themes = []
     for event in events:
-        themes.append(event.themes.split())
+        themes.append(event.themes.split(', '))
 
     if check_if_admin():
         if request.method == 'POST':
@@ -111,11 +112,52 @@ def participants():
     return redirect(url_for('index'))
 
 
-@app.route('/rating/')
+
+@app.route('/rating/', methods=['GET', 'POST'])
 def rating():
     if check_if_admin():
-        data = db.review.get_all()
-        return render_template('rating.html', admin=1, data=data)
+        events = db.events.get_all()
+        themes = []
+        for event in events:
+            themes.append(event.themes.split(', '))
+
+        if request.method == 'POST':
+            event, theme = request.form['event'], request.form['theme']
+            sumbits = db.submits.get_all()
+            for sumbit in sumbits:
+                if sumbit.num_of_checks > 0:
+                    user = db.users.get('login', sumbit.login)[0]
+
+                    reviews = db.reviews.get('id', sumbit.id)
+                    score = 0
+                    for review in reviews:
+                        score += review.sum
+
+                    final_score = score / len(reviews)
+                    final_score = decimal.Decimal(final_score).quantize(decimal.Decimal('0.00'), rounding=decimal.ROUND_HALF_UP)
+
+                    existence = db.rating.get('submit_id', sumbit.id)
+                    if existence:
+                        db.rating.update('submit_id', sumbit.id, 'final_score', final_score)
+                    else:
+                        data = {
+                        'login': user.login,
+                        'last_name': user.last_name,
+                        'first_name': user.first_name,
+                        'middle_name': user.middle_name,
+                        'submit_id': sumbit.id,
+                        'university': user.university,
+                        'event': sumbit.event,
+                        'theme': sumbit.theme,
+                        'scientific_director': sumbit.scientific_director,
+                        'final_score': final_score
+                        }
+
+                        db.rating.put(data)
+            data = db.rating.get_all()
+            return render_template('rating.html', admin=1, events=events, event=event, themes=themes, theme=theme,
+                                   data=data, visibility='visible', event_name=request.form['event'], theme_name=request.form['theme'])
+        return render_template('rating.html', admin=1, events=events, themes=themes, visibility='hidden')
     return redirect(url_for('index'))
 
 
@@ -208,7 +250,7 @@ def submit():
     events = db.events.get_all()
     themes = []
     for event in events:
-        themes.append(event.themes.split())
+        themes.append(event.themes.split(', '))
 
     if check_if_admin():
         return redirect(url_for('index'))
@@ -244,6 +286,7 @@ def submit():
                             'file': file.read(),
                             'event': request.form['event'],
                             'theme': request.form['theme'],
+                            'scientific_director': request.form['scientific_director'],
                             'num_of_checks': 0
                             })
 
@@ -275,9 +318,8 @@ def review_check(id):
         data = db.submits.get('id', int(id))[0]
         if request.method == 'POST':
 
-            check = db.reviews.get('id', int(id))
-            if check:
-                check = check[0]
+            checks = db.reviews.get('id', int(id))
+            for check in checks:
                 if check.id == int(id) and session['jury'] == check.jury:
                     return render_template('review_id.html', admin=1, data=data, message='Вы уже проверили эту работу')
 

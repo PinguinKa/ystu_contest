@@ -1,5 +1,5 @@
 from sqlalchemy import Column
-from sqlalchemy.types import Integer, String, LargeBinary
+from sqlalchemy.types import Integer, String, LargeBinary, Float
 from .db import Base
 
 
@@ -44,7 +44,7 @@ class Submits(Base):
     file = Column(LargeBinary)
     event = Column(String)
     theme = Column(String)
-    full_name = Column(String)
+    scientific_director = Column(String)
     num_of_checks = Column(Integer)
     jury_members = Column(String)
 
@@ -54,10 +54,27 @@ class Reviews(Base):
 
     __tablename__ = 'reviews'
 
-    id = Column(Integer, primary_key=True)
+    id = Column(Integer, primary_key=True, unique=True)
     jury = Column(String, primary_key=True)
     criteria1 = Column(Integer)
     criteria2 = Column(Integer)
     criteria3 = Column(Integer)
     criteria4 = Column(Integer)
     sum = Column(Integer)
+
+
+
+class Rating(Base):
+
+    __tablename__ = 'rating'
+
+    login = Column(String, primary_key=True)
+    last_name = Column(String)
+    first_name = Column(String)
+    middle_name = Column(String)
+    submit_id = Column(Integer, primary_key=True, unique=True)
+    university = Column(String)
+    event = Column(String)
+    theme = Column(String)
+    scientific_director = Column(String)
+    final_score = Column(Float)
