@@ -67,7 +67,8 @@ select option[value=""], select option:not([value]) { font-style: italic; }
 
 
 button[type=submit],
-button[disabled] {
+button[disabled],
+input::file-selector-button {
     font-size: 17px;
     padding: 2px 4px 0;
     border: 3px solid grey;
@@ -75,7 +76,8 @@ button[disabled] {
 
 button[disabled] { color: grey; }
 
-button[type=submit]:hover:not([disabled]) {
+button[type=submit]:hover:not([disabled]),
+input::file-selector-button:hover {
     cursor: pointer;
     border-image-slice: 1;
     border-image-source: linear-gradient(135deg, var(--ystu-blue), var(--ystu-orange));

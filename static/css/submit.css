@@ -1,5 +1,6 @@
 select#event, label[for="event"],
-select#theme, label[for="theme"] {
+select#theme, label[for="theme"],
+input[type=text] {
     width: 100%;
     margin-bottom: 12px;
 }
