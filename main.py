@@ -54,7 +54,6 @@ def check_if_admin():
         if session['login'] == 'admin':
             return True
 
-
 @app.route('/')
 def index():
     if check_if_admin():
