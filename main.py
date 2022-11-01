@@ -117,11 +117,11 @@ def login():
         return render_template('login.html', rights=check_rights())
 
     if request.method == 'POST':
-        row = db.users.get('login', request.form['login'])[0]
+        row = db.users.get('login', request.form['login'])
         if not row:
             return render_template('login.html', rights=check_rights(), error='Неправильный логин или пароль')
 
-        if check_password(request.form['password'], row.password):
+        if check_password(request.form['password'], row[0].password):
             user = User(login)
             login_user(user)
             session.modified = True
