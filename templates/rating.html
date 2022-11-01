@@ -8,12 +8,9 @@
     <script type="text/javascript" src="../static/js/jquery-3.6.1.min.js"></script>
     <script type="text/javascript" src="../static/js/jquery.tablesorter.js"></script>
     <script>
-        $(function() {
-            $("#ratingsTable").tablesorter({ sortList: [3,0]] });
-        });
-    </script>
-    <script>
         $(document).ready(function () {
+            $("#ratingsTable").tablesorter({ sortList: [[4,1]] });
+
             $('#event').val("{{ event_name }}");
             $('#theme').val("{{ theme_name }}");
 
@@ -65,13 +62,16 @@
 
 
     <table id="ratingsTable" style="visibility: {{ visibility }}{#{% if data_loaded %} visible {% else %} hidden {% endif %}#};">
-        <tr>
-            <th>ФИО</th>
-            <th>Работа</th>
-            <th>ВУЗ</th>
-            <th>Научный руководитель</th>
-            <th>Количество баллов</th>
-        </tr>
+        <thead>
+            <tr>
+                <th>ФИО</th>
+                <th>Работа</th>
+                <th>ВУЗ</th>
+                <th>Научный руководитель</th>
+                <th>Количество баллов</th>
+            </tr>
+        </thead>
+        <tbody>
         {% for row in data %}
             {% if row.event == event and row.theme == theme %}
                 <tr>
@@ -83,5 +83,6 @@
                 </tr>
             {% endif %}
         {% endfor %}
+        </tbody>
     </table>
 {% endblock %}
