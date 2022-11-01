@@ -22,9 +22,9 @@
                 <label for="login">E-Mail</label>
                 <input type="text" id="login" name="login" value="{{ data['login'] }}" placeholder="example@email.com" required />
                 <label for="password">Пароль</label>
-                <input type="password" id="password" name="password" value="{{ data['password'] }}" placeholder="Qw3R7y" required />
+                <input type="password" id="password" name="password" placeholder="Qw3R7y" required />
                 <label for="password_check">Повторите пароль</label>
-                <input type="password" id="password_check" name="password_check" value="{{ data['password'] }}" placeholder="Qw3R7y" required />
+                <input type="password" id="password_check" name="password_check" placeholder="Qw3R7y" required />
                 <button type="submit">Сохранить изменения</button>
             {% elif rights['login'] and rights['admin'] %}
                 <label for="login">E-Mail</label>

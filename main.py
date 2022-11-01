@@ -155,7 +155,7 @@ def edit():
         db.users.update('login', session['login'], 'first_name', request.form['first_name'])
         db.users.update('login', session['login'], 'middle_name', request.form['middle_name'])
         db.users.update('login', session['login'], 'university', request.form['university'])
-        db.users.update('login', session['login'], 'password', request.form['password'])
+        db.users.update('login', session['login'], 'password', hash_password(request.form['password']))
         db.users.update('login', session['login'], 'login', request.form['login'])
         session['login'] = request.form['login']
         data = db.users.get('login', session['login'])[0]
