@@ -9,7 +9,7 @@
     <script type="text/javascript" src="../static/js/jquery.tablesorter.js"></script>
     <script>
         $(function() {
-            $("#participantsTable").tablesorter();
+            $("#reviewTable").tablesorter();
         });
     </script>
     <script>
@@ -80,7 +80,7 @@
     </form>
 
 
-    <table style="visibility: {{ visibility }}{#{% if data_loaded %} visible {% else %} hidden {% endif %}#};">
+    <table id="reviewTable" style="visibility: {{ visibility }}{#{% if data_loaded %} visible {% else %} hidden {% endif %}#};">
         <tr>
             <th>ID</th>
             <th>Работа</th>
