@@ -14,25 +14,29 @@
 
 {% block content %}
     <table id="participantsTable">
-    <thead>
-    <tr>
-        <th>№</th>
-        <th>Фамилия</th>
-        <th>Имя</th>
-        <th>Отчество</th>
-        <th>ВУЗ</th>
-    </tr>
-    </thead>
-    <tbody>
-    {% for row in data %}
+        <thead>
         <tr>
-            <td>{{row.id}}</td>
-            <td>{{row.last_name}}</td>
-            <td>{{row.first_name}}</td>
-            <td>{{row.middle_name}}</td>
-            <td>{{row.university}}</td>
+            <th>№</th>
+            <th>Фамилия</th>
+            <th>Имя</th>
+            <th>Отчество</th>
+            <th>ВУЗ</th>
+            <th>Участие</th>
         </tr>
-    {% endfor %}
-    </tbody>
+        </thead>
+
+        <tbody>
+        {% for row in data %}
+            <tr>
+                <td>{{row.id}}</td>
+                <td>{{row.last_name}}</td>
+                <td>{{row.first_name}}</td>
+                <td>{{row.middle_name}}</td>
+                <td>{{row.university}}</td>
+                <td>{{row.participation }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+
     </table>
 {% endblock %}

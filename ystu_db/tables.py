@@ -14,7 +14,7 @@ class Users(Base):
     university = Column(String)
     login = Column(String, unique=True, primary_key=True)
     password = Column(String)
-
+    participation = Column(String)
 
 
 class Events(Base):

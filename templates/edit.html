@@ -10,7 +10,7 @@
     <form action='/edit' method='post'>
         <div class="error notification">{{message}}</div>
         <div class="login-form">
-            {% if not admin %}
+            {% if rights['login'] and not rights['admin'] %}
                 <label for="last_name">Фамилия</label>
                 <input type="text" id="last_name" name="last_name" value="{{ data['last_name'] }}" placeholder="Иванов" required />
                 <label for="first_name">Имя</label>
@@ -26,7 +26,7 @@
                 <label for="password_check">Повторите пароль</label>
                 <input type="password" id="password_check" name="password_check" value="{{ data['password'] }}" placeholder="Qw3R7y" required />
                 <button type="submit">Сохранить изменения</button>
-            {% else %}
+            {% elif rights['login'] and rights['admin'] %}
                 <label for="login">E-Mail</label>
                 <input type="text" id="login" name="login" value="{{ data['login'] }}">
                 <label for="password">Пароль</label>

@@ -1,41 +1,43 @@
 <!DOCTYPE html>
 <html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href= "/static/css/style.css">
-    <link rel="icon" href="/static/images/ystu_logo.svg">
-    {% block head %}
-        <title>Главная</title>
-        <link rel="stylesheet" href= "/static/css/index.css">
-        <link rel="stylesheet" href= "/static/css/center-page.css">
-    {% endblock %}
-</head>
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href= "/static/css/style.css">
+        <link rel="icon" href="/static/images/ystu_logo.svg">
+        {% block head %}
+            <title>Главная</title>
+            <link rel="stylesheet" href= "/static/css/index.css">
+            <link rel="stylesheet" href= "/static/css/center-page.css">
+        {% endblock %}
+    </head>
 
-<body>
-<div class="topnav">
-    <a href="https://www.ystu.ru" class="left" title="Сайт ЯГТУ">
-        <img src="/static/images/ystu_logo.svg" width="27" alt="ystu_logo">
-    </a>
+    <body>
+        <div class="topnav">
+            <a href="https://www.ystu.ru" class="left" title="Сайт ЯГТУ">
+                <img src="/static/images/ystu_logo.svg" width="27" alt="ystu_logo">
+            </a>
 
-    <a href="/" class="{% if request.path == "/" %}current{% endif %}">Главная</a><!--
- --><a href="/info/" class="{% if request.path == "/info/" %}current{% endif %}">Информация</a><!--
- --><a href="/events/" class="{% if request.path == "/events/" %}current{% endif %}">Мероприятия</a><!--
-    {% if admin %}
-     --><a href="/review/" class="{% if request.path == "/review/" %}current{% endif %}">Проверка</a><!--
-     --><a href="/participants/" class="{% if request.path == "/participants/" %}current{% endif %}">Участники</a><!--
-     --><a href="/rating/" class="{% if request.path == "/rating/" %}current{% endif %}">Рейтинг</a><!--
-    {% endif %}-->
+            <a href="/" class="{% if request.path == "/" %}current{% endif %}">Главная</a><!--
+         --><a href="/info/" class="{% if request.path == "/info/" %}current{% endif %}">Информация</a><!--
+         --><a href="/events/" class="{% if request.path == "/events/" %}current{% endif %}">Мероприятия</a><!--
+            {% if rights['admin'] %}
+            --><a href="/participants/" class="{% if request.path == "/participants/" %}current{% endif %}">Участники</a><!--
+             --><a href="/review/" class="{% if request.path == "/review/" %}current{% endif %}">Проверка</a><!--
+             --><a href="/rating/" class="{% if request.path == "/rating/" %}current{% endif %}">Рейтинг</a><!--
+            {% endif %}-->
 
-    {% if check_login or admin %}<a href="/edit/" class="right" title="Аккаунт">
-    {% else %}<a href="/login/" class="right" title="Аккаунт">
-    {% endif %}
-        <img src="/static/images/user_icon.svg" width="27" alt="user_icon">
-    </a>
-</div>
-<div class="content">
-{% block content %}
-    <h1>Кафедра иностранных языков ЯГТУ</h1>
-{% endblock %}
-</div>
-</body>
+            {% if rights['login'] %}
+                <a href="/edit/" class="right" title="Аккаунт">
+            {% else %}
+                <a href="/login/" class="right" title="Аккаунт">
+            {% endif %}
+                <img src="/static/images/user_icon.svg" width="27" alt="user_icon"></a>
+
+        </div>
+        <div class="content">
+        {% block content %}
+            <h1>Кафедра иностранных языков ЯГТУ</h1>
+        {% endblock %}
+        </div>
+    </body>
 </html>

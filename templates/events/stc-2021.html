@@ -19,9 +19,9 @@
                target="_blank" rel="noopener noreferrer">Статьи для перевода</a>
             <a href="https://docs.google.com/document/d/1JFrpwLh2Cb9CvD2lPOnUGS20X8-N_Ykv/edit"
                target="_blank" rel="noopener noreferrer">Чек-лист</a>
-            {% if admin %}
+            {% if rights['admin'] %}
                 <div class="participation-error">Невозможно участвовать с аккаунта администратора.</div>
-            {% elif check_login %}
+            {% elif rights['login'] %}
                 <form method="post" action="/events/stc-2021">
                     <button type="submit">Принять участие</button>
                 </form>
