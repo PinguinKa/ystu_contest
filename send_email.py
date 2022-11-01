@@ -25,7 +25,7 @@ def registration(recipient, user_password):
     msg = (MIMEText(template, "html"))
     msg["From"] = sender_name
     msg["To"] = recipient
-    msg["Subject"] = "Регистрация на кафедру иностранных языков ЯГТУ"
+    msg["Subject"] = "Регистрация на сайте кафедры иностранных языков ЯГТУ"
 
     _send(recipient, msg)
 
