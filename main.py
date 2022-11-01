@@ -9,14 +9,6 @@ from flask import Flask, render_template, request, url_for, redirect, session, s
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user
 
 
-def hash_password(plain_text_password):
-    return bcrypt.hashpw(plain_text_password.encode('utf-8'), bcrypt.gensalt())
-
-
-def check_password(plain_text_password, hashed_password):
-    return bcrypt.checkpw(plain_text_password.encode('utf-8'), hashed_password)
-
-
 app = Flask(__name__)
 app.config.update(
     SECRET_KEY='WOW SUCH SECRET'
@@ -36,11 +28,6 @@ class User(UserMixin):
 def load_user(user_login):
     return User(user_login)
 
-
-ALLOWED_EXTENSIONS = {'txt', 'pdf', 'doc', 'docx'}
-def allowed_file(filename):
-    return '.' in filename and \
-           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
 def check_rights():
@@ -86,6 +73,9 @@ def event(event):
 
 
 
+def hash_password(plain_text_password):
+    return bcrypt.hashpw(plain_text_password.encode('utf-8'), bcrypt.gensalt())
+
 @app.route('/register/', methods=['GET', 'POST'])
 def register():
     if check_rights()['login']:
@@ -109,6 +99,7 @@ def register():
         data = dict(request.form)
         data['id'] = len(db.users.get_all())
         data['participation'] = 'Этот пользователь ещё нигде не участвовал'
+        data['password'] = hash_password(request.form['password'])
         data.pop('password_check')
 
         db.users.put(data=data)
@@ -116,6 +107,9 @@ def register():
         return render_template('register.html', rights=check_rights(), message='Регистрация прошла успешно')
 
 
+
+def check_password(plain_text_password, hashed_password):
+    return bcrypt.checkpw(plain_text_password.encode('utf-8'), hashed_password)
 
 @app.route('/login/', methods=['GET', 'POST'])
 def login():
@@ -127,7 +121,7 @@ def login():
         if not row:
             return render_template('login.html', rights=check_rights(), error='Неправильный логин или пароль')
 
-        if request.form['password'] == row.password:
+        if check_password(request.form['password'], row.password):
             user = User(login)
             login_user(user)
             session.modified = True
@@ -169,6 +163,13 @@ def edit():
         send_email.edit(request.form['last_name'], request.form['first_name'], request.form['middle_name'],
                         request.form['university'], request.form['login'], request.form['password'])
         return render_template('edit.html', rights=check_rights(), message='Ваши изменения сохранены!', data=data)
+
+
+
+ALLOWED_EXTENSIONS = {'txt', 'pdf', 'doc', 'docx'}
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
 
