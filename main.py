@@ -133,7 +133,11 @@ def login():
 
 
 @app.route('/edit/', methods=['GET', 'POST'])
+@login_required
 def edit():
+    if not check_rights()['login']:
+        return redirect(url_for('index'))
+
     data = db.users.get('login', session['login'])[0]
 
     if request.method == 'GET':
@@ -170,8 +174,6 @@ ALLOWED_EXTENSIONS = {'txt', 'pdf', 'doc', 'docx'}
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
-
-
 
 @app.route("/submit/", methods=['GET', 'POST'])
 @login_required
@@ -238,6 +240,7 @@ def submit():
 
 
 @app.route('/participants/')
+@login_required
 def participants():
     if not check_rights()['admin']:
         return redirect(url_for('index'))
@@ -248,6 +251,7 @@ def participants():
 
 
 @app.route('/review/', methods=['GET', 'POST'])
+@login_required
 def review():
     events = db.events.get_all()
     themes = []
@@ -272,7 +276,7 @@ def download(id):
         return redirect(url_for('index'))
 
     upload = db.submits.get('id', id)[0]
-    return send_file(BytesIO(upload.file), rights=check_rights(), download_name=upload.filename, as_attachment=True)
+    return send_file(BytesIO(upload.file), download_name=upload.filename, as_attachment=True)
 
 
 
