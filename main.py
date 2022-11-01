@@ -32,12 +32,14 @@ def load_user(user_login):
 
 def check_rights():
     if 'login' in session:
-        if session['login'] == 'AdminAccess4618':
-            rights = {'admin': True, 'login': True}
+        if session['login'] == 'AdminAccess1812':
+            rights = {'admin': True, 'jury': False, 'login': True}
+        elif session['login'] == 'JuryMember3310':
+            rights = {'admin': False, 'jury': True, 'login': True}
         else:
-            rights = {'admin': False, 'login': True}
+            rights = {'admin': False, 'jury': False, 'login': True}
     else:
-        rights = {'admin': False, 'login': False}
+        rights = {'admin': False, 'jury': False, 'login': False}
     return rights
 
 
@@ -62,7 +64,6 @@ def events():
 
 
 @app.route('/events/<event>', methods=['GET', 'POST'])
-@login_required
 def event(event):
     if request.method == 'GET':
         return render_template(f'events/{event}.html', rights=check_rights())
@@ -178,7 +179,7 @@ def allowed_file(filename):
 @app.route("/submit/", methods=['GET', 'POST'])
 @login_required
 def submit():
-    if check_rights()['admin']:
+    if check_rights()['admin'] or check_rights()['jury']:
         return redirect(url_for('index'))
 
     events = db.events.get_all()
@@ -213,7 +214,8 @@ def submit():
                 if user_submit.event == request.form['event'] and user_submit.theme == request.form['theme']:
                     return render_template('submit.html', rights=check_rights(), message='Вы уже участвовали в этой номинации', events=events, themes=themes)
 
-            db.submits.put({'id': len(db.submits.get_all()) + 1,
+            id = len(db.submits.get_all()) + 1
+            db.submits.put({'id': id,
                             'login': session['login'],
                             'filename': file.filename,
                             'file': file.read(),
@@ -223,7 +225,6 @@ def submit():
                             'num_of_checks': 0
                             })
 
-            text = ''
             rows = db.users.get('login', session['login'])[0]
             event = db.events.get('name', request.form['event'])[0]
             participation = f"{event.title} - {request.form['theme']};  "
@@ -232,7 +233,7 @@ def submit():
             else:
                 db.users.update('login', session['login'], 'participation', rows.participation + participation)
 
-            send_email.participation(session['login'], db.events.get('name', request.form['event'])[0].title, request.form['theme'])
+            send_email.participation(session['login'], db.events.get('name', request.form['event'])[0].title, request.form['theme'], str(id))
             return render_template('submit.html', rights=check_rights(), message='Успешно загружено', events=events, themes=themes)
 
         return render_template('submit.html', rights=check_rights(), message='Неверный формат файла', events=events, themes=themes)
@@ -246,6 +247,7 @@ def participants():
         return redirect(url_for('index'))
     data = db.users.get_all()
     data.pop(0)
+    data.pop(0)
     return render_template('participants.html', rights=check_rights(), data=data)
 
 
@@ -258,7 +260,7 @@ def review():
     for event in events:
         themes.append(event.themes.split(', '))
 
-    if not check_rights()['admin']:
+    if not check_rights()['jury']:
         return redirect(url_for('index'))
 
     if request.method == 'POST':
@@ -272,7 +274,7 @@ def review():
 
 @app.route('/review/download/<id>')
 def download(id):
-    if not check_rights()['admin']:
+    if not check_rights()['admin'] and not check_rights()['jury']:
         return redirect(url_for('index'))
 
     upload = db.submits.get('id', id)[0]
@@ -282,7 +284,7 @@ def download(id):
 
 @app.route('/review/<id>', methods=['GET', 'POST'])
 def review_check(id):
-    if not check_rights()['admin']:
+    if not check_rights()['jury']:
         return redirect(url_for('index'))
 
     data = db.submits.get('id', int(id))[0]

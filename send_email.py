@@ -49,13 +49,14 @@ def edit(last_name, first_name, middle_name, university, recipient, user_passwor
     _send(recipient, msg)
 
 
-def participation(recipient, event, theme):
+def participation(recipient, event, theme, id):
     with open("templates/emails/participation.html", encoding='utf-8') as file:
         template = file.read()
 
     template = template.replace('{{ login }}', recipient)
     template = template.replace('{{ event }}', event)
     template = template.replace('{{ theme }}', theme)
+    template = template.replace('{{ id }}', id)
 
     msg = (MIMEText(template, "html"))
     msg["From"] = sender_name

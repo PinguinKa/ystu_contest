@@ -67,6 +67,7 @@
     <table id="ratingsTable" style="visibility: {{ visibility }}{#{% if data_loaded %} visible {% else %} hidden {% endif %}#};">
         <tr>
             <th>ФИО</th>
+            <th>Работа</th>
             <th>ВУЗ</th>
             <th>Научный руководитель</th>
             <th>Количество баллов</th>
@@ -75,6 +76,7 @@
             {% if row.event == event and row.theme == theme %}
                 <tr>
                     <td>{{row.last_name}} {{row.first_name}} {{row.middle_name}}</td>
+                    <td><a href="../review/download/{{row.submit_id}}">{{row.submit_id}}</a></td>
                     <td>{{row.university}}</td>
                     <td>{{row.scientific_director}}</td>
                     <td>{{row.final_score}}</td>

@@ -21,6 +21,8 @@
                target="_blank" rel="noopener noreferrer">Чек-лист</a>
             {% if rights['admin'] %}
                 <div class="participation-error">Невозможно участвовать с аккаунта администратора.</div>
+            {% elif rights['jury'] %}
+                <div class="participation-error">Невозможно участвовать с аккаунта члена жюри.</div>
             {% elif rights['login'] %}
                 <form method="post" action="/events/stc-2021">
                     <button type="submit">Принять участие</button>

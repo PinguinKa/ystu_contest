@@ -20,18 +20,22 @@
             <a href="/" class="{% if request.path == "/" %}current{% endif %}">Главная</a><!--
          --><a href="/info/" class="{% if request.path == "/info/" %}current{% endif %}">Информация</a><!--
          --><a href="/events/" class="{% if request.path == "/events/" %}current{% endif %}">Мероприятия</a><!--
+
             {% if rights['admin'] %}
-            --><a href="/participants/" class="{% if request.path == "/participants/" %}current{% endif %}">Участники</a><!--
-             --><a href="/review/" class="{% if request.path == "/review/" %}current{% endif %}">Проверка</a><!--
+             --><a href="/participants/" class="{% if request.path == "/participants/" %}current{% endif %}">Участники</a><!--
              --><a href="/rating/" class="{% if request.path == "/rating/" %}current{% endif %}">Рейтинг</a><!--
-            {% endif %}-->
+            {% endif %}
+
+            {% if rights['jury'] %}
+             --><a href="/review/" class="{% if request.path == "/review/" %}current{% endif %}">Проверка</a><!--
+            {% endif %}
 
             {% if rights['login'] %}
-                <a href="/edit/" class="right" title="Аккаунт">
+             --><a href="/edit/" class="right" title="Аккаунт"><!--
             {% else %}
-                <a href="/login/" class="right" title="Аккаунт">
+             --><a href="/login/" class="right" title="Аккаунт"><!--
             {% endif %}
-                <img src="/static/images/user_icon.svg" width="27" alt="user_icon"></a>
+         --><img src="/static/images/user_icon.svg" width="27" alt="user_icon"></a>
 
         </div>
         <div class="content">
