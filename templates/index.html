@@ -4,44 +4,66 @@
         <meta charset="UTF-8">
         <link rel="stylesheet" href= "/static/css/style.css">
         <link rel="icon" href="/static/images/ystu_logo.svg">
-        {% block head %}
-            <title>Главная</title>
-            <link rel="stylesheet" href= "/static/css/index.css">
-            <link rel="stylesheet" href= "/static/css/center-page.css">
-        {% endblock %}
+    {% block head %}
+        <title>Главная</title>
+        <link rel="stylesheet" href= "/static/css/index.css">
+        <link rel="stylesheet" href= "/static/css/center-page.css">
+    {% endblock %}
     </head>
 
     <body>
-        <div class="topnav">
-            <a href="https://www.ystu.ru" class="left" title="Сайт ЯГТУ">
-                <img src="/static/images/ystu_logo.svg" width="27" alt="ystu_logo">
+        <topnav>
+            <a href="https://www.ystu.ru" target="_blank" class="left" rel="noopener noreferrer" title="Сайт ЯГТУ">
+                <img src="/static/images/ystu_logo.svg" alt="ystu_logo">
             </a>
 
             <a href="/" class="{% if request.path == "/" %}current{% endif %}">Главная</a><!--
          --><a href="/info/" class="{% if request.path == "/info/" %}current{% endif %}">Информация</a><!--
          --><a href="/events/" class="{% if request.path == "/events/" %}current{% endif %}">Мероприятия</a><!--
 
-            {% if rights['admin'] %}
-             --><a href="/participants/" class="{% if request.path == "/participants/" %}current{% endif %}">Участники</a><!--
-             --><a href="/rating/" class="{% if request.path == "/rating/" %}current{% endif %}">Рейтинг</a><!--
-            {% endif %}
+        {% if rights['admin'] %}
+         --><a href="/participants/" class="{% if request.path == "/participants/" %}current{% endif %}">Участники</a><!--
+         --><a href="/rating/" class="{% if request.path == "/rating/" %}current{% endif %}">Рейтинг</a><!--
+        {% endif %}
 
-            {% if rights['jury'] %}
-             --><a href="/review/" class="{% if request.path == "/review/" %}current{% endif %}">Проверка</a><!--
-            {% endif %}
+        {% if rights['jury'] %}
+         --><a href="/review/" class="{% if request.path == "/review/" %}current{% endif %}">Проверка</a><!--
+        {% endif %}
 
-            {% if rights['login'] %}
-             --><a href="/edit/" class="right" title="Аккаунт"><!--
-            {% else %}
-             --><a href="/login/" class="right" title="Аккаунт"><!--
-            {% endif %}
-         --><img src="/static/images/user_icon.svg" width="27" alt="user_icon"></a>
+        {% if rights['login'] %}
+         --><a href="/edit/" class="right" title="Аккаунт"><!--
+        {% else %}
+         --><a href="/login/" class="right" title="Аккаунт"><!--
+        {% endif %}-->
+                <img src="/static/images/user_icon.svg" alt="user_icon">
+            </a>
+        </topnav>
 
-        </div>
         <div class="content">
         {% block content %}
-            <h1>Кафедра иностранных языков ЯГТУ</h1>
+            <h1>Кафедра иностранных<br/>языков ЯГТУ</h1>
         {% endblock %}
+
+        {% if request.path not in ["/"] %}
+            <footer>
+                <div class="contact">
+                    <div class="contact-name">E-Mail</div>
+                    <a href="mailto:inyaz.language@yandex.ru" target="_blank"
+                       rel="noopener noreferrer" class="contact-value">inyaz.language@yandex.ru</a>
+                </div><!--
+
+             --><div class="contact">
+                    <div class="contact-name">Телефон</div>
+                    <div class="contact-value">+7 (4852) 44-68-05</div>
+                </div><!--
+
+             --><div class="contact">
+                    <div class="contact-name">VK</div>
+                    <a href="https://vk.com/ystuforlang" target="_blank"
+                       rel="noopener noreferrer" class="contact-value">vk.com/ystuforlang</a>
+                </div>
+            </footer>
+        {% endif %}
         </div>
     </body>
 </html>
