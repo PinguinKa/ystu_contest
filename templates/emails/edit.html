@@ -1,63 +1,25 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <title>Изменение данных</title>
+{% extends "emails/registration.html" %}
 
-    <style>
-        html, body {
-            font-family: 'Segoe UI', Tahoma, Verdana, Arial, sans-serif;
-            font-size: 14px;
-        }
-
-        .subheader {
-            padding: 0;
-            font-family: 'Segoe UI Semibold', 'Segoe UI Bold', 'Segoe UI', 'Helvetica Neue Medium', Arial, sans-serif;
-            font-size: 16px;
-            color: #F07C00;
-        }
-
-        .header {
-            padding: 0;
-            font-family: 'Segoe UI Light', 'Segoe UI', 'Helvetica Neue Medium', Arial, sans-serif;
-            font-size: 32px;
-            color: #004589
-        }
-
-        .credentials {
-            padding-top: 16px;
-        }
-
-        .credentials div {
-            display: inline-block
-        }
-    </style>
-</head>
-
-<body>
-<div class="subheader">
-    Учётная запись кафедры иностранных языков ЯГТУ
-</div>
-<div class="header">
-    Информация об аккаунте была изменена
-</div>
-<div class="credentials">
-    <div>
-        Фамилия: <br/>
-        Имя: <br/>
-        Отчество: <br/>
-        ВУЗ: <br/>
-        E-Mail: <br/>
-        Пароль:
+{% block content %}
+    <div class="header">
+        Информация об аккаунте была изменена
     </div>
-    <div style="font-weight: bold">
-        {{ last_name }}<br/>
-        {{ first_name }}<br/>
-        {{ middle_name }}<br/>
-        {{ university }}<br/>
-        {{ login }}<br/>
-        {{ password }}
+    <div class="credentials">
+        <div>
+            Фамилия: <br/>
+            Имя: <br/>
+            Отчество: <br/>
+            ВУЗ: <br/>
+            E-Mail: <br/>
+            Пароль:
+        </div>
+        <div style="font-weight: bold">
+            {{ last_name }}<br/>
+            {{ first_name }}<br/>
+            {{ middle_name }}<br/>
+            {{ university }}<br/>
+            <a href="#" style="text-decoration: none; color: black">{{ login }}</a><br/>
+            {{ password }}
+        </div>
     </div>
-</div>
-</body>
-</html>
+{% endblock %}
