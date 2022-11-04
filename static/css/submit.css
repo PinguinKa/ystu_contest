@@ -1,3 +1,4 @@
+/* == Drop Downs == */
 select#event, label[for="event"],
 select#theme, label[for="theme"],
 input[type=text] {
@@ -5,4 +6,6 @@ input[type=text] {
     margin-bottom: 12px;
 }
 
+
+/* == Buttons == */
 button[type=submit] { float: right; }

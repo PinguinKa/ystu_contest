@@ -1,3 +1,4 @@
+/* == Grouped Boxes == */
 .event {
     width: 49%;
     float: left;
@@ -14,6 +15,7 @@
 }
 
 
+/* == Drop Downs == */
 select#jury, label[for="jury"],
 select#event, label[for="event"],
 select#theme, label[for="theme"],
@@ -23,10 +25,12 @@ select#theme, label[for="theme"],
 }
 
 
+/* == Buttons == */
 button[type=submit]:not([disabled]) {
     color: inherit;
     border-color: var(--ystu-blue);
 }
 
 
+/* == Table Elements == */
 th { text-align: center !important; }

@@ -1,8 +1,10 @@
+/* == Content Boxes == */
 .infobox, .event { width: 80%; }
 .infobox { margin: 20px 10%; }
 .event { margin: 10px 10%; }
 
 
+/* == Headers == */
 h2 {
     width: 80%;
     font-size: 55px;
@@ -20,6 +22,8 @@ h3 {
     font-weight: 300;
 }
 
+
+/* == Table Elements == */
 table.event {
     border-collapse: separate;
     border-spacing: 0 10px;
@@ -48,4 +52,6 @@ td.event_name {
 
 td.event_info { width: 37%; }
 
+
+/* == Participation Button == */
 button[type=submit], .participation-error { margin-top: 20px; }

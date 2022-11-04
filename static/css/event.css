@@ -1,6 +1,8 @@
+/* == Event's Content Box == */
 .infobox { margin: 20px 15%; }
 
 
+/* == Headers == */
 h2 {
     width: 80%;
     font-size: 55px;
@@ -19,6 +21,7 @@ h3 {
 }
 
 
+/* == Event's Page Elements == */
 .useful-links {
     font-size: 15pt;
     font-weight: bold;

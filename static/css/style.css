@@ -1,3 +1,4 @@
+/* == Roboto Font == */
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
 
 
@@ -24,6 +25,7 @@ img { display:block; }
 a { color: var(--ystu-blue); }
 
 
+/* == NavBar == */
 .left { float: left; }
 .right { float: right; }
 
@@ -76,6 +78,7 @@ topnav a:hover:not(.left):not(.right):nth-of-type(even),
 topnav a:nth-of-type(even).current { border-bottom: 5px solid var(--ystu-blue); }
 
 
+/* == Footer == */
 footer {
     position: absolute;
     background: white;
@@ -121,6 +124,7 @@ footer .contact .contact-value {
 }
 
 
+/* == Page Content == */
 .content {
     position: relative;
     min-height: calc(100vh - (var(--navbar-height) + var(--navbar-border-width) +

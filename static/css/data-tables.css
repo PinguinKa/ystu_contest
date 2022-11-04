@@ -1,14 +1,15 @@
 :root {
-    --border-radius: 10px;
+    --table-border-radius: 10px;
 }
 
 
+/* == Table Elements == */
 table {
     margin: 20px auto;
     width: 80%;
     border: none;
     border-collapse: collapse;
-    border-radius: var(--border-radius);
+    border-radius: var(--table-border-radius);
     empty-cells: show;
 }
 
@@ -22,10 +23,10 @@ tr:first-of-type th { cursor: pointer; }
 
 td + td { border-left: 1px solid #a4a4a4; }
 
-tr:first-of-type th:first-of-type { border-top-left-radius: var(--border-radius) !important; }
-tr:first-of-type th:last-of-type { border-top-right-radius: var(--border-radius) !important; }
-tr:last-of-type td:first-of-type { border-bottom-left-radius: var(--border-radius) !important; }
-tr:last-of-type td:last-of-type { border-bottom-right-radius: var(--border-radius) !important; }
+tr:first-of-type th:first-of-type { border-top-left-radius: var(--table-border-radius) !important; }
+tr:first-of-type th:last-of-type { border-top-right-radius: var(--table-border-radius) !important; }
+tr:last-of-type td:first-of-type { border-bottom-left-radius: var(--table-border-radius) !important; }
+tr:last-of-type td:last-of-type { border-bottom-right-radius: var(--table-border-radius) !important; }
 
 tr>:nth-child(1) { text-align: right; }
 

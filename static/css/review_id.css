@@ -1,14 +1,18 @@
+/* == Headers == */
 .header {
     text-align: center;
     margin: 12px auto;
 }
 
 
+/* == Labels == */
 label {
     font-size: 18px;
     font-weight: normal;
 }
 
+
+/* == Inputs == */
 input {
     font-size: 17px;
     width: 24px;

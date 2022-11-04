@@ -1,3 +1,4 @@
+/* == Image On Full Page == */
 body {
     background-image: url("../images/library.jpg");
     background-position: center;
@@ -6,7 +7,7 @@ body {
 }
 
 
-
+/* == Site Title Header == */
 h1 {
     font-size: 125px;
     background-color: rgba(0, 0, 0, .75);
