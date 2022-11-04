@@ -1,7 +1,13 @@
+/* == Contents == */
+.wrapper {
+    min-height: inherit;
+}
+
+
 /* == Headers == */
 .header {
     text-align: center;
-    margin: 12px auto;
+    margin: 24px auto;
 }
 
 

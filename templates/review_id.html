@@ -8,9 +8,9 @@
 {% endblock %}
 
 {% block content %}
-    <div>
+    <div class="wrapper">
     <div class="header">
-        <a href="../review/download/{{data.id}}" target="_blank" rel="noopener noreferrer">повторно скачать работу</a>
+        <a href="../review/download/{{data.id}}" target="_blank" rel="noopener noreferrer">СКАЧАТЬ РАБОТУ</a>
     </div>
     <form action="/review/{{data.id}}" method="post">
         <div class="error notification">{{message}}</div>
