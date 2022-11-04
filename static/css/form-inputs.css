@@ -1,7 +1,7 @@
 .login-form,
 .logout-form,
 .submit-form {
-    padding: 12px 6px;
+    padding: 12px 0;
     margin: auto;
     width: 255px;
     display: flex;
@@ -17,7 +17,7 @@ label[for=personal_data] { margin-bottom: 12px; }
 .submit-form {
      margin: 12px auto;
      width: 400px;
- }
+}
 
 
 label {
@@ -45,6 +45,10 @@ input:not(:placeholder-shown) {
     outline: none;
     border-image-slice: 1;
     border-image-source: linear-gradient(to right, var(--ystu-blue), var(--ystu-orange));
+}
+
+input[type=checkbox] {
+    margin: 1px;
 }
 
 
@@ -84,5 +88,13 @@ input::file-selector-button:hover {
 }
 
 
-.notification { text-align: center; }
-.error { color: red; }
+.notification {
+    text-align: center;
+    margin-bottom: 12px;
+}
+
+.error {
+    margin-top: 12px;
+    margin-bottom: 0 !important;
+    color: red;
+}

@@ -8,7 +8,9 @@
 
 {% block content %}
     <form action='/edit' method='post'>
+    {% if message %}
         <div class="error notification">{{message}}</div>
+    {% endif %}
         <div class="login-form">
             {% if rights['login'] and not rights['admin'] and not rights['jury'] %}
                 <label for="last_name">Фамилия</label>

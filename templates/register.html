@@ -8,7 +8,9 @@
 
 {% block content %}
     <form action='/register' method='post'>
+    {% if message %}
         <div class="error notification">{{message}}</div>
+    {% endif %}
         <div class="login-form">
             <label for="last_name">Фамилия</label>
             <input type="text" id="last_name" name="last_name" placeholder="Иванов" required />
@@ -19,13 +21,13 @@
             <label for="university">ВУЗ (полное название)</label>
             <input type="text" id="university" name="university" placeholder="Ярославский государственный технический университет" required />
             <label for="login">E-Mail</label>
-            <input type="text" id="login" name="login" placeholder="example@email.com" required />
+            <input type="text" id="login" name="login" placeholder="example@email.net" required />
             <label for="password">Пароль</label>
             <input type="password" id="password" name="password" placeholder="Qw3R7y" required />
             <label for="password_check">Повторите пароль</label>
             <input type="password" id="password_check" name="password_check" placeholder="Qw3R7y" required />
             <label for="personal_data">
-                <input type="checkbox" value="Bike" required />
+                <input type="checkbox" id="personal_data" name="personal_data" required />
                 Соглашаюсь на <a href="">обработку персональных данных</a>
             </label>
             <button type="submit">Зарегистрироваться</button>
