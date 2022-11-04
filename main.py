@@ -148,7 +148,7 @@ def edit():
             return render_template('edit.html', rights=check_rights(), message='Неправильный формат почты', data=data)
 
         if request.form['password'] != request.form['password_check']:
-            return render_template('edit.html', rights=check_rights(), message='Пароли не совпадают')
+            return render_template('edit.html', rights=check_rights(), message='Пароли не совпадают', data=data)
 
         db.users.update('login', session['login'], 'last_name', request.form['last_name'])
         db.users.update('login', session['login'], 'first_name', request.form['first_name'])
