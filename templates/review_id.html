@@ -3,10 +3,12 @@
 {% block head %}
     <title>Оценка работы</title>
     <link rel="stylesheet" href= "/static/css/review_id.css">
+    <link rel="stylesheet" href= "/static/css/center-page.css">
     <link rel="stylesheet" href= "/static/css/form-inputs.css">
 {% endblock %}
 
 {% block content %}
+    <div>
     <div class="header">
         <a href="../review/download/{{data.id}}" target="_blank" rel="noopener noreferrer">повторно скачать работу</a>
     </div>
@@ -22,4 +24,5 @@
         <input type="number" id="criteria4" name='criteria4' min="0" max="5" step="1" value="0"/><br/>
         <button type="submit">Оценить</button>
     </form>
+    </div>
 {% endblock %}
