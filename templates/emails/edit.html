@@ -1,6 +1,41 @@
-{% extends "emails/registration.html" %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Регистрация</title>
 
-{% block content %}
+    <style>
+        html, body {
+            font-family: 'Segoe UI', Tahoma, Verdana, Arial, sans-serif;
+            font-size: 14px;
+        }
+
+        .subheader {
+            padding: 0;
+            font-family: 'Segoe UI Semibold', 'Segoe UI Bold', 'Segoe UI', 'Helvetica Neue Medium', Arial, sans-serif;
+            font-size: 16px;
+            color: #F07C00;
+        }
+
+        .subheader a { color: #F07C00; }
+
+        .header {
+            padding: 0;
+            font-family: 'Segoe UI Light', 'Segoe UI', 'Helvetica Neue Medium', Arial, sans-serif;
+            font-size: 32px;
+            color: #004589
+        }
+
+        .credentials { padding-top: 16px; }
+
+        .credentials div { display: inline-block }
+    </style>
+</head>
+
+<body>
+<div class="subheader">
+    Учётная запись <a href="http://forlang.pythonanywhere.com">кафедры иностранных языков ЯГТУ</a>
+</div>
     <div class="header">
         Информация об аккаунте была изменена
     </div>
@@ -22,4 +57,5 @@
             {{ password }}
         </div>
     </div>
-{% endblock %}
+</body>
+</html>
