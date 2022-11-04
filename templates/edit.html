@@ -7,10 +7,10 @@
 {% endblock %}
 
 {% block content %}
+    <div class="wrapper">
 {% if message %}
     <div class="error notification">{{message}}</div>
 {% endif %}
-    <div>
     <form action="/edit" method="post" class="edit-form">
     {% if rights['login'] and not rights['admin'] and not rights['jury'] %}
         <label for="last_name">Фамилия</label>
