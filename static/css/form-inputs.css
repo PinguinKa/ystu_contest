@@ -1,23 +1,23 @@
 /* == Forms == */
 .login-form,
+.edit-form,
 .logout-form,
 .submit-form {
-    padding: 12px 0;
-    margin: auto;
+    margin: 12px auto;
     width: 255px;
     display: flex;
     flex-direction: column;
 }
 
-.login-form input[type=text],
-.login-form input[type=password],
+input[type=text],
+input[type=password],
 .submit-form select,
 label.personal_data { margin-bottom: 12px; }
 
 .select-form,
 .submit-form {
-     margin: 12px auto;
-     width: 400px;
+    margin: 12px auto;
+    width: 400px;
 }
 
 
