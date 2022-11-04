@@ -1,3 +1,4 @@
+/* == Forms == */
 .login-form,
 .logout-form,
 .submit-form {
@@ -11,7 +12,7 @@
 .login-form input[type=text],
 .login-form input[type=password],
 .submit-form select,
-label[for=personal_data] { margin-bottom: 12px; }
+label.personal_data { margin-bottom: 12px; }
 
 .select-form,
 .submit-form {
@@ -20,12 +21,14 @@ label[for=personal_data] { margin-bottom: 12px; }
 }
 
 
+/* == Labels == */
 label {
     font-size: 15px;
     font-weight: bold;
 }
 
 
+/* == Inputs == */
 input[type=text],
 input[type=password],
 input[type=number] {
@@ -52,6 +55,7 @@ input[type=checkbox] {
 }
 
 
+/* == Drop Downs == */
 select {
     font-size: 17px;
     padding: 2px 0 0;
@@ -70,6 +74,7 @@ select > option { font-style: normal; }
 select option[value=""], select option:not([value]) { font-style: italic; }
 
 
+/* == Buttons == */
 button[type=submit],
 button[disabled],
 input::file-selector-button {
@@ -88,6 +93,7 @@ input::file-selector-button:hover {
 }
 
 
+/* == Notifications == */
 .notification {
     text-align: center;
     margin-bottom: 12px;
