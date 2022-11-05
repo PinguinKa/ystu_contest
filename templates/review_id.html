@@ -5,14 +5,23 @@
     <link rel="stylesheet" href= "/static/css/review_id.css">
     <link rel="stylesheet" href= "/static/css/center-page.css">
     <link rel="stylesheet" href= "/static/css/form-inputs.css">
-    <script type="text/javascript" src="../static/js/jquery-3.6.1.min.js"></script>
+    <link rel="stylesheet" href="/static/css/bars-pill.css">
+    <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script type="text/javascript" src="../static/js/jquery.barrating.min.js"></script>
     <script>
         $(document).ready(function () {
             $('#requirement').on('change', function() {
-                if ($('#criteria').css('visibility') == 'hidden')
-                    $('#criteria').css('visibility', 'visible');
+                if ($('#criteria').css('display') == 'none')
+                    $('#criteria').css('display', 'block');
                 else
-                    $('#criteria').css('visibility', 'hidden');
+                    $('#criteria').css('display', 'none');
+            });
+
+            $('.rating').barrating({
+                theme: 'bars-pill',
+                initialRating: '0',
+                showValues: true,
+                showSelectedRating: false
             });
         });
     </script>
@@ -24,7 +33,14 @@
         <a href="../review/download/{{data.id}}" target="_blank" rel="noopener noreferrer">СКАЧАТЬ РАБОТУ</a>
     </div>
     <form action="/review/{{data.id}}" method="post">
-        <label>
+        <h3>Требования</h3>
+        <ul>
+            <li>Максимум 2 500 знаков (с интервалами)</li>
+            <li>Библиографическая запись + текст</li>
+            <li>Запрещена любая явная и неявная идентификация участника, а также схемы, рисунки и т.д.</li>
+        </ul>
+
+        <label for="requirement">
             <input type="checkbox" id="requirement" required />
             Соответствует требованиям
         </label>
@@ -33,15 +49,52 @@
         <div class="error notification">{{message}}</div>
     {% endif %}
 
-        <div id="criteria" style="visibility: hidden">
-            <label for="criteria1">Полнота изложения реферируемого материала: </label>
-            <input type="number" id="criteria1" name='criteria1' min="0" max="5" step="1" value="0"/><br/>
-            <label for="criteria2">Информативность и доступность изложения: </label>
-            <input type="number" id="criteria2" name='criteria2' min="0" max="5" step="1" value="0"/><br/>
-            <label for="criteria3">Качество русского языка: </label>
-            <input type="number" id="criteria3" name='criteria3' min="0" max="5" step="1" value="0"/><br/>
-            <label for="criteria4">Умение работать с аудиторией: </label>
-            <input type="number" id="criteria4" name='criteria4' min="0" max="5" step="1" value="0"/><br/>
+        <div id="criteria" style="display: none">
+            <label for="criteria1">Заголовок</label>
+            <ul>
+                <li>1 балл — Перевод заголовка</li>
+                <li>1 балл — Стилистика перевода</li>
+            </ul>
+            <select id="criteria1" class="rating">
+                <option value="0">0</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+            </select>
+
+            <label for="criteria2">Полнота изложения</label>
+            <ul>
+                <li>1 балл — Выделение существенной информации</li>
+                <li>1 балл — Соблюдение логики источника</li>
+            </ul>
+            <select id="criteria2" class="rating">
+                <option value="0">0</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+            </select>
+
+            <label for="criteria3">Доступность изложения</label>
+            <ul>
+                <li>1 балл — Простой язык</li>
+                <li>1 балл — Соответствие речевым нормам</li>
+            </ul>
+            <select id="criteria3" class="rating">
+                <option value="0">0</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+            </select>
+
+            <label for="criteria4">Прочие нормы</label>
+            <ul>
+                <li>1 балл — Корректное употребление терминов</li>
+                <li>1 балл — Корректная передача имен собственных</li>
+                <li>1 балл — Следование нормам орфографии и грамматики русского языка</li>
+            </ul>
+            <select id="criteria4" class="rating">
+                <option value="0">0</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+            </select>
         </div>
 
         <div class="center">
