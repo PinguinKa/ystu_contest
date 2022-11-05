@@ -13,8 +13,15 @@
 
 /* == Labels == */
 label {
-    font-size: 18px;
-    font-weight: normal;
+    display: inline-block;
+    margin: 12px 0 0;
+}
+
+h3,
+label:not([for=requirement]) {
+    font-size: 18pt;
+    margin: 12px 0 6px;
+    font-weight: 300;
 }
 
 
@@ -29,4 +36,12 @@ input[value]:not([value="0"]) {
     outline: none;
     border-image-slice: 1;
     border-image-source: linear-gradient(to right, var(--ystu-blue), var(--ystu-orange));
+}
+
+
+/* == Text == */
+ul {
+    font-size: 11.5pt;
+    margin: 0;
+    padding-inline-start: 19px;
 }
