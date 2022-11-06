@@ -21,7 +21,7 @@ label {
 h3,
 label:not([for=requirements_met]) {
     font-size: 18pt;
-    margin: 12px 0 6px;
+    margin: 12px 7px 6px;
     font-weight: 300;
 }
 
