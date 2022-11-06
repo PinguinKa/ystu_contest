@@ -337,7 +337,7 @@ def review_check(id):
             db.submits.update('id', int(id), 'jury_members', session['jury'])
 
         return render_template('review_id.html', rights=check_rights(), data=data,
-                               message='Вы уже проверили эту работу')
+                               message='Работа проверена')
     return render_template('review_id.html', rights=check_rights(), data=data)
 
 
