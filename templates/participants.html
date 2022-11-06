@@ -7,7 +7,7 @@
     <script type="text/javascript" src="../static/js/jquery.tablesorter.js"></script>
     <script>
         $(document).ready(function () {
-            $("#participantsTable").tablesorter();
+            $("#participantsTable").tablesorter({ sortList: [[0,0]] });
         });
     </script>
 {% endblock %}
@@ -29,7 +29,7 @@
                 <td>{{row.id - 1}}</td>
                 <td>{{row.last_name}} {{row.first_name}} {{row.middle_name}}</td>
                 <td>{{row.university}}</td>
-                <td>{{row.participation }}</td>
+                <td>{{row.participation}}</td>
             </tr>
         {% endfor %}
         </tbody>
