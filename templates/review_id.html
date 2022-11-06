@@ -29,6 +29,9 @@
 
 {% block content %}
     <div class="wrapper">
+{% if message %}
+    <div class="error notification">{{message}}</div>
+{% endif %}
     <div class="center">
         <a href="../review/download/{{data.id}}" target="_blank" rel="noopener noreferrer">СКАЧАТЬ РАБОТУ</a>
     </div>
@@ -44,10 +47,6 @@
             <input type="checkbox" id="requirement" />
             Соответствует требованиям
         </label>
-
-    {% if message %}
-        <div class="error notification">{{message}}</div>
-    {% endif %}
 
         <div id="criteria" style="display: none">
             <label for="criteria1">Заголовок</label>
