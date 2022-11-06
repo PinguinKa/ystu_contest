@@ -30,7 +30,3 @@ button[type=submit]:not([disabled]) {
     color: inherit;
     border-color: var(--ystu-blue);
 }
-
-
-/* == Table Elements == */
-th { text-align: center !important; }

@@ -9,7 +9,7 @@
     <script type="text/javascript" src="../static/js/jquery.tablesorter.js"></script>
     <script>
         $(document).ready(function () {
-            $("#reviewTable").tablesorter();
+            $('#reviewTable').tablesorter({ sortList: [[0,0]] });
 
             $('#jury').val("{{ jury_name }}");
             $('#event').val("{{ event_name }}");
@@ -54,9 +54,9 @@
                     <label for="event">Мероприятие</label>
                     <select id="event" name="event" required>
                         <option value="">-- Нужно выбрать --</option>
-                        {% for event in events %}
-                            <option value="{{ event.name }}">{{ event.title }}</option>
-                        {% endfor %}
+                    {% for event in events %}
+                        <option value="{{ event.name }}">{{ event.title }}</option>
+                    {% endfor %}
                     </select>
                 </div>
 
@@ -64,9 +64,9 @@
                     <label for="theme">Тема</label>
                     <select id="theme" name="theme" required>
                         <option value="">-- Нужно выбрать --</option>
-                        {% for theme in themes[0]  %}
-                            <option value="{{ theme }}">{{ theme }}</option>
-                        {% endfor %}
+                    {% for theme in themes[0]  %}
+                        <option value="{{ theme }}">{{ theme }}</option>
+                    {% endfor %}
                     </select>
                 </div>
             </div>
@@ -80,29 +80,34 @@
     <table id="reviewTable" style="visibility: {{ visibility }}{#{% if data_loaded %} visible {% else %} hidden {% endif %}#};">
         <thead>
             <tr>
-                <th>Уникальный код</th>
-                <th>Работа</th>
+                <th>Проверена</th>
+                <th>ID</th>
                 <th>Проверка</th>
-                <th>Кол-во проверок</th>
                 <th>Проверившие члены жюри</th>
+                <th>#</th>
             </tr>
         </thead>
         <tbody>
-        {% for row in data %}
-            {% if row.event == event and row.theme == theme %}
-                <tr>
-                    <td>{{row.id}}</td>
-                    <td><a href="download/{{row.id}}" target="_blank" rel="noopener noreferrer">{{row.filename}}</a></td>
-                    <td><a href="{{row.id}}" target="_blank" rel="noopener noreferrer">Оценить</a></td>
-                    <td>{{row.num_of_checks}}</td>
-                    {% if row.jury_members %}
-                        <td>{{row.jury_members}}</td>
-                    {% else %}
-                        <td>Эта работа ещё не проверена</td>
-                    {% endif %}
-                </tr>
+    {% for row in data %}
+        {% if row.event == event and row.theme == theme %}
+            {% if jury_name in row.jury_members %}
+            <tr class="reviewed">
+                <td value="1" style="text-align: center;">✔️</td>
+            {% else %}
+            <tr>
+                <td value="0" style="text-align: center;">❌</td>
             {% endif %}
-        {% endfor %}
+                <td>{{row.id}}</td>
+                <td style="text-align: center;"><a href="{{row.id}}" target="_blank" rel="noopener noreferrer">Оценить</a></td>
+            {% if row.jury_members %}
+                <td>{{row.jury_members}}</td>
+            {% else %}
+                <td>Эта работа ещё не проверена</td>
+            {% endif %}
+                <td>{{row.num_of_checks}}</td>
+            </tr>
+        {% endif %}
+    {% endfor %}
         </tbody>
     </table>
 {% endblock %}

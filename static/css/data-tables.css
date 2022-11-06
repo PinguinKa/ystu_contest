@@ -7,9 +7,7 @@
 table {
     margin: 20px auto;
     width: 80%;
-    border: none;
     border-collapse: collapse;
-    border-radius: var(--table-border-radius);
     empty-cells: show;
 }
 
@@ -19,25 +17,43 @@ th {
     color: white;
 }
 
-tr:first-of-type th { cursor: pointer; }
-
-td + td { border-left: 1px solid #a4a4a4; }
+td { border-top: 1px solid white; }
+td + td, th + th { border-left: 1px solid white; }
 
 tr:first-of-type th:first-of-type { border-top-left-radius: var(--table-border-radius) !important; }
 tr:first-of-type th:last-of-type { border-top-right-radius: var(--table-border-radius) !important; }
 tr:last-of-type td:first-of-type { border-bottom-left-radius: var(--table-border-radius) !important; }
 tr:last-of-type td:last-of-type { border-bottom-right-radius: var(--table-border-radius) !important; }
 
-tr>:nth-child(1) { text-align: right; }
+th { padding: 10px; }
+td { padding: 5px 10px; }
 
-th, td {
-    padding: 12px 15px;
+tr:nth-of-type(odd) { background-color: rgba(0, 0, 0, 0.1); }
+tr:nth-of-type(even) { background-color: rgba(0, 0, 0, 0.2); }
+tr:hover { background-color: rgba(0, 69, 137, 0.25); }
+
+#reviewTable tr:nth-of-type(odd) { background-color: rgba(240, 58, 23, 0.3); }
+#reviewTable tr:nth-of-type(even) { background-color: rgba(240, 58, 23, 0.4); }
+#reviewTable tr.reviewed:nth-of-type(odd) { background-color: rgba(22, 198, 12, 0.3); }
+#reviewTable tr.reviewed:nth-of-type(even) { background-color: rgba(22, 198, 12, 0.4); }
+
+#reviewTable tr:hover { background-color: rgba(240, 58, 23, 0.2); }
+#reviewTable tr.reviewed:hover { background-color: rgba(22, 198, 12, 0.2); }
+
+/* TableSorter */
+.tablesorter-header {
+    padding-right: 20px;
+    background-image: url("/static/css/icons/metro-unsorted.png");
+    background-position: center right 4px;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    white-space: normal;
 }
 
-tr:nth-of-type(even) {
-    background-color: #ddd;
-}
+.tablesorter-headerAsc { background-image: url("/static/css/icons/metro-white-asc.png"); }
+.tablesorter-headerDesc { background-image: url("/static/css/icons/metro-white-desc.png"); }
 
-tr:hover {
-    background-color: #ccd;
+.tablesorter .sorter-false {
+    background-image: none;
+    cursor: default;
 }
