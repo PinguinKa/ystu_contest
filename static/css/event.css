@@ -1,5 +1,8 @@
 /* == Event's Content Box == */
-.infobox { margin: 20px 15%; }
+.infobox {
+    width: 70%;
+    margin: 20px auto;
+}
 
 
 /* == Headers == */
