@@ -1,25 +1,71 @@
 /* == Content Boxes == */
-.infobox, .event { width: 80%; }
-.infobox { margin: 20px 10%; }
-.event { margin: 10px 10%; }
+.infobox {
+    width: 70%;
+    margin: 20px auto;
+}
+
+.event {
+    width: 80%;
+    margin: 10px auto;
+}
 
 
 /* == Headers == */
 h2 {
     width: 80%;
-    font-size: 55px;
     color: white;
     background: var(--ystu-blue);
     padding: 20px 10%;
 
     margin: 0;
-    font-weight: normal;
+    font-size: 55px;
+    font-weight: 400;
+}
+
+h2.event-name {
+    font-size: 40px;
+    font-weight: 300;
 }
 
 h3 {
-    font-size: 22pt;
     margin: 18px 24px 12px;
+    font-size: 22pt;
     font-weight: 300;
+}
+
+
+/* == Event's Page Elements == */
+.useful-links {
+    font-size: 15pt;
+    font-weight: bold;
+}
+
+.useful-links a:not([href="/login"]) {
+    display: block;
+    text-decoration: none;
+
+    margin-bottom: 2px;
+
+    width: fit-content;
+    block-size: fit-content;
+}
+
+
+/* == Text == */
+p {
+    margin: 0 0 12px;
+    font-size: 13.2pt;
+}
+
+ul {
+    margin: 0 0 12px;
+    font-size: 13.2pt;
+    padding-inline-start: 19px;
+}
+
+
+.participation-error {
+    margin-bottom: 2px;
 }
 
 
@@ -34,15 +80,15 @@ table.event td {
     padding: 10px 7px;
 }
 
-td.event_date {
+td.event-date {
     width: 18%;
     font-size: 25px;
     word-wrap: unset;
 }
 
-td.event_date div { display: inline-block; }
+td.event-date div { display: inline-block; }
 
-td.event_name {
+td.event-name {
     text-align: center;
     width: 25%;
     font-size: 35px;
@@ -50,8 +96,31 @@ td.event_name {
     border-right: 1px solid gray !important;
 }
 
-td.event_info { width: 37%; }
+td.event-info { width: 37%; }
+
+
+/* == More Info Button == */
+.event-info button[type=submit],
+.event-info .participation-error { margin-top: 20px; }
 
 
 /* == Participation Button == */
-button[type=submit], .participation-error { margin-top: 20px; }
+.useful-links button[type=submit] {
+    display: block;
+
+    border: none;
+    padding: 0;
+    margin: 0 0 2px;
+
+    font-size: 15pt;
+    font-weight: bold;
+
+    width: fit-content;
+    block-size: fit-content;
+
+    cursor: pointer;
+
+    background: linear-gradient(135deg, var(--ystu-blue), var(--ystu-orange));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
