@@ -11,8 +11,7 @@
 
 input[type=text],
 input[type=password],
-.submit-form select,
-label.personal_data { margin-bottom: 12px; }
+.submit-form select { margin-bottom: 12px; }
 
 .select-form,
 .submit-form {
@@ -50,8 +49,66 @@ input:not(:placeholder-shown) {
     border-image-source: linear-gradient(to right, var(--ystu-blue), var(--ystu-orange));
 }
 
-input[type=checkbox] {
-    margin: 1px;
+/* Checkboxes */
+.checkbox-label {
+    display: block;
+    position: relative;
+    padding-left: 22px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.checkbox-label input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+.checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 13px;
+    width: 13px;
+    border: 1px solid #bbb;
+    border-radius: 999px;
+}
+
+.checkbox-label:hover input ~ .checkmark {
+    background-color: #bbb;
+}
+
+.checkbox-label input:checked ~ .checkmark {
+    background-color: var(--ystu-orange);
+    border-color: var(--ystu-orange);
+}
+
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+.checkbox-label input:checked ~ .checkmark:after {
+    display: block;
+}
+
+.checkbox-label .checkmark:after {
+    left: 4px;
+    top: -1px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
 }
 
 
