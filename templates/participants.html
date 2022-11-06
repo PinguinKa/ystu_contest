@@ -15,23 +15,19 @@
 {% block content %}
     <table id="participantsTable">
         <thead>
-        <tr>
-            <th>№</th>
-            <th>Фамилия</th>
-            <th>Имя</th>
-            <th>Отчество</th>
-            <th>ВУЗ</th>
-            <th>Участие</th>
-        </tr>
+            <tr>
+                <th>№</th>
+                <th>ФИО</th>
+                <th>ВУЗ</th>
+                <th>Участие</th>
+            </tr>
         </thead>
 
         <tbody>
         {% for row in data %}
             <tr>
                 <td>{{row.id - 1}}</td>
-                <td>{{row.last_name}}</td>
-                <td>{{row.first_name}}</td>
-                <td>{{row.middle_name}}</td>
+                <td>{{row.last_name}} {{row.first_name}} {{row.middle_name}}</td>
                 <td>{{row.university}}</td>
                 <td>{{row.participation }}</td>
             </tr>
