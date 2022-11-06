@@ -290,14 +290,15 @@ def review_check(id):
         return redirect(url_for('index'))
 
     data = db.submits.get('id', int(id))[0]
-    if request.method == 'POST':
 
+    if request.method == 'GET':
         checks = db.reviews.get('id', int(id))
         for check in checks:
             if check.id == int(id) and session['jury'] == check.jury:
                 return render_template('review_id.html', rights=check_rights(), data=data,
                                        message='Вы уже проверили эту работу')
 
+    if request.method == 'POST':
         criteria1 = int(request.form['criteria1'])
         criteria2 = int(request.form['criteria2'])
         criteria3 = int(request.form['criteria3'])
