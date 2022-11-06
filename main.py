@@ -336,7 +336,8 @@ def review_check(id):
         else:
             db.submits.update('id', int(id), 'jury_members', session['jury'])
 
-        return render_template('review_id.html', rights=check_rights(), data=data)
+        return render_template('review_id.html', rights=check_rights(), data=data,
+                               message='Вы уже проверили эту работу')
     return render_template('review_id.html', rights=check_rights(), data=data)
 
 
