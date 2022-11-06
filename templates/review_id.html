@@ -10,7 +10,7 @@
     <script type="text/javascript" src="../static/js/jquery.barrating.min.js"></script>
     <script>
         $(document).ready(function () {
-            $('#requirement').on('change', function() {
+            $('#requirements_met').on('change', function() {
                 if (this.checked)
                     $('#criteria').css('display', 'block');
                 else
@@ -43,8 +43,8 @@
             <li>Запрещена любая явная и неявная идентификация участника, а также схемы, рисунки и т.д.</li>
         </ul>
 
-        <label for="requirement">
-            <input type="checkbox" id="requirement" />
+        <label for="requirements_met">
+            <input type="checkbox" id="requirements_met" />
             Соответствует требованиям
         </label>
 

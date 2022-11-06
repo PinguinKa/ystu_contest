@@ -299,10 +299,23 @@ def review_check(id):
                                        message='Вы уже проверили эту работу')
 
     if request.method == 'POST':
-        criteria1 = int(request.form['criteria1'])
-        criteria2 = int(request.form['criteria2'])
-        criteria3 = int(request.form['criteria3'])
-        criteria4 = int(request.form['criteria4'])
+        checks = db.reviews.get('id', int(id))
+        for check in checks:
+            if check.id == int(id) and session['jury'] == check.jury:
+                return render_template('review_id.html', rights=check_rights(), data=data,
+                                       message='Вы уже проверили эту работу')
+
+        if request.form.get('requirements_met'):
+            criteria1 = int(request.form['criteria1'])
+            criteria2 = int(request.form['criteria2'])
+            criteria3 = int(request.form['criteria3'])
+            criteria4 = int(request.form['criteria4'])
+        else:
+            criteria1 = 0
+            criteria2 = 0
+            criteria3 = 0
+            criteria4 = 0
+
         sum = criteria1 + criteria2 + criteria3 + criteria4
 
         db.reviews.put({
