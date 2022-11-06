@@ -5,13 +5,13 @@
 /* == Headers == */
 h2 {
     width: 80%;
-    font-size: 55px;
+    font-size: 40px;
     color: white;
     background: var(--ystu-blue);
     padding: 20px 10%;
 
     margin: 0;
-    font-weight: 400;
+    font-weight: 300;
 }
 
 h3 {
