@@ -42,7 +42,7 @@
     <div class="submit-form">
     <div class="event">
         <label for="event">Мероприятие</label>
-        <select id="event" name="event" required>
+        <select id="event" name="event" disabled>
             <option value="">-- Нужно выбрать --</option>
             {% for event in events %}
                 <option value="{{ event.name }}">{{ event.title }}</option>
@@ -64,7 +64,12 @@
     <input type="text" id="scientific_director" name="scientific_director" placeholder="Иванов Иван Иванович" required />
 
     <div class="file-submit">
-        <input type="file" id="file" name="file">
+        {% if "video" in event_name %}
+            <label for="scientific_director">YouTube-ссылка</label>
+            <input type="text" id="scientific_director" name="scientific_director" placeholder="https://www.youtube.com" required />
+        {% else %}
+            <input type="file" id="file" name="file">
+        {% endif %}
         <button type="submit" disabled>Отправить</button>
     </div>
 
