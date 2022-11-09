@@ -114,7 +114,7 @@ def login():
     if request.method == 'POST':
         row = db.users.get('login', request.form['login'])
         if not row:
-            return render_template('login.html', rights=check_rights(), error='Неправильный логин или пароль')
+            return render_template('login.html', rights=check_rights(), message='Неправильный логин или пароль')
 
         if check_password(request.form['password'], row[0].password):
             user = User(login)
@@ -123,7 +123,7 @@ def login():
             session['login'] = request.form['login']
             return redirect(url_for('index'))
         else:
-            return render_template('login.html', rights=check_rights(), error='Неправильный логин или пароль')
+            return render_template('login.html', rights=check_rights(), message='Неправильный логин или пароль')
 
 
 @app.route('/edit/', methods=['GET', 'POST'])
