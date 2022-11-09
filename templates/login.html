@@ -9,7 +9,7 @@
 {% block content %}
     <form action='/login' method='post'>
     {% if message %}
-        <div class="error notification">{{error}}</div>
+        <div class="error notification">{{message}}</div>
     {% endif %}
         <div class="login-form">
             <label for="login">E-Mail</label>
