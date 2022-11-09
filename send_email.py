@@ -6,8 +6,8 @@ sender_name = "Кафедра иностранных языков ЯГТУ"
 
 
 def _send(recipient, msg):
-    sender = "pinguink.in.box@gmail.com"
-    password = 'ltnsekkthdwzywcc'
+    sender = "inyaz.731@gmail.com"
+    password = 'smmognwylaclzpbj'
 
     with smtplib.SMTP("smtp.gmail.com", 587) as server:
         server.starttls()
