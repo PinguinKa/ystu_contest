@@ -187,6 +187,7 @@ def submit():
         event_name = ''
         if session['event']:
             event_name = session['event']
+
         return render_template('submit.html', rights=check_rights(), events=events, themes=themes,
                                event_name=event_name)
 
@@ -237,8 +238,9 @@ def submit():
 
             send_email.participation(session['login'], db.events.get('name', request.form['event'])[0].title,
                                      request.form['theme'], str(id))
-            return render_template('submit.html', rights=check_rights(), message='Успешно загружено', events=events,
-                                   themes=themes)
+            return render_template('submit.html', rights=check_rights(),
+                                    message='Успешно загружено! Уникальный код работы отправлен Вам на почту. Если вы не получили письмо, проверьте папки Спам и Удаленные',
+                                    events=events, themes=themes)
 
         return render_template('submit.html', rights=check_rights(), message='Неверный формат файла', events=events,
                                themes=themes)
