@@ -54,19 +54,19 @@
         <label for="theme">Номинация</label>
         <select id="theme" name="theme" required>
             <option value="">-- Нужно выбрать --</option>
-            {% for theme in themes[0]  %}
+            {% for theme in themes[0] %}
                 <option value="{{ theme }}">{{ theme }}</option>
             {% endfor %}
         </select>
     </div>
 
-    <label for="scientific_director">Полностью ФИО вашего руководителя</label>
+    <label for="scientific_director">Полное ФИО вашего руководителя</label>
     <input type="text" id="scientific_director" name="scientific_director" placeholder="Иванов Иван Иванович" required />
 
     <div class="file-submit">
         {% if "video" in event_name %}
-            <label for="scientific_director">YouTube-ссылка</label>
-            <input type="text" id="scientific_director" name="scientific_director" placeholder="https://www.youtube.com" required />
+            <label for="link">YouTube-ссылка</label>
+            <input type="text" id="link" name="link" placeholder="https://www.youtube.com" required />
         {% else %}
             <input type="file" id="file" name="file">
         {% endif %}

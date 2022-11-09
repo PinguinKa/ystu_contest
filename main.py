@@ -168,10 +168,6 @@ ALLOWED_TEXT_EXTENSIONS = {'txt', 'pdf', 'doc', 'docx'}
 def allowed_text_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_TEXT_EXTENSIONS
 
-ALLOWED_VIDEO_EXTENSIONS = {'mp4', 'mov', 'avi', 'wmv'}
-def allowed_video_file(filename):
-    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_VIDEO_EXTENSIONS
-
 @app.route("/submit/", methods=['GET', 'POST'])
 @login_required
 def submit():
@@ -200,22 +196,22 @@ def submit():
             return render_template('submit.html', rights=check_rights(),
                                    message='По этому мероприятию работы не принимаются', events=events, themes=themes)
 
-        if 'file' not in request.files:
-            return render_template('submit.html', rights=check_rights(), message='Загрузите файл!', events=events,
-                                   themes=themes)
+        if 'video' not in request.form['event']:
+            if 'file' not in request.files:
+                return render_template('submit.html', rights=check_rights(), message='Загрузите файл!', events=events,
+                                       themes=themes)
 
-        file = request.files['file']
-        if file.filename == '':
-            return render_template('submit.html', message='Загрузите файл!', rights=check_rights(), events=events,
-                                   themes=themes)
+            file = request.files['file']
+            if file.filename == '':
+                return render_template('submit.html', message='Загрузите файл!', rights=check_rights(), events=events,
+                                       themes=themes)
 
-        if file and (request.form['event'] == 'video_presentations-2022' and allowed_video_file(file.filename) or
-                     request.form['event'] != 'video_presentations-2022' and allowed_text_file(file.filename)):
-            user_submits = db.submits.get('login', session['login'])
-            for user_submit in user_submits:
-                if user_submit.event == request.form['event'] and user_submit.theme == request.form['theme']:
-                    return render_template('submit.html', rights=check_rights(),
-                                           message='Вы уже участвовали в этой номинации', events=events, themes=themes)
+            if file and allowed_text_file(file.filename):
+                user_submits = db.submits.get('login', session['login'])
+                for user_submit in user_submits:
+                    if user_submit.event == request.form['event'] and user_submit.theme == request.form['theme']:
+                        return render_template('submit.html', rights=check_rights(),
+                                               message='Вы уже участвовали в этой номинации', events=events, themes=themes)
 
             id = len(db.submits.get_all()) + 1
             db.submits.put({'id': id,
@@ -228,22 +224,38 @@ def submit():
                             'num_of_checks': 0
                             })
 
-            rows = db.users.get('login', session['login'])[0]
-            event = db.events.get('name', request.form['event'])[0]
-            participation = f"{event.title} - {request.form['theme']};  "
-            if rows.participation == 'Этот пользователь ещё нигде не участвовал':
-                db.users.update('login', session['login'], 'participation', participation)
-            else:
-                db.users.update('login', session['login'], 'participation', rows.participation + participation)
+        else:
 
-            send_email.participation(session['login'], db.events.get('name', request.form['event'])[0].title,
-                                     request.form['theme'], str(id))
-            return render_template('submit.html', rights=check_rights(),
-                                    message='Успешно загружено! Уникальный код работы отправлен Вам на почту. Если вы не получили письмо, проверьте папки Спам и Удаленные',
-                                    events=events, themes=themes)
+            id = len(db.submits.get_all()) + 1
+            db.submits.put({'id': id,
+                            'login': session['login'],
+                            'filename': request.form['link'],
+                            'event': request.form['event'],
+                            'theme': request.form['theme'],
+                            'scientific_director': request.form['scientific_director'],
+                            'num_of_checks': 0
+                            })
 
-        return render_template('submit.html', rights=check_rights(), message='Неверный формат файла', events=events,
-                               themes=themes)
+            print(request.form)
+
+
+
+        rows = db.users.get('login', session['login'])[0]
+        event = db.events.get('name', request.form['event'])[0]
+        participation = f"{event.title} - {request.form['theme']};  "
+        if rows.participation == 'Этот пользователь ещё нигде не участвовал':
+            db.users.update('login', session['login'], 'participation', participation)
+        else:
+            db.users.update('login', session['login'], 'participation', rows.participation + participation)
+
+        send_email.participation(session['login'], db.events.get('name', request.form['event'])[0].title,
+                                 request.form['theme'], str(id))
+        return render_template('submit.html', rights=check_rights(),
+                                message='Успешно загружено! Уникальный код работы отправлен Вам на почту. Если вы не получили письмо, проверьте папки Спам и Удаленные',
+                                events=events, themes=themes)
+
+    return render_template('submit.html', rights=check_rights(), message='Неверный формат файла', events=events,
+                           themes=themes)
 
 
 @app.route('/participants/')
