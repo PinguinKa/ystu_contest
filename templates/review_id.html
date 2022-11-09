@@ -23,6 +23,8 @@
                 showValues: true,
                 showSelectedRating: false
             });
+
+            $('#yt-player').height($('#yt-player').width()*9/16)
         });
     </script>
 {% endblock %}
@@ -33,138 +35,123 @@
     <div class="error notification">{{message}}</div>
 {% endif %}
     <div class="center">
+    {% if "video" in data.event %}
+        <iframe src="https://www.youtube-nocookie.com/embed/{{video_id}}?rel=0" title="YouTube video player"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen id="yt-player"></iframe>
+    {% else %}
         <a href="../review/download/{{data.id}}" target="_blank" rel="noopener noreferrer">СКАЧАТЬ РАБОТУ</a>
+    {% endif %}
     </div>
     <form action="/review/{{data.id}}" method="post">
         <h3>Требования</h3>
-
-
-
-        {% if data.event == 'stc-2022' %}
         <ul>
+        {% if "video" in data.event %}
+            <li>Запрещена любая явная и неявная идентификация участника (ФИО, адрес электронной почты и т.п.
+                в работе или названии файла)</li>
+        {% else %}
             <li>Объем готового реферативного перевода - от 2000 до 2 500 знаков
                 (с интервалами, без библиографической записи)</li>
             <li>Библиографическая запись + текст</li>
             <li>Запрещена любая явная и неявная идентификация участника (ФИО, адрес электронной почты и т.п.
                 в тексте работы или названии файла), а также схемы, рисунки и т.д.</li>
+        {% endif %}
         </ul>
-        {% endif %}
-
-
-
-        {% if data.event == 'stc-2022-video' %}
-            <ul>
-                <li>Запрещена любая явная и неявная идентификация участника (ФИО, адрес электронной почты и т.п.
-                    в работе или названии файла), а также схемы, рисунки и т.д.</li>
-            </ul>
-        {% endif %}
-
-
 
         <label for="requirements_met" class="checkbox-label">
             <input type="checkbox" id="requirements_met" name="requirements_met" /><span class="checkmark"></span>
             Соответствует требованиям
         </label>
 
+        <div id="criteria" style="display: none">
+        {% if "video" in data.event %}
+            <label for="criteria1">Полнота изложения реферируемого материала </label>
+            <select id="criteria1" name="criteria1" class="rating">
+                <option value="0">0</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+            </select>
 
+            <label for="criteria2">Информативность и доступность изложения </label>
+            <select id="criteria2" name="criteria2" class="rating">
+                <option value="0">0</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+            </select>
 
-        {% if data.event == 'stc-2022' %}
-            <div id="criteria" style="display: none">
-                <label for="criteria1">Заголовок</label>
-                <ul>
-                    <li>1 балл — Перевод заголовка</li>
-                    <li>1 балл — Стилистика перевода</li>
-                </ul>
-                <select id="criteria1" name="criteria1" class="rating">
-                    <option value="0">0</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                </select>
+            <label for="criteria3">Качество русского языка </label>
+            <select id="criteria3" name="criteria3" class="rating">
+                <option value="0">0</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+            </select>
 
-                <label for="criteria2">Полнота изложения</label>
-                <ul>
-                    <li>1 балл — Выделение существенной информации</li>
-                    <li>1 балл — Соблюдение логики источника</li>
-                </ul>
-                <select id="criteria2" name="criteria2" class="rating">
-                    <option value="0">0</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                </select>
+            <label for="criteria4">Умение работать с аудиторией </label>
+            <select id="criteria4" name="criteria4" class="rating">
+                <option value="0">0</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+            </select>
+        {% else %}
+            <label for="criteria1">Заголовок</label>
+            <ul>
+                <li>1 балл — Перевод заголовка</li>
+                <li>1 балл — Стилистика перевода</li>
+            </ul>
+            <select id="criteria1" name="criteria1" class="rating">
+                <option value="0">0</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+            </select>
 
-                <label for="criteria3">Доступность изложения</label>
-                <ul>
-                    <li>1 балл — Простой язык</li>
-                    <li>1 балл — Соответствие речевым нормам научно-технической литературы</li>
-                </ul>
-                <select id="criteria3" name="criteria3" class="rating">
-                    <option value="0">0</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                </select>
+            <label for="criteria2">Полнота изложения</label>
+            <ul>
+                <li>1 балл — Выделение существенной информации</li>
+                <li>1 балл — Соблюдение логики источника</li>
+            </ul>
+            <select id="criteria2" name="criteria2" class="rating">
+                <option value="0">0</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+            </select>
 
-                <label for="criteria4">Прочие нормы</label>
-                <ul>
-                    <li>1 балл — Корректное употребление терминов</li>
-                    <li>1 балл — Корректная передача имен собственных</li>
-                    <li>1 балл — Следование нормам орфографии и грамматики русского языка</li>
-                </ul>
-                <select id="criteria4" name="criteria4" class="rating">
-                    <option value="0">0</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                </select>
-            </div>
+            <label for="criteria3">Доступность изложения</label>
+            <ul>
+                <li>1 балл — Простой язык</li>
+                <li>1 балл — Соответствие речевым нормам научно-технической литературы</li>
+            </ul>
+            <select id="criteria3" name="criteria3" class="rating">
+                <option value="0">0</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+            </select>
+
+            <label for="criteria4">Прочие нормы</label>
+            <ul>
+                <li>1 балл — Корректное употребление терминов</li>
+                <li>1 балл — Корректная передача имен собственных</li>
+                <li>1 балл — Следование нормам орфографии и грамматики русского языка</li>
+            </ul>
+            <select id="criteria4" name="criteria4" class="rating">
+                <option value="0">0</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+            </select>
         {% endif %}
-
-
-
-        {% if data.event == 'stc-2022-video' %}
-            <div id="criteria" style="display: none">
-                <label for="criteria1">Полнота изложения реферируемого материала </label>
-                <select id="criteria1" name="criteria1" class="rating">
-                    <option value="0">0</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                </select>
-
-                <label for="criteria2">Информативность и доступность изложения </label>
-                <select id="criteria2" name="criteria2" class="rating">
-                    <option value="0">0</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                </select>
-
-                <label for="criteria3">Качество русского языка </label>
-                <select id="criteria3" name="criteria3" class="rating">
-                    <option value="0">0</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                </select>
-
-                <label for="criteria4">Умение работать с аудиторией </label>
-                <select id="criteria4" name="criteria4" class="rating">
-                    <option value="0">0</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                </select>
-            </div>
-        {% endif %}
-
-
+        </div>
 
         <div class="center">
             <button type="submit">Оценить</button>

@@ -46,3 +46,9 @@ ul {
     margin: 0;
     padding-inline-start: 19px;
 }
+
+
+iframe {
+    border: none;
+    width: 100%;
+}
