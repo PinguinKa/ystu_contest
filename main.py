@@ -164,13 +164,13 @@ def edit():
         return render_template('edit.html', rights=check_rights(), message='Ваши изменения сохранены!', data=data)
 
 
-ALLOWED_EXTENSIONS = {'txt', 'pdf', 'doc', 'docx'}
+ALLOWED_TEXT_EXTENSIONS = {'txt', 'pdf', 'doc', 'docx'}
+def allowed_text_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_TEXT_EXTENSIONS
 
-
-def allowed_file(filename):
-    return '.' in filename and \
-           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
-
+ALLOWED_VIDEO_EXTENSIONS = {'mp4', 'mov', 'avi', 'wmv'}
+def allowed_video_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_VIDEO_EXTENSIONS
 
 @app.route("/submit/", methods=['GET', 'POST'])
 @login_required
@@ -208,7 +208,8 @@ def submit():
             return render_template('submit.html', message='Загрузите файл!', rights=check_rights(), events=events,
                                    themes=themes)
 
-        if file and allowed_file(file.filename):
+        if file and (request.form['event'] == 'video_presentations-2022' and allowed_video_file(file.filename) or
+                     request.form['event'] != 'video_presentations-2022' and allowed_text_file(file.filename)):
             user_submits = db.submits.get('login', session['login'])
             for user_submit in user_submits:
                 if user_submit.event == request.form['event'] and user_submit.theme == request.form['theme']:

@@ -6,7 +6,8 @@
 {% endblock %}
 
 {% block content %}
-    <h2 class="event-name">IV Всероссийский студенческий конкурс реферативного перевода с международным участием</h2>
+    <h2 class="event-name">IV Всероссийский студенческий конкурс
+        видеопрезентаций «Научный стенд-ап» с международным участием</h2>
 
     <div class="infobox">
         <h3>Полезные ссылки</h3>
@@ -26,7 +27,7 @@
             {% elif rights['jury'] %}
                 <div class="participation-error">Невозможно участвовать с аккаунта члена жюри.</div>
             {% elif rights['login'] %}
-                <form method="post" action="/events/stc-2022">
+                <form method="post" action="/events/video_presentations-2022">
                     <button type="submit">Принять участие</button>
                 </form>
             {% else %}

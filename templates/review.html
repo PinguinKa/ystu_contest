@@ -90,22 +90,30 @@
         <tbody>
     {% for row in data %}
         {% if row.event == event and row.theme == theme %}
-            {% if jury_name in row.jury_members %}
-            <tr class="reviewed">
-                <td value="1" style="text-align: center;">✔️</td>
+            {% if row.jury_members %}
+                {% if jury_name in row.jury_members %}
+                    <tr class="reviewed">
+                        <td value="1" style="text-align: center;">✔</td>
+                        {% else %}
+                    <tr>
+                    <td value="0" style="text-align: center;">❌</td>
+                {% endif %}
             {% else %}
-            <tr>
+                <tr>
                 <td value="0" style="text-align: center;">❌</td>
             {% endif %}
-                <td>{{row.id}}</td>
-                <td style="text-align: center;"><a href="{{row.id}}" target="_blank" rel="noopener noreferrer">Оценить</a></td>
-            {% if row.jury_members %}
-                <td>{{row.jury_members}}</td>
-            {% else %}
-                <td>Эта работа ещё не проверена</td>
-            {% endif %}
-                <td>{{row.num_of_checks}}</td>
-            </tr>
+
+        <td>{{row.id}}</td>
+        <td style="text-align: center;"><a href="{{row.id}}" target="_blank" rel="noopener noreferrer">Оценить</a></td>
+
+        {% if row.jury_members %}
+            <td>{{row.jury_members}}</td>
+        {% else %}
+            <td>Эта работа ещё не проверена</td>
+        {% endif %}
+
+        <td>{{row.num_of_checks}}</td>
+        </tr>
         {% endif %}
     {% endfor %}
         </tbody>
