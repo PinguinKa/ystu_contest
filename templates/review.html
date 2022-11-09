@@ -88,20 +88,15 @@
             </tr>
         </thead>
         <tbody>
-    {% for row in data %}
-        {% if row.event == event and row.theme == theme %}
-            {% if row.jury_members %}
-                {% if jury_name in row.jury_members %}
-                    <tr class="reviewed">
-                        <td value="1" style="text-align: center;">✔</td>
-                        {% else %}
-                    <tr>
-                    <td value="0" style="text-align: center;">❌</td>
-                {% endif %}
-            {% else %}
-                <tr>
+{% for row in data %}
+    {% if row.event == event and row.theme == theme %}
+        {% if row.num_of_checks and jury_name in row.jury_members %}
+            <tr class="reviewed">
+                <td value="1" style="text-align: center;">✔️</td>
+        {% else %}
+            <tr>
                 <td value="0" style="text-align: center;">❌</td>
-            {% endif %}
+        {% endif %}
 
         <td>{{row.id}}</td>
         <td style="text-align: center;"><a href="{{row.id}}" target="_blank" rel="noopener noreferrer">Оценить</a></td>
@@ -114,8 +109,8 @@
 
         <td>{{row.num_of_checks}}</td>
         </tr>
-        {% endif %}
-    {% endfor %}
+    {% endif %}
+{% endfor %}
         </tbody>
     </table>
 {% endblock %}
