@@ -7,6 +7,8 @@
     <link rel="stylesheet" type="text/css" href="/static/css/form-inputs.css"/>
     <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
     <script>
+        jQuery.fn.exists = function(){ return this.length > 0; }
+
         $(document).ready(function () {
             $("#event").val("{{ event_name }}");
 
@@ -14,9 +16,12 @@
                 event = $('#event').val();
                 theme = $('#theme').val();
                 scientific_director = $('#scientific_director').val();
-                file = $('#file')[0].files.length;
+                if ($('#link').exists())
+                    linkORfile = $('#link').val();
+                else
+                    linkORfile = $('#file')[0].files.length;
 
-                if (event != 0 && theme != 0 && scientific_director != "" && file != 0) {
+                if (event != 0 && theme != 0 && scientific_director != "" && linkORfile != 0) {
                     $('button[type=submit]').prop("disabled", false);
                 } else { $('button[type=submit]').prop("disabled", true); }
             }
@@ -26,7 +31,10 @@
             $('#event').on('change', function() { checkAllSelected() });
             $('#theme').on('change', function() { checkAllSelected() });
             $('#scientific_director').on('change', function() { checkAllSelected() });
-            $('#file').on('change', function() { checkAllSelected() });
+            if ($('#link').exists())
+                $('#link').on('change', function() { checkAllSelected() });
+            else
+                $('#file').on('change', function() { checkAllSelected() });
         });
     </script>
 {% endblock %}
@@ -44,9 +52,9 @@
         <label for="event">Мероприятие</label>
         <select id="event" name="event" disabled>
             <option value="">-- Нужно выбрать --</option>
-            {% for event in events %}
-                <option value="{{ event.name }}">{{ event.title }}</option>
-            {% endfor %}
+        {% for event in events %}
+            <option value="{{ event.name }}">{{ event.title }}</option>
+        {% endfor %}
         </select>
     </div>
 
@@ -54,9 +62,9 @@
         <label for="theme">Номинация</label>
         <select id="theme" name="theme" required>
             <option value="">-- Нужно выбрать --</option>
-            {% for theme in themes[0] %}
-                <option value="{{ theme }}">{{ theme }}</option>
-            {% endfor %}
+        {% for theme in themes[0]  %}
+            <option value="{{ theme }}">{{ theme }}</option>
+        {% endfor %}
         </select>
     </div>
 
@@ -64,12 +72,12 @@
     <input type="text" id="scientific_director" name="scientific_director" placeholder="Иванов Иван Иванович" required />
 
     <div class="file-submit">
-        {% if "video" in event_name %}
-            <label for="link">YouTube-ссылка</label>
-            <input type="text" id="link" name="link" placeholder="https://www.youtube.com" required />
-        {% else %}
-            <input type="file" id="file" name="file">
-        {% endif %}
+    {% if "video" in event_name %}
+        <label for="link">YouTube-ссылка</label>
+        <input type="text" id="link" name="link" placeholder="https://www.youtube.com/AbC_3fGh1jK" required />
+    {% else %}
+        <input type="file" id="file" name="file" required />
+    {% endif %}
         <button type="submit" disabled>Отправить</button>
     </div>
 
