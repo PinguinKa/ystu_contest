@@ -38,6 +38,7 @@ h3 {
 .useful-links {
     font-size: 15pt;
     font-weight: bold;
+    margin-bottom: 18px;
 }
 
 .useful-links a:not([href="/login"]) {
@@ -57,12 +58,16 @@ p {
     font-size: 13.2pt;
 }
 
+ol,
 ul {
     margin: 0 0 12px;
     font-size: 13.2pt;
     padding-inline-start: 19px;
 }
 
+ol > li::marker {
+    font-weight: bold;
+}
 
 .participation-error {
     margin-bottom: 2px;
