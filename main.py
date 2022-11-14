@@ -70,7 +70,6 @@ def event(event):
 def hash_password(plain_text_password):
     return bcrypt.hashpw(plain_text_password.encode('utf-8'), bcrypt.gensalt())
 
-
 @app.route('/register/', methods=['GET', 'POST'])
 def register():
     if check_rights()['login']:
@@ -104,7 +103,6 @@ def register():
 
 def check_password(plain_text_password, hashed_password):
     return bcrypt.checkpw(plain_text_password.encode('utf-8'), hashed_password)
-
 
 @app.route('/login/', methods=['GET', 'POST'])
 def login():
@@ -263,8 +261,6 @@ def submit():
         return render_template('submit.html', rights=check_rights(),
                                 message='Успешно загружено! Уникальный код работы отправлен Вам на почту. Если вы не получили письмо, проверьте папки Спам и Удаленные',
                                 events=events, themes=themes)
-
-
 
 
 @app.route('/participants/')
