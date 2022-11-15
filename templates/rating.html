@@ -79,8 +79,7 @@
                     <td>{{row.last_name}} {{row.first_name}} {{row.middle_name}}</td>
                     <td>{{row.submit_id}}</td>
                 {% if "video" in row.event %}
-                    <td style="text-align: center;"><a href="https://youtu.be/{{link}}"
-                                                       target="_blank" rel="noopener noreferrer">Посмотреть</a></td>
+                    <td style="text-align: center;"><a href="https://youtu.be/{{link}}" target="_blank">Посмотреть</a></td>
                 {% else %}
                     <td style="text-align: center;"><a href="../review/download/{{row.submit_id}}">Скачать</a></td>
                 {% endif %}
