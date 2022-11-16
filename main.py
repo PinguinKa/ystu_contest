@@ -177,13 +177,12 @@ def submit():
     for event in events:
         themes.append(event.themes.split(', '))
 
-    if request.method == 'GET':
-        event_name = ''
-        if session['event']:
-            event_name = session['event']
+    event_name = ''
+    if session['event']:
+        event_name = session['event']
 
-        return render_template('submit.html', rights=check_rights(), events=events, themes=themes,
-                               event_name=event_name)
+    if request.method == 'GET':
+        return render_template('submit.html', rights=check_rights(), events=events, themes=themes, event_name=event_name)
 
     if request.method == 'POST':
         event = db.events.get('name', session['event'])[0]
@@ -192,28 +191,28 @@ def submit():
 
         if datetime.now() < begin_date or datetime.now() > exp_date:
             return render_template('submit.html', rights=check_rights(),
-                                   message='По этому мероприятию работы не принимаются', events=events, themes=themes)
+                                   message='По этому мероприятию работы не принимаются', events=events, themes=themes, event_name=event_name)
 
 
 
         if 'video' not in session['event']:
             if 'file' not in request.files:
                 return render_template('submit.html', rights=check_rights(), message='Загрузите файл!', events=events,
-                                       themes=themes)
+                                       themes=themes, event_name=event_name)
             file = request.files['file']
             if file.filename == '':
                 return render_template('submit.html', message='Загрузите файл!', rights=check_rights(), events=events,
-                                       themes=themes)
+                                       themes=themes, event_name=event_name)
 
             if file and allowed_text_file(file.filename):
                 user_submits = db.submits.get('login', session['login'])
                 for user_submit in user_submits:
                     if user_submit.event == session['event'] and user_submit.theme == request.form['theme']:
                         return render_template('submit.html', rights=check_rights(),
-                                               message='Вы уже участвовали в этой номинации', events=events, themes=themes)
+                                               message='Вы уже участвовали в этой номинации', events=events, themes=themes, event_name=event_name)
             else:
                 return render_template('submit.html', rights=check_rights(), message='Неверный формат файла', events=events,
-                                       themes=themes)
+                                       themes=themes, event_name=event_name)
 
             id = len(db.submits.get_all()) + 1
             db.submits.put({'id': id,
@@ -230,7 +229,7 @@ def submit():
 
             if not re.match(r'(?:https?:\/\/)?(?:www\.)?youtu(?:\.be\/|be.com\/\S*(?:watch|embed)(?:(?:(?=\/[-a-zA-Z0-9_]{11,}(?!\S))\/)|(?:\S*v=|v\/)))([-a-zA-Z0-9_]{11,})', request.form['link']):
                 return render_template('submit.html', rights=check_rights(), message='Неправильный формат ссылки',
-                                       events=events, themes=themes)
+                                       events=events, themes=themes, event_name=event_name)
 
             link = request.form['link']
             if 'youtu.be' in link:
@@ -259,8 +258,8 @@ def submit():
         send_email.participation(session['login'], db.events.get('name', session['event'])[0].title,
                                  request.form['theme'], str(id))
         return render_template('submit.html', rights=check_rights(),
-                                message='Успешно загружено! Уникальный код работы отправлен Вам на почту. Если вы не получили письмо, проверьте папки Спам и Удаленные',
-                                events=events, themes=themes)
+                               message='Успешно загружено! Уникальный код работы отправлен Вам на почту. Если вы не получили письмо, проверьте папки Спам и Удаленные',
+                               events=events, themes=themes, event_name=event_name)
 
 
 @app.route('/participants/')
@@ -376,12 +375,12 @@ def rating():
 
     if request.method == 'POST':
         event, theme = request.form['event'], request.form['theme']
-        sumbits = db.submits.get_all()
-        for sumbit in sumbits:
-            if sumbit.num_of_checks > 0:
-                user = db.users.get('login', sumbit.login)[0]
+        submits = db.submits.get_all()
+        for submit in submits:
+            if submit.num_of_checks > 0:
+                user = db.users.get('login', submit.login)[0]
 
-                reviews = db.reviews.get('id', sumbit.id)
+                reviews = db.reviews.get('id', submit.id)
                 score = 0
                 for review in reviews:
                     score += review.sum
@@ -390,26 +389,26 @@ def rating():
                 final_score = decimal.Decimal(final_score).quantize(decimal.Decimal('0.00'),
                                                                     rounding=decimal.ROUND_HALF_UP)
 
-                existence = db.rating.get('submit_id', sumbit.id)
+                existence = db.rating.get('submit_id', submit.id)
                 if existence:
-                    db.rating.update('submit_id', sumbit.id, 'final_score', final_score)
+                    db.rating.update('submit_id', submit.id, 'final_score', final_score)
                 else:
                     data = {
                         'login': user.login,
                         'last_name': user.last_name,
                         'first_name': user.first_name,
                         'middle_name': user.middle_name,
-                        'submit_id': sumbit.id,
+                        'submit_id': submit.id,
                         'university': user.university,
-                        'event': sumbit.event,
-                        'theme': sumbit.theme,
-                        'scientific_director': sumbit.scientific_director,
+                        'event': submit.event,
+                        'theme': submit.theme,
+                        'scientific_director': submit.scientific_director,
                         'final_score': final_score
                     }
 
                     db.rating.put(data)
 
-        link = db.submits.get('id', sumbit.id)[0].filename
+        link = db.submits.get('id', submit.id)[0].filename
         data = db.rating.get_all()
         return render_template('rating.html', rights=check_rights(), events=events, event=event, themes=themes,
                                theme=theme, data=data, visibility='visible', event_name=request.form['event'],
