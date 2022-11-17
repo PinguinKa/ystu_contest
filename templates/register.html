@@ -13,19 +13,19 @@
     {% endif %}
         <div class="login-form">
             <label for="last_name">Фамилия</label>
-            <input type="text" id="last_name" name="last_name" placeholder="Иванов" required />
+            <input type="text" id="last_name" name="last_name" placeholder="Иванов" maxlength="35" class="input-ru" required />
             <label for="first_name">Имя</label>
-            <input type="text" id="first_name" name="first_name" placeholder="Иван" required />
+            <input type="text" id="first_name" name="first_name" placeholder="Иван" maxlength="35" class="input-ru" required />
             <label for="middle_name">Отчество</label>
-            <input type="text" id="middle_name" name="middle_name" placeholder="Иванович" required />
+            <input type="text" id="middle_name" name="middle_name" placeholder="Иванович" maxlength="35" class="input-ru" required />
             <label for="university">ВУЗ (полное название)</label>
-            <input type="text" id="university" name="university" placeholder="Ярославский государственный технический университет" required />
+            <input type="text" id="university" name="university" placeholder="Ярославский государственный технический университет" class="input-ru" required />
             <label for="login">E-Mail</label>
             <input type="text" id="login" name="login" placeholder="example@email.net" required />
-            <label for="password">Пароль</label>
-            <input type="password" id="password" name="password" placeholder="Qw3R7y" required />
+            <label for="password">Пароль (до 32 символов)</label>
+            <input type="password" id="password" name="password" placeholder="Qw3R7y" maxlength="32" required />
             <label for="password_check">Повторите пароль</label>
-            <input type="password" id="password_check" name="password_check" placeholder="Qw3R7y" required />
+            <input type="password" id="password_check" name="password_check" placeholder="Qw3R7y" maxlength="32" required />
             <label class="checkbox-label">
                 <input type="checkbox" required /><span class="checkmark"></span>
                 Соглашаюсь на <a href="">обработку персональных данных</a>
@@ -34,4 +34,11 @@
         </div>
         <div class="notification">Есть аккаунт? <a href="../login/">Войти</a></div>
     </form>
+
+    <script>
+        $('form').on('input', '.input-ru', function(){
+            this.value = this.value.replace(/[^а-яё\s]/gi, '');
+        });
+    </script>
+
 {% endblock %}
