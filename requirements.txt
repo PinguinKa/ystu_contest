@@ -1,5 +1,5 @@
-bcrypt~=4.0.0
+bcrypt==4.0.1
 flask==2.2.2
 flask_login==0.6.2
-sqlalchemy==1.4.41
+sqlalchemy==1.4.44
 Werkzeug~=2.2.2
