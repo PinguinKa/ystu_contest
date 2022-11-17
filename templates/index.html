@@ -2,7 +2,6 @@
 <html lang="ru">
     <head>
         <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href= "/static/css/style.css">
         <link rel="icon" href="/static/images/ystu_logo.svg">
     {% block head %}
@@ -15,7 +14,7 @@
     <body>
         <topnav>
             <a href="https://www.ystu.ru" target="_blank" class="left" title="Сайт ЯГТУ">
-                <img src="/static/images/ystu_logo.svg" alt="ystu_logo">
+                <img src="/static/images/ystu_logo.svg" alt="ystu_logo" />
             </a>
 
             <a href="/" class="{% if request.path == "/" %}current{% endif %}">Главная</a><!--
