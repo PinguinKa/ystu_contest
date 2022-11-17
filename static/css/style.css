@@ -63,11 +63,15 @@ topnav a {
     text-decoration: none;
 }
 
-topnav a img { height: 100%; }
-
-topnav a.left, .topnav a.right {
+topnav a.left, topnav a.right {
     padding: 10px;
+    width: 27px;
     height: 27px;
+}
+
+topnav a img {
+    width: 100%;
+    height: 100%;
 }
 
 topnav a:hover:not(.left):not(.right),
