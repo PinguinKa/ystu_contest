@@ -41,9 +41,9 @@
         <input type="text" id="university" name="university" value="{{ data['university'] }}" placeholder="Ярославский государственный технический университет" class="input-ru" required />
         <label for="login">E-Mail</label>
         <input type="text" id="login" name="login" value="{{ data['login'] }}" placeholder="example@email.com" required />
-        <label for="new_password">Новый пароль (до 32 символов) <i class="far fa-eye" id="toggleNewPassword"></i></label>
+        <label for="new_password">Новый пароль (до 32 символов) <i class="far fa-eye fa-eye-slash" id="toggleNewPassword"></i></label>
         <input type="password" id="new_password" name="password" placeholder="Qw3R7y" maxlength="32" required />
-        <label for="new_password_check">Повторите новый пароль <i class="far fa-eye" id="toggleNewPasswordCheck"></i></label>
+        <label for="new_password_check">Повторите новый пароль <i class="far fa-eye fa-eye-slash" id="toggleNewPasswordCheck"></i></label>
         <input type="password" id="new_password_check" name="password_check" placeholder="Qw3R7y" maxlength="32" required />
         <button type="submit">Сохранить изменения</button>
     {% elif rights['login'] and (rights['admin'] or rights['jury']) %}
