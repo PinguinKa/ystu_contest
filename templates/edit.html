@@ -4,6 +4,24 @@
     <title>Регистрация</title>
     <link rel="stylesheet" type="text/css" href="../static/css/center-page.css">
     <link rel="stylesheet" type="text/css" href="../static/css/form-inputs.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+    <script>
+        $(document).ready(function(){
+            $('#toggleNewPassword').click(function(){
+                password = $('#new_password');
+                const type = password.attr('type') === 'password' ? 'text' : 'password';
+                password.attr('type', type);
+                this.classList.toggle('fa-eye-slash');
+            });
+
+            $('#toggleNewPasswordCheck').click(function(){
+                password = $('#new_password_check');
+                const type = password.attr('type') === 'password' ? 'text' : 'password';
+                password.attr('type', type);
+                this.classList.toggle('fa-eye-slash');
+            });
+        });
+    </script>
 {% endblock %}
 
 {% block content %}
@@ -23,10 +41,10 @@
         <input type="text" id="university" name="university" value="{{ data['university'] }}" placeholder="Ярославский государственный технический университет" class="input-ru" required />
         <label for="login">E-Mail</label>
         <input type="text" id="login" name="login" value="{{ data['login'] }}" placeholder="example@email.com" required />
-        <label for="password">Новый пароль (до 32 символов)</label>
-        <input type="password" id="password" name="password" placeholder="Qw3R7y" maxlength="32" required />
-        <label for="password_check">Повторите новый пароль</label>
-        <input type="password" id="password_check" name="password_check" placeholder="Qw3R7y" maxlength="32" required />
+        <label for="new_password">Новый пароль (до 32 символов) <i class="far fa-eye" id="toggleNewPassword"></i></label>
+        <input type="password" id="new_password" name="password" placeholder="Qw3R7y" maxlength="32" required />
+        <label for="new_password_check">Повторите новый пароль <i class="far fa-eye" id="toggleNewPasswordCheck"></i></label>
+        <input type="password" id="new_password_check" name="password_check" placeholder="Qw3R7y" maxlength="32" required />
         <button type="submit">Сохранить изменения</button>
     {% elif rights['login'] and (rights['admin'] or rights['jury']) %}
         <label for="login">E-Mail</label>

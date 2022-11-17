@@ -4,6 +4,24 @@
     <title>Регистрация</title>
     <link rel="stylesheet" type="text/css" href="../static/css/center-page.css">
     <link rel="stylesheet" type="text/css" href="../static/css/form-inputs.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+    <script>
+        $(document).ready(function(){
+            $('#togglePassword').click(function(){
+                password = $('#password');
+                const type = password.attr('type') === 'password' ? 'text' : 'password';
+                password.attr('type', type);
+                this.classList.toggle('fa-eye-slash');
+            });
+
+            $('#togglePasswordCheck').click(function(){
+                password = $('#password_check');
+                const type = password.attr('type') === 'password' ? 'text' : 'password';
+                password.attr('type', type);
+                this.classList.toggle('fa-eye-slash');
+            });
+        });
+    </script>
 {% endblock %}
 
 {% block content %}
@@ -22,9 +40,9 @@
             <input type="text" id="university" name="university" placeholder="Ярославский государственный технический университет" class="input-ru" required />
             <label for="login">E-Mail</label>
             <input type="text" id="login" name="login" placeholder="example@email.net" required />
-            <label for="password">Пароль (до 32 символов)</label>
+            <label for="password">Пароль (до 32 символов) <i class="far fa-eye" id="togglePassword"></i></label>
             <input type="password" id="password" name="password" placeholder="Qw3R7y" maxlength="32" required />
-            <label for="password_check">Повторите пароль</label>
+            <label for="password_check">Повторите пароль <i class="far fa-eye" id="togglePasswordCheck"></i></label>
             <input type="password" id="password_check" name="password_check" placeholder="Qw3R7y" maxlength="32" required />
             <label class="checkbox-label">
                 <input type="checkbox" required /><span class="checkmark"></span>
