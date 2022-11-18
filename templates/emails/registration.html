@@ -10,44 +10,56 @@
             font-size: 14px;
         }
 
-        .subheader {
+        .subtitle {
             padding: 0;
             font-family: 'Segoe UI Semibold', 'Segoe UI Bold', 'Segoe UI', 'Helvetica Neue Medium', Arial, sans-serif;
             font-size: 16px;
             color: #F07C00;
         }
 
-        .subheader a { color: #F07C00; }
+        .subtitle a { color: #F07C00; }
 
-        .header {
+        .title {
             padding: 0;
             font-family: 'Segoe UI Light', 'Segoe UI', 'Helvetica Neue Medium', Arial, sans-serif;
             font-size: 32px;
             color: #004589
         }
 
-        .credentials { padding-top: 16px; }
+        table.credentials {
+            margin-top: 16px;
+            border-collapse: collapse;
+        }
 
-        .credentials div { display: inline-block }
+        tr + tr { border-top: 1px dashed lightgrey; }
+
+        pre {
+            display: inherit;
+            font-family: inherit;
+            white-space: inherit;
+            margin: inherit;
+        }
     </style>
 </head>
 
 <body>
-<div class="subheader">
-    Учётная запись <a href="http://forlang.pythonanywhere.com">кафедры иностранных языков ЯГТУ</a>
-</div>
-    <div class="header">
+    <div class="subtitle">
+        Учётная запись <a href="http://forlang.pythonanywhere.com">кафедры иностранных языков ЯГТУ</a>
+    </div>
+
+    <div class="title">
         Благодарим за регистрацию!
     </div>
-    <div class="credentials">
-        <div>
-            Ваш логин: <br/>
-            Ваш пароль:
-        </div>
-        <div style="font-weight: bold">
-            {{ login }}<br/>
-            {{ password }}
-        </div>
-    </div>
+
+    <table class="credentials">
+        <tr>
+            <td style="width: 1px; white-space: nowrap;">Ваш логин:</td>
+            <td style="padding-left: 8px; font-weight: bold;"><a href="#" style="text-decoration: none; color: black">{{ login }}</a></td>
+        </tr>
+        <tr>
+            <td style="width: 1px; white-space: nowrap;">Ваш пароль:</td>
+            <td style="padding-left: 8px; font-weight: bold;"><pre>{{ password }}</pre></td>
+        </tr>
+    </table>
 </body>
 </html>

@@ -10,7 +10,7 @@
             font-size: 14px;
         }
 
-        .header {
+        .title {
             padding: 0;
             font-family: 'Segoe UI Light', 'Segoe UI', 'Helvetica Neue Medium', Arial, sans-serif;
             font-size: 32px;
@@ -25,16 +25,18 @@
 </head>
 
 <body>
-<div class="header">
-    Регистрация в конкурсе
-</div>
-<div class="info">
-    Уважаемый пользователь,<br/>
-    Ваша работа была успешно отправлена на участие в конкурсе "{{ event }}" в номинации "{{ theme }}".<br/>
-    Ваш уникальный код работы: {{ id }}
-</div>
-<div class="info">
-    Желаем удачи!
-</div>
+    <div class="title">
+        Регистрация в конкурсе
+    </div>
+
+    <div class="info">
+        <b>Уважаемый пользователь</b>,<br/>
+        Ваша работа была успешно отправлена на участие в конкурсе "{{ event }}" в номинации "{{ theme }}".<br/>
+        Ваш уникальный код работы: {{ id }}
+    </div>
+
+    <div class="info">
+        <b>Желаем удачи!</b>
+    </div>
 </body>
 </html>
