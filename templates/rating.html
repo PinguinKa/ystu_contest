@@ -21,10 +21,7 @@
                 else { $('button[type=submit]').prop("disabled", true); }
             }
 
-            checkAllSelected();
-
-            $('#event').on('change', function() { checkAllSelected() });
-            $('#theme').on('change', function() { checkAllSelected() });
+            $('select').on('change', function() { checkAllSelected() });
         });
     </script>
 {% endblock %}
