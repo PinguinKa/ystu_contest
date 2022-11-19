@@ -12,28 +12,20 @@
             $("#event").val("{{ event_name }}");
 
             function checkAllSelected() {
-                event = $('#event').val();
                 theme = $('#theme').val();
-                scientific_director = $('#scientific_director').val();
+                scientific_director = $('#scientific_director').val().length;
                 if ($('#link').exists())
-                    linkORfile = $('#link').val();
+                    linkORfile = $('#link').val().length;
                 else
                     linkORfile = $('#file')[0].files.length;
 
-                if (event != 0 && theme != 0 && scientific_director != "" && linkORfile != 0) {
+                if (theme && scientific_director && linkORfile) {
                     $('button[type=submit]').prop("disabled", false);
                 } else { $('button[type=submit]').prop("disabled", true); }
             }
 
-            checkAllSelected();
-
-            $('#event').on('change', function() { checkAllSelected() });
-            $('#theme').on('change', function() { checkAllSelected() });
-            $('#scientific_director').on('change', function() { checkAllSelected() });
-            if ($('#link').exists())
-                $('#link').on('change', function() { checkAllSelected() });
-            else
-                $('#file').on('change', function() { checkAllSelected() });
+            $('select').on('change', function() { checkAllSelected() });
+            $('input').on('change', function() { checkAllSelected() });
         });
     </script>
 {% endblock %}
@@ -72,7 +64,7 @@
 
     <div class="file-submit">
     {% if "video" in event_name %}
-        <label for="link">YouTube-ссылка</label>
+        <label for="link">YouTube-ссылка (<a href="https://docs.google.com/document/d/1xSmn5i2unZ-Ms30VO55176Ayt3zuatyWqXjfGXjHt3U/edit" target="_blank">Инструкция</a>)</label>
         <input type="text" id="link" name="link" placeholder="https://www.youtube.com/watch?v=AbC_3fGh1jK" required />
     {% else %}
         <input type="file" id="file" name="file" required />
