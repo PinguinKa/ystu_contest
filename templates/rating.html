@@ -17,7 +17,7 @@
                 event = $('#event').val();
                 theme = $('#theme').val();
 
-                if (event != 0 && theme != 0) { $('button[type=submit]').prop("disabled", false); }
+                if (event && theme) { $('button[type=submit]').prop("disabled", false); }
                 else { $('button[type=submit]').prop("disabled", true); }
             }
 

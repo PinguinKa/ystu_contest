@@ -19,7 +19,7 @@
                 event = $('#event').val();
                 theme = $('#theme').val();
 
-                if (jury != 0 && event != 0 && theme != 0) { $('button[type=submit]').prop("disabled", false); }
+                if (jury && event && theme) { $('button[type=submit]').prop("disabled", false); }
                 else { $('button[type=submit]').prop("disabled", true); }
             }
 
