@@ -57,6 +57,7 @@ tr:hover { background-color: rgba(0, 69, 137, 0.25); }
 .tablesorter-headerDesc { background-image: url("/static/css/icons/metro-white-desc.png"); }
 
 .tablesorter .sorter-false {
+    padding-right: 10px;
     background-image: none;
     cursor: default;
 }
