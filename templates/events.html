@@ -12,7 +12,9 @@
         {% for row in data %}
             <tr>
                 <td class="event-date"><div>{{ row.start }}</div> – <div>{{ row.end }}</div></td>
-                <td class="event-name">{{ row.title }}</td>
+                <td class="event-name"><a href="/events/{{ row.name }}" title="{{ row.title }}">
+                    <img src="/static/images/events/{{ row.name }}.png" alt="{{ row.title }}"></a>
+                </td>
                 <td class="event-info">
                     <b>{{ row.subtitle }}</b> {{ row.info }} <br/>
                     <button type="submit" onclick="window.location.href='{{ row.name }}'">Подробнее</button>

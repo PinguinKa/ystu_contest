@@ -101,6 +101,11 @@ td.event-name {
     border-right: 1px solid gray !important;
 }
 
+td.event-name img {
+    margin: 0 auto;
+    width: 400px;
+}
+
 td.event-info { width: 37%; }
 
 
