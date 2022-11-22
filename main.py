@@ -399,6 +399,7 @@ def rating():
                         'first_name': user.first_name,
                         'middle_name': user.middle_name,
                         'submit_id': submit.id,
+                        'link': submit.filename,
                         'university': user.university,
                         'event': submit.event,
                         'theme': submit.theme,
@@ -408,11 +409,10 @@ def rating():
 
                     db.rating.put(data)
 
-        link = db.submits.get('id', submit.id)[0].filename
         data = db.rating.get_all()
         return render_template('rating.html', rights=check_rights(), events=events, event=event, themes=themes,
                                theme=theme, data=data, visibility='visible', event_name=request.form['event'],
-                               theme_name=request.form['theme'], link=link)
+                               theme_name=request.form['theme'])
 
 
 @app.route("/logout/")
