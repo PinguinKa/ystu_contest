@@ -5,7 +5,7 @@ import send_email
 from io import BytesIO
 from ystu_db import db
 from datetime import datetime
-from flask import Flask, render_template, request, url_for, redirect, session, send_file
+from flask import Flask, render_template, request, url_for, redirect, session, send_file, Markup
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user
 
 app = Flask(__name__)
@@ -98,7 +98,7 @@ def register():
 
         db.users.put(data=data)
         send_email.registration(request.form['login'], request.form['password'])
-        return render_template('register.html', rights=check_rights(), message='Регистрация прошла успешно')
+        return render_template('register.html', rights=check_rights(), message='Регистрация прошла успешно!' + Markup('<br/>') + 'На указанный почтовый ящик отправленно письмо подтверждения.' + Markup('<br/>') + 'Если вы не видите письма, пожалуйста, проверьте спам и правильность указанного адреса.' + Markup('<br/>') + 'Если адрес был указан неправильно, то замените его в настройках аккаунта.')
 
 
 def check_password(plain_text_password, hashed_password):
