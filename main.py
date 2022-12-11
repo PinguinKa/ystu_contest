@@ -4,7 +4,7 @@ import decimal
 import send_email
 from io import BytesIO
 from ystu_db import db
-from datetime import datetime
+from datetime import datetime, timedelta
 from flask import Flask, render_template, request, url_for, redirect, session, send_file, Markup
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user
 
@@ -189,7 +189,7 @@ def submit():
         begin_date = datetime.strptime(event.begin_date, "%d.%m.%Y")
         exp_date = datetime.strptime(event.exp_date, "%d.%m.%Y")
 
-        if datetime.now() < begin_date or datetime.now() > exp_date:
+        if datetime.now() < begin_date or datetime.now() > exp_date + timedelta(days=1):
             return render_template('submit.html', rights=check_rights(),
                                    message='По этому мероприятию работы не принимаются', events=events, themes=themes, event_name=event_name)
 
