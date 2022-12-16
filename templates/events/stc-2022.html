@@ -27,7 +27,6 @@
                 Методические рекомендации</a>
             <a href="https://docs.google.com/document/d/1fiR0gV_B4GNXs09pXshkJRAJIn1TR7Cb/edit" target="_blank">
                 Чек-лист</a>
-        {% if not event_ended %}
             {% if rights['admin'] %}
                 <div class="participation-error">Невозможно участвовать с аккаунта администратора.</div>
             {% elif rights['jury'] %}
@@ -39,11 +38,6 @@
             {% else %}
                 <div class="participation-error"><a href="/login">Войдите в аккаунт</a>, чтобы принять участие.</div>
             {% endif %}
-        {% else %}
-            <form method="get" action="/results">
-                <button type="submit">Посмотреть результаты</button>
-            </form>
-        {% endif %}
         </div>
 
         <h3>Что?</h3>

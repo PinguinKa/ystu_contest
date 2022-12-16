@@ -70,7 +70,7 @@
     </form>
 
 
-    <table id="reviewTable" style="visibility: {{ visibility }};">
+    <table id="reviewTable" style="visibility: {{ visibility }}{#{% if data_loaded %} visible {% else %} hidden {% endif %}#};">
         <thead>
             <tr>
                 <th style="width: 1px;">Проверена</th>
