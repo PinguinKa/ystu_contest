@@ -57,13 +57,18 @@ def events():
     return render_template('events.html', rights=check_rights(), data=data)
 
 
-@app.route('/events/<event>', methods=['GET', 'POST'])
-def event(event):
+@app.route('/events/<event_name>', methods=['GET', 'POST'])
+def event(event_name):
     if request.method == 'GET':
-        return render_template(f'events/{event}.html', rights=check_rights())
+        session['event'] = event_name
+        event_info = db.events.get('name', event_name)[0]
+        end_date = datetime.strptime(event_info.exp_date, "%d.%m.%Y") + timedelta(days=1)
+
+        return render_template(f'events/{event_name}.html', rights=check_rights(),
+                               event_ended=datetime.now() > end_date)
 
     if request.method == 'POST':
-        session['event'] = event
+        session['event'] = event_name
         return redirect(url_for('submit'))
 
 

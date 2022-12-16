@@ -115,7 +115,8 @@ td.event-info { width: 37%; }
 
 
 /* == Participation Button == */
-.useful-links button[type=submit] {
+.useful-links button[type=submit],
+.useful-links .results {
     display: block;
 
     border: none;
