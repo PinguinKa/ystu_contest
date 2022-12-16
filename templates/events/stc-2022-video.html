@@ -27,6 +27,7 @@
                 Методические рекомендации</a>
             <a href="https://docs.google.com/document/d/1xSmn5i2unZ-Ms30VO55176Ayt3zuatyWqXjfGXjHt3U/edit" target="_blank">
                 Загрузка видео на YouTube</a>
+        {% if not event_ended %}
             {% if rights['admin'] %}
                 <div class="participation-error">Невозможно участвовать с аккаунта администратора.</div>
             {% elif rights['jury'] %}
@@ -38,6 +39,11 @@
             {% else %}
                 <div class="participation-error"><a href="/login">Войдите в аккаунт</a>, чтобы принять участие.</div>
             {% endif %}
+        {% else %}
+            <form method="get" action="/results">
+                <button type="submit">Посмотреть результаты</button>
+            </form>
+        {% endif %}
         </div>
 
         <p><b>Идея конкурса</b> — взглянуть по-новому на реферативный перевод и показать возможности

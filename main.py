@@ -57,14 +57,41 @@ def events():
     return render_template('events.html', rights=check_rights(), data=data)
 
 
-@app.route('/events/<event>', methods=['GET', 'POST'])
-def event(event):
+@app.route('/events/<event_name>', methods=['GET', 'POST'])
+def event(event_name):
     if request.method == 'GET':
-        return render_template(f'events/{event}.html', rights=check_rights())
+        session['event'] = event_name
+        event_info = db.events.get('name', event_name)[0]
+        end_date = datetime.strptime(event_info.exp_date, "%d.%m.%Y") + timedelta(days=1)
+
+        return render_template(f'events/{event_name}.html', rights=check_rights(),
+                               event_ended=datetime.now() > end_date)
 
     if request.method == 'POST':
-        session['event'] = event
+        session['event'] = event_name
         return redirect(url_for('submit'))
+
+
+@app.route('/results/', methods=['GET', 'POST'])
+def results():
+    data = db.rating.get_all()
+
+    events = db.events.get_all()
+    themes = []
+    for event in events:
+        themes.append(event.themes.split(', '))
+
+    event_name = ''
+    if session['event']:
+        event_name = session['event']
+
+    if request.method == 'POST':
+        event, theme = request.form['event'], request.form['theme']
+        return render_template('results.html', rights=check_rights(), events=events, event=event, themes=themes,
+                               theme=theme, data=data, visibility='visible', event_name=request.form['event'],
+                               theme_name=request.form['theme'])
+    return render_template('results.html', rights=check_rights(), events=events, themes=themes, event_name=event_name,
+                           visibility='hidden')
 
 
 def hash_password(plain_text_password):
@@ -187,9 +214,9 @@ def submit():
     if request.method == 'POST':
         event = db.events.get('name', session['event'])[0]
         begin_date = datetime.strptime(event.begin_date, "%d.%m.%Y")
-        exp_date = datetime.strptime(event.exp_date, "%d.%m.%Y")
+        end_date = datetime.strptime(event.exp_date, "%d.%m.%Y") + timedelta(days=1)
 
-        if datetime.now() < begin_date or datetime.now() > exp_date + timedelta(days=1):
+        if datetime.now() < begin_date or datetime.now() > end_date:
             return render_template('submit.html', rights=check_rights(),
                                    message='По этому мероприятию работы не принимаются', events=events, themes=themes, event_name=event_name)
 
