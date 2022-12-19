@@ -73,6 +73,7 @@ class Rating(Base):
     first_name = Column(String)
     middle_name = Column(String)
     submit_id = Column(Integer, primary_key=True, unique=True)
+    link = Column(String)
     university = Column(String)
     event = Column(String)
     theme = Column(String)

@@ -1,90 +1,92 @@
 {% extends "index.html" %}
 
 {% block head %}
-    <title>Проверка</title>
-    <link rel="stylesheet" href= "/static/css/review.css">
-    <link rel="stylesheet" href= "/static/css/form-inputs.css">
-    <link rel="stylesheet" href= "/static/css/data-tables.css">
-    <script type="text/javascript" src="../static/js/jquery.tablesorter.js"></script>
-    <script>
-        $(document).ready(function () {
-            $("#ratingsTable").tablesorter({ sortList: [[5,1]] });
+<title>Проверка</title>
+<link rel="stylesheet" href= "/static/css/review.css">
+<link rel="stylesheet" href= "/static/css/form-inputs.css">
+<link rel="stylesheet" href= "/static/css/data-tables.css">
+<script type="text/javascript" src="../static/js/jquery.tablesorter.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#ratingsTable").tablesorter({ sortList: [[5,1]] });
 
-            $('#event').val("{{ event_name }}");
-            $('#theme').val("{{ theme_name }}");
+        $('#event').val("{{ event_name }}");
+        $('#theme').val("{{ theme_name }}");
 
-            function checkAllSelected() {
-                event = $('#event').val();
-                theme = $('#theme').val();
+        function checkAllSelected() {
+            event = $('#event').val();
+            theme = $('#theme').val();
 
-                if (event && theme) { $('button[type=submit]').prop("disabled", false); }
-                else { $('button[type=submit]').prop("disabled", true); }
-            }
+            if (event && theme) { $('button[type=submit]').prop("disabled", false); }
+            else { $('button[type=submit]').prop("disabled", true); }
+        }
 
-            $('select').on('change', function() { checkAllSelected() });
-        });
-    </script>
+        $('select').on('change', function() { checkAllSelected() });
+    });
+</script>
 {% endblock %}
 
 {% block content %}
-    <form action="/rating" method="post">
-        <div class="select-form">
-            <div class="event-selector-container">
-                <div class="event">
-                    <label for="event">Мероприятие</label>
-                    <select id="event" name="event" required>
-                        <option value="">-- Нужно выбрать --</option>
-                        {% for event in events %}
-                            <option value="{{ event.name }}">{{ event.title }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-
-                <div class="theme">
-                    <label for="theme">Тема</label>
-                    <select id="theme" name="theme" required>
-                        <option value="">-- Нужно выбрать --</option>
-                        {% for theme in themes[0]  %}
-                            <option value="{{ theme }}">{{ theme }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
+<form action="/rating" method="post">
+    <div class="select-form">
+        <div class="event-selector-container">
+            <div class="event">
+                <label for="event">Мероприятие</label>
+                <select id="event" name="event" required>
+                    <option value="">-- Нужно выбрать --</option>
+                    {% for event in events %}
+                    <option value="{{ event.name }}">{{ event.title }}</option>
+                    {% endfor %}
+                </select>
             </div>
-            <div class="button-wrap">
-                <button type="submit" disabled>Загрузить таблицу</button>
+
+            <div class="theme">
+                <label for="theme">Тема</label>
+                <select id="theme" name="theme" required>
+                    <option value="">-- Нужно выбрать --</option>
+                    {% for theme in themes[0]  %}
+                    <option value="{{ theme }}">{{ theme }}</option>
+                    {% endfor %}
+                </select>
             </div>
         </div>
-    </form>
+        <div class="button-wrap">
+            <button type="submit" disabled>Загрузить таблицу</button>
+        </div>
+    </div>
+</form>
 
 
-    <table id="ratingsTable" style="visibility: {{ visibility }}{#{% if data_loaded %} visible {% else %} hidden {% endif %}#};">
-        <thead>
-            <tr>
-                <th>ФИО</th>
-                <th style="width: 1px;">ID</th>
-                <th style="width: 1px;" data-sorter="false">Работа</th>
-                <th>ВУЗ</th>
-                <th>Научный руководитель</th>
-                <th style="width: 1px;">Балл</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for row in data %}
-            {% if row.event == event and row.theme == theme %}
-                <tr>
-                    <td>{{row.last_name}} {{row.first_name}} {{row.middle_name}}</td>
-                    <td>{{row.submit_id}}</td>
-                {% if "video" in row.event %}
-                    <td style="text-align: center;"><a href="https://youtu.be/{{row.link}}" target="_blank">Посмотреть</a></td>
-                {% else %}
-                    <td style="text-align: center;"><a href="../review/download/{{row.submit_id}}">Скачать</a></td>
-                {% endif %}
-                    <td>{{row.university}}</td>
-                    <td>{{row.scientific_director}}</td>
-                    <td>{{row.final_score}}</td>
-                </tr>
-            {% endif %}
-        {% endfor %}
-        </tbody>
-    </table>
+<table id="ratingsTable" style="visibility: {{ visibility }}{#{% if data_loaded %} visible {% else %} hidden {% endif %}#};">
+    <thead>
+    <tr>
+        <th>ФИО</th>
+        <th>Почта</th>
+        <th style="width: 1px;">ID</th>
+        <th style="width: 1px;" data-sorter="false">Работа</th>
+        <th>ВУЗ</th>
+        <th>Научный руководитель</th>
+        <th style="width: 1px;">Балл</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for row in data %}
+    {% if row.event == event and row.theme == theme %}
+    <tr>
+        <td>{{row.last_name}} {{row.first_name}} {{row.middle_name}}</td>
+        <td>{{row.login}}</td>
+        <td>{{row.submit_id}}</td>
+        {% if "video" in row.event %}
+        <td style="text-align: center;"><a href="{{row.link}}" target="_blank">Посмотреть</a></td>
+        {% else %}
+        <td style="text-align: center;"><a href="../review/download/{{row.submit_id}}">Скачать</a></td>
+        {% endif %}
+        <td>{{row.university}}</td>
+        <td>{{row.scientific_director}}</td>
+        <td>{{row.final_score}}</td>
+    </tr>
+    {% endif %}
+    {% endfor %}
+    </tbody>
+</table>
 {% endblock %}

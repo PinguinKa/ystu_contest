@@ -4,7 +4,7 @@ import decimal
 import send_email
 from io import BytesIO
 from ystu_db import db
-from datetime import datetime
+from datetime import datetime, timedelta
 from flask import Flask, render_template, request, url_for, redirect, session, send_file
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user
 
@@ -57,13 +57,19 @@ def events():
     return render_template('events.html', rights=check_rights(), data=data)
 
 
-@app.route('/events/<event>', methods=['GET', 'POST'])
-def event(event):
+@app.route('/events/<event_name>/', methods=['GET', 'POST'])
+def event(event_name):
     if request.method == 'GET':
-        return render_template(f'events/{event}.html', rights=check_rights())
+        session['event'] = event_name
+        event_info = db.events.get('name', event_name)[0]
+        end_date = datetime.strptime(event_info.exp_date, "%d.%m.%Y") + timedelta(days=1)
+
+        return render_template(f'events/{event_name}.html', rights=check_rights(),
+                               event_ended=datetime.now() > end_date)
 
     if request.method == 'POST':
         session['event'] = event
+        session['event'] = event_name
         return redirect(url_for('submit'))
 
 
@@ -189,7 +195,7 @@ def submit():
         begin_date = datetime.strptime(event.begin_date, "%d.%m.%Y")
         exp_date = datetime.strptime(event.exp_date, "%d.%m.%Y")
 
-        if datetime.now() < begin_date or datetime.now() > exp_date:
+        if datetime.now() < begin_date or datetime.now() > exp_date + timedelta(days=1):
             return render_template('submit.html', rights=check_rights(),
                                    message='По этому мероприятию работы не принимаются', events=events, themes=themes, event_name=event_name)
 
@@ -393,13 +399,15 @@ def rating():
                 if existence:
                     db.rating.update('submit_id', submit.id, 'final_score', final_score)
                 else:
+                    link = 'https://youtu.be/' + submit.filename
+
                     data = {
                         'login': user.login,
                         'last_name': user.last_name,
                         'first_name': user.first_name,
                         'middle_name': user.middle_name,
                         'submit_id': submit.id,
-                        'link': submit.filename,
+                        'link': link,
                         'university': user.university,
                         'event': submit.event,
                         'theme': submit.theme,
@@ -408,6 +416,7 @@ def rating():
                     }
 
                     db.rating.put(data)
+
 
         data = db.rating.get_all()
         return render_template('rating.html', rights=check_rights(), events=events, event=event, themes=themes,
