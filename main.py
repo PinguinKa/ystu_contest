@@ -57,7 +57,7 @@ def events():
     return render_template('events.html', rights=check_rights(), data=data)
 
 
-@app.route('/events/<event_name>', methods=['GET', 'POST'])
+@app.route('/events/<event_name>/', methods=['GET', 'POST'])
 def event(event_name):
     if request.method == 'GET':
         session['event'] = event_name
@@ -383,8 +383,10 @@ def rating():
         submits = db.submits.get_all()
         for submit in submits:
             if submit.num_of_checks > 0:
-                user = db.users.get('login', submit.login)[0]
-
+                try:
+                    user = db.users.get('login', submit.login)[0]
+                except:
+                    print(submit.login)
                 reviews = db.reviews.get('id', submit.id)
                 score = 0
                 for review in reviews:
