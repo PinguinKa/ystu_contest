@@ -5,7 +5,7 @@ import send_email
 from io import BytesIO
 from ystu_db import db
 from datetime import datetime, timedelta
-from flask import Flask, render_template, request, url_for, redirect, session, send_file
+from flask import Flask, render_template, request, url_for, redirect, session, send_file, Markup
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user
 
 app = Flask(__name__)
@@ -57,7 +57,7 @@ def events():
     return render_template('events.html', rights=check_rights(), data=data)
 
 
-@app.route('/events/<event_name>/', methods=['GET', 'POST'])
+@app.route('/events/<event_name>', methods=['GET', 'POST'])
 def event(event_name):
     if request.method == 'GET':
         session['event'] = event_name
@@ -68,7 +68,6 @@ def event(event_name):
                                event_ended=datetime.now() > end_date)
 
     if request.method == 'POST':
-        session['event'] = event
         session['event'] = event_name
         return redirect(url_for('submit'))
 
@@ -104,7 +103,7 @@ def register():
 
         db.users.put(data=data)
         send_email.registration(request.form['login'], request.form['password'])
-        return render_template('register.html', rights=check_rights(), message='Регистрация прошла успешно')
+        return render_template('register.html', rights=check_rights(), message='Регистрация прошла успешно!' + Markup('<br/>') + 'На указанный почтовый ящик отправленно письмо подтверждения.' + Markup('<br/>') + 'Если вы не видите письма, пожалуйста, проверьте спам и правильность указанного адреса.' + Markup('<br/>') + 'Если адрес был указан неправильно, то замените его в настройках аккаунта.')
 
 
 def check_password(plain_text_password, hashed_password):
@@ -416,7 +415,6 @@ def rating():
                     }
 
                     db.rating.put(data)
-
 
         data = db.rating.get_all()
         return render_template('rating.html', rights=check_rights(), events=events, event=event, themes=themes,
